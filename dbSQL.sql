@@ -20,7 +20,7 @@ USE `swd` ;
 CREATE TABLE IF NOT EXISTS `swd`.`Assignments` (
   `idAssignments` INT NOT NULL AUTO_INCREMENT,
   `assignment_name` MEDIUMTEXT NULL,
-  `due_date` DATETIME NULL,
+  `due_date` DATE NULL,
   PRIMARY KEY (`idAssignments`))
 ENGINE = InnoDB;
 
@@ -32,10 +32,13 @@ CREATE TABLE IF NOT EXISTS `swd`.`Users` (
   `idUsers` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,
+  `gender` ENUM('M', 'F') NULL,
   `school` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `telephone_no` VARCHAR(45) NULL,
   `paid` TINYINT NULL DEFAULT 0,
+  `passwords` LONGTEXT NULL,
+  `role` VARCHAR(45) NULL,
   PRIMARY KEY (`idUsers`))
 ENGINE = InnoDB;
 
@@ -45,23 +48,21 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `swd`.`Submissions` (
   `idSubmissions` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NULL,
-  `assignment_id` INT NULL,
   `graded` TINYINT NULL,
-  `pdf_name` VARCHAR(45) NULL,
+  `pdf_name` LONGBLOB NULL,
   `grade` INT NULL,
-  `Assignments_id` INT NOT NULL,
-  `Users_idUsers` INT NOT NULL,
+  `assignment_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
   PRIMARY KEY (`idSubmissions`),
-  INDEX `fk_Submissions_Assignments_idx` (`Assignments_id` ASC) VISIBLE,
-  INDEX `fk_Submissions_Users1_idx` (`Users_idUsers` ASC) VISIBLE,
+  INDEX `fk_Submissions_Assignments_idx` (`assignment_id` ASC) VISIBLE,
+  INDEX `fk_Submissions_Users1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_Submissions_Assignments`
-    FOREIGN KEY (`Assignments_id`)
+    FOREIGN KEY (`assignment_id`)
     REFERENCES `swd`.`Assignments` (`idAssignments`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Submissions_Users1`
-    FOREIGN KEY (`Users_idUsers`)
+    FOREIGN KEY (`user_id`)
     REFERENCES `swd`.`Users` (`idUsers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -77,12 +78,12 @@ CREATE TABLE IF NOT EXISTS `swd`.`AssignmentView` (`idAssignments` INT, `assignm
 -- -----------------------------------------------------
 -- Placeholder table for view `swd`.`SubmissionsView`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `swd`.`SubmissionsView` (`idSubmissions` INT, `user_id` INT, `assignment_id` INT, `graded` INT, `pdf_name` INT, `grade` INT, `Assignments_id` INT, `Users_idUsers` INT);
+CREATE TABLE IF NOT EXISTS `swd`.`SubmissionsView` (`idSubmissions` INT, `graded` INT, `pdf_name` INT, `grade` INT, `assignment_id` INT, `user_id` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `swd`.`UsersView`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `swd`.`UsersView` (`idUsers` INT, `first_name` INT, `last_name` INT, `school` INT, `email` INT, `telephone_no` INT, `paid` INT);
+CREATE TABLE IF NOT EXISTS `swd`.`UsersView` (`idUsers` INT, `first_name` INT, `last_name` INT, `gender` INT, `school` INT, `email` INT, `telephone_no` INT, `paid` INT, `passwords` INT, `role` INT);
 
 -- -----------------------------------------------------
 -- View `swd`.`AssignmentView`
