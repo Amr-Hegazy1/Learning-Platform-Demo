@@ -10,7 +10,10 @@
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
-        if($ali == true){?>
+        if($ali == true){
+            include "configusers.php";
+            $getavas = $db->query("SELECT * FROM assistants"); //Get available assistants
+            ?>
     <form method="POST" enctype="multipart/form-data">
         Add Assistant:
         <br>
@@ -22,7 +25,14 @@
     <form method="POST" enctype="multipart/form-data">
         Remove Assistant:
         <br>
-        Enter a Username: <input type="text" name="username2"><br><br> 
+        Enter a Username: <select name='username2' id='username2'>
+        <?php 
+            while($rows = $getavas->fetch_assoc()){
+                $thisusername = $rows['AssistantUsername'];
+                echo "<option value='$thisusername'>$thisusername</option>";
+            }
+        ?>   
+        <br><br> 
         <input type="submit" name="removesubmit" value="Remove">
     </form>
     <hr>

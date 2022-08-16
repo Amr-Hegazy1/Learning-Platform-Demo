@@ -2,15 +2,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Log in</title>
+    <title>Admin Home</title>
 </head>
 <body>
-    <form method="POST" enctype="multipart/form-data">
-        Username: <input type="text" name="username"> bye <br><br> 
-        Password: <input type="text" name="password"> bye <br><br>
-        <input type="submit" name="loginsubmit" value="Submit">
-    </form>
     <?php
+        $loggedin = false;
         include "configusers.php";
         if(isset($_POST['loginsubmit'])){
             session_start();  //Start or Resume
@@ -21,22 +17,34 @@
             $res = mysqli_query($db, $adminloginsql);
             $row = mysqli_fetch_assoc($res);
             if(password_verify($p, $row['Password'])){
-                echo "Correct";
-                echo "<br>";
+                echo "<h1>Dashboard</h1>";
+                echo "<h6>Welcome $u</h6><hr>";
                 $loggedin = true;
                 $_SESSION['adminloggedin'] = $loggedin;
                 echo '<a href="http://localhost/TCD/addadmin.php"> Add Admin </a><br>';
-                echo '<a href="http://localhost/TCD/addtest.php"> Add Video </a><br>';
+                echo '<a href="http://localhost/TCD/managevideos.php"> Manage Videos </a><br>';
                 echo '<a href="http://localhost/TCD/manageassignments.php"> Manage Assignments </a><br>';
                 echo '<a href="http://localhost/TCD/manageassistants.php"> Manage Assistants </a><br>';
                 echo '<a href="http://localhost/TCD/manageposts.php"> Manage Posts </a><br>';
-                echo '<a href="http://localhost/TCD/manageviewing.php"> Manage Viewing </a><br>';
+                echo '<a href="http://localhost/TCD/managequestions.php"> Manage Questions </a><br>';
+                echo '<a href="http://localhost/TCD/addfreeuser.php"> Add Free User </a><br>';
+                echo '<a href="http://localhost/TCD/adminanswer.php"> Answer Questions </a><br>';
+                echo '<a href="http://localhost/TCD/viewprogress.php"> View Progress </a><br>';
+                ?>
+                    <video width="640" height="400" src = "http://localhost/TCD/videos/orientation.mp4" controls></video><br>';
+                <?php
             }else {
-                echo "Wrong";
                 $loggedin = false;
                 $_SESSION['adminloggedin'] = $loggedin;
             }
         }
+        if(!$loggedin){
     ?>
+        <form method="POST" enctype="multipart/form-data">
+            Username: <input type="text" name="username"> bye <br><br> 
+            Password: <input type="text" name="password"> bye <br><br>
+        <input type="submit" name="loginsubmit" value="Submit">
+        </form>
+        <?php }?>
 </body>
 </html>
