@@ -5,34 +5,51 @@
     <title>View Student Work</title>
 </head>
 <body>
-            <form method="POST" enctype="multipart/form-data">
-                Assignment ID: <input type="number" name="id"><br><br>
-                <input type="submit" name='submit' value="submit" id='submit'>
-            </form>
-    <?php
+    <?php 
         include "configusers.php";
+        echo "<h1>View Students' Work</h1>";
         $li = false;
         session_start();
-        $li = $_SESSION['loggedin'];
-        if($li){
-            if($_POST['submit']){
-                $assignmentid = $_POST['id'];
-                $viewworksql = "SELECT * FROM work WHERE `AssignmentID`= '$assignmentid'";
-                $res = mysqli_query($db, $viewworksql);
-                if(mysqli_num_rows($res)>0){
-                    while ($work = mysqli_fetch_assoc($res)){
-                        $user = $work['UserID'];
-                        echo "$user  :  ";
-                        $late = lateCheck($work['Late']);
-                        echo "$late  :  ";
-                        $grade = $work['Grade'];
-                        echo "$grade <br>";            
-                    }
-                } else {
-                    echo "No Assignments Submitted yet";
-                }
+        $a = $_SESSION['assistant'];
+        if(isset($_SESSION['assistantloggedin'])){
+            $li = $_SESSION['assistantloggedin'];}
+        if($li){ 
+            include "configusers.php";
+            $getavas = $db->query("SELECT `AssignmentID` FROM assignments"); //Get available assignments
+
+            ?>
+        <form method="POST" enctype="multipart/form-data">
+            Assignment ID: <select name='id' id='id'>
+        <?php 
+            while($rows = $getavas->fetch_assoc()){
+                $thisid = $rows['AssignmentID'];
+                echo "<option value='$thisid'> Assignment $thisid</option>";
             }
-        }else{
+        ?> 
+            <input type="submit" name='submit' value="Submit" id='submit'>
+        </form>
+    <?php
+        if(isset($_POST['submit'])){
+            $assignmentid = $_POST['id'];
+            $viewworksql = "SELECT * FROM work WHERE `AssignmentID`= '$assignmentid' AND `Corrected`=0 ORDER BY `WorkID` ASC";
+            $res = mysqli_query($db, $viewworksql);
+            if(mysqli_num_rows($res)>0){
+                while ($work = mysqli_fetch_assoc($res)){
+                    $wid = $work['WorkID'];
+                    $_SESSION['wid'] = $wid;
+                    echo "$wid  :  ";
+                    $user = $work['UserID'];
+                    echo "$user  :  ";
+                    $late = lateCheck($work['Late']);
+                    echo "$late  :  ";
+                    $grade = $work['Grade'];
+                    echo '<a href="http://localhost/TCD/correctingpage.php"/> Correct </a><br>';
+                }            
+            } else {
+                echo "No Assignments Submitted yet";
+            }
+        }
+        } else {
             echo "Access Denied";
         }
         function lateCheck($x){

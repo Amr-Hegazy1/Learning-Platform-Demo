@@ -10,25 +10,32 @@
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
-        if($ali == true){?>
+        if($ali == true){
+            include "configusers.php";
+            $getposts = $db->query("SELECT * FROM posts"); //Get available posts?>
     <h1>Post</h1>
     <hr>
     <form method="POST" enctype="multipart/form-data">
         Header: <input type='text' name='head' id='head'><br><br> 
         Description: <input type="text" name="description"><br><br>
+        Attachments: <input type="file" name="attachment"><br><br>
         <input type="submit" name="postsubmit" value="Submit">
     </form>
     <h1>Remove</h1>
     <hr>
     <form method="POST" enctype="multipart/form-data">
-        PostID: <input type='number' name='id' id='id'><br><br> 
+        PostID: <select name='id' id='id'>
+        <?php 
+            while($rows = $getposts->fetch_assoc()){
+                $thisid = $rows['PostID'];
+                $thishead = $rows['Header'];
+                echo "<option value='$thisid'>$thisid : $thishead </option>";
+            }
+        ?> 
         <input type="submit" name="removesubmit" value="Submit">
     </form>
-    <h1>Posts Table</h1>
-    <hr>
     <?php
         include "configusers.php";
-        echo "Posts ID : Header : Description";
         if(isset($_POST['removesubmit'])){
             $id = $_POST["id"];
             $removepostsql = "DELETE FROM `posts` WHERE(`PostID`= '$id')";
@@ -40,7 +47,11 @@
         if(isset($_POST['postsubmit'])){
             $h = $_POST['head'];
             $d = $_POST['description'];
-            $postsql = "INSERT INTO posts(Header, Description)VALUES('$h', '$d')";
+            $filename = $_FILES["attachment"]["name"];
+            $tempname = $_FILES["attachment"]["tmp_name"];
+            $folder = "attachments/" . $filename;
+            move_uploaded_file($tempname, $folder);
+            $postsql = "INSERT INTO posts(Header, Description, attachments)VALUES('$h', '$d', '$folder')";
             if(!mysqli_query($db, $postsql)){
                 echo "<br><h2>Post not Added :(</h2>";
             } else {
@@ -51,9 +62,12 @@
         $res = mysqli_query($db, $viewpostssql);
         $resultCheck = mysqli_num_rows($res);
         if($resultCheck>0){
+            echo "    <h1>Posts Table</h1>
+            <hr>
+            <h4> Posts ID : Header : Description </h4>";
             while ($row = mysqli_fetch_assoc($res)){
-                echo $row['PostID'];
-                echo $row['Header'];
+                echo $row['PostID']." : ";
+                echo $row['Header']." : ";
                 echo $row['Description'];
                 echo "<br>";            
             }

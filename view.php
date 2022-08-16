@@ -10,7 +10,7 @@
         session_start();
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];
-            include "newconfig.php";}
+            include "configusers.php";}
         if($li){
             $viewsql = "SELECT * FROM videos WHERE `Accessebility`= 1 ORDER BY VideoID DESC";
             $res = mysqli_query($db, $viewsql);
@@ -19,7 +19,7 @@
                     $name = $video['VideoName'];
                     echo "$name ";
                 ?>
-                    <video src="http://localhost/TCD/<?=$video['VideoLocation']?>" controls></video><br>
+                    <video width="640" height="560" src="http://localhost/TCD/<?=$video['VideoLocation']?>" controls></video><br>
                 <?php            
                 }
             } else {

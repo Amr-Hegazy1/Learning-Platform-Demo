@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Admin</title>
+    <title>Add Free User</title>
 </head>
 <body>
     <?php
@@ -16,7 +16,7 @@
         <br>
         Enter a Username: <input type="text" name="username"><br><br>
         Enter a Password: <input type="text" name="password"><br><br>
-        Re-nter a Password: <input type="text" name="repassword"><br><br> 
+        Re-enter a Password: <input type="text" name="repassword"><br><br>  
         <input type="submit" name="addsubmit" value="Add">
     </form>
     <hr>
@@ -24,32 +24,29 @@
             include "configusers.php";
             if(isset($_POST['addsubmit'])){
                 $username = $_POST["username"];
-                $pass = $_POST["password"];
-                $rpass = $_POST['repassword'];
-                if(notExists($username, $db)){
+                if(notExists($username, $db, "Username", "users")){
+                    $pass = $_POST["password"];
+                    $rpass = $_POST['repassword'];
                     if($pass == $rpass){
                         $hashedpass = password_hash($pass, PASSWORD_DEFAULT);
-                        $addassistantsql = "INSERT INTO `admins`(`Username`,`Password`)VALUES('$username', '$hashedpass')";
+                        $addassistantsql = "INSERT INTO `users`(`Username`,`Password`)VALUES('$username', '$hashedpass')";
+                        $addtoprogress = $db->query("INSERT INTO `progress` (`UserID`)VALUES('$username')");
                         if(!mysqli_query($db, $addassistantsql)){
-                            echo "<br><h2>Admin not Added :(</h2><br>";
+                            echo "<br><h2>User not Added :(</h2><br>";
                         } else {
-                            echo "<br><h2>Admin Added!</h2><br>";}
-                    } else {
-                        echo "Passwords don't match :(";
-                    }
-                } else {
-                    echo "This admin username already exists :(";
-                }
+                            echo "<br><h2>User Added!</h2><br>";}
+                    } else {echo "Passwords don't match";}
+                } else {echo "Username already taken, choose another one please";}
             }
         }else{
             echo "Access denied";
         }
-        function notExists($name, $db){
-            $exists = "SELECT `Username` FROM `admins`";
+        function notExists($i, $db, $field, $table){
+            $exists = "SELECT `$field` FROM `$table`";
             $r = mysqli_query($db, $exists);
             $n = mysqli_num_rows($r);
             while($x = mysqli_fetch_assoc($r)){
-                if($x['Username'] == $name){
+                if($x[$field] == $i){
                     return false;
                 }
             }
