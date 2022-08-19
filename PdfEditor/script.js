@@ -1,28 +1,27 @@
-$(".spinner-border").hide();
 
 
-function display(e){
-    $(".spinner-border").show();
-    var filereader = new FileReader();
-    filereader.readAsDataURL(e.files[0]);
-    filereader.onload = function (evt) {
-       var base64 = evt.target.result;
-        
-    
-  pdf = new PDFAnnotate('pdf-container', base64, {
-    onPageUpdated(page, oldData, newData) {
-      console.log(page, oldData, newData);
-    },
-    ready() {
-      console.log('Plugin initialized successfully');
-      $(".spinner-border").hide();
-      pdf.loadFromJSON(sampleOutput);
-    },
-    scale: 1.5,
-    pageImageCompression: 'FAST', // FAST, MEDIUM, SLOW(Helps to control the new PDF file size)
-  });
-}
-}
+
+$(".spinner-border").show();
+var paramString = window.location.href.split('?')[1];
+var queryString = new URLSearchParams(paramString);
+
+workFile = queryString.get("workFile");
+console.log(window.location.href);
+  
+pdf = new PDFAnnotate('pdf-container', ".."+workFile, {
+  onPageUpdated(page, oldData, newData) {
+    console.log(page, oldData, newData);
+  },
+  ready() {
+    console.log('Plugin initialized successfully');
+    $(".spinner-border").hide();
+    pdf.loadFromJSON(sampleOutput);
+  },
+  scale: 1.5,
+  pageImageCompression: 'FAST', // FAST, MEDIUM, SLOW(Helps to control the new PDF file size)
+});
+
+
 
 function changeActiveTool(event) {
   var element = $(event.target).hasClass('tool-button')
@@ -118,3 +117,5 @@ document.onkeydown = function (e) {
   if (e['key'] == "Delete")
     deleteSelectedObject(e);
 };
+
+
