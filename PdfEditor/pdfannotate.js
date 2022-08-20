@@ -270,21 +270,25 @@ PDFAnnotate.prototype.savePdf = function (fileName) {
         undefined
     );
     if (index === inst.fabricObjects.length - 1) {
+      
+      
       var blob = btoa(doc.output());
       var formData = new FormData();
+      formData.append("fileName",workFile.split("/")[1]);
       formData.append("file",blob);
+          
       $.ajax({
-        url: "save_pdf.php",
-        type: "POST",
-        data:formData,
-        processData: false,
-        contentType: false,
-        success: function (data){
-          console.log(data);
-        }
+          url: "save_pdf.php",
+          type: "POST",
+          data:formData,
+          processData: false,
+          contentType: false,
+          success: function (data){
+            console.log(data);
+          }
 
-        
-      });
+            
+          });
 
     }
   });

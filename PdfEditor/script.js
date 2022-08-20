@@ -1,14 +1,13 @@
-
-
-
 $(".spinner-border").show();
 var paramString = window.location.href.split('?')[1];
 var queryString = new URLSearchParams(paramString);
 
 workFile = queryString.get("workFile");
-console.log(window.location.href);
+
+
+	
   
-pdf = new PDFAnnotate('pdf-container', ".."+workFile, {
+pdf = new PDFAnnotate('pdf-container',"../PdfEditor/fetch_pdf.php?workFile="+workFile , {
   onPageUpdated(page, oldData, newData) {
     console.log(page, oldData, newData);
   },
@@ -80,6 +79,7 @@ function savePDF() {
   $(".spinner-border").show();
   pdf.savePdf('output.pdf'); // save with given file name
   $(".spinner-border").hide();
+  
 }
 
 function clearPage() {
@@ -117,5 +117,3 @@ document.onkeydown = function (e) {
   if (e['key'] == "Delete")
     deleteSelectedObject(e);
 };
-
-
