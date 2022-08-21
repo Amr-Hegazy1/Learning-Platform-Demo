@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 20, 2022 at 01:28 AM
+-- Host: 127.0.0.1:3308
+-- Generation Time: Aug 17, 2022 at 06:46 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -168,23 +168,16 @@ INSERT INTO `questions` (`QuestionID`, `Question`, `User`, `Answer`, `Assistant`
 
 CREATE TABLE `users` (
   `Username` varchar(40) NOT NULL,
-  `Password` varchar(250) NOT NULL,
-  `first name` varchar(50) NOT NULL,
-  `last name` varchar(50) NOT NULL,
-  `gender` enum('M','F') NOT NULL,
-  `school` varchar(250) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone no` varchar(20) NOT NULL,
-  `paid` tinyint(1) NOT NULL
+  `Password` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`Username`, `Password`, `first name`, `last name`, `gender`, `school`, `email`, `phone no`, `paid`) VALUES
-('user2', '$2y$10$llip7yvF7EHqYQu/S43L5esjDtZRwzd2MtUm5w2A7QhR.14q34Wne', '', '', 'M', '', '', '', 0),
-('username', '$2y$10$F4vxGXoYUJ1KkhANW185uukb0jzyXHL35IPN1cCd8pQJ56e0QnIwS', '', '', 'M', '', '', '', 0);
+INSERT INTO `users` (`Username`, `Password`) VALUES
+('user2', '$2y$10$llip7yvF7EHqYQu/S43L5esjDtZRwzd2MtUm5w2A7QhR.14q34Wne'),
+('username', '$2y$10$F4vxGXoYUJ1KkhANW185uukb0jzyXHL35IPN1cCd8pQJ56e0QnIwS');
 
 -- --------------------------------------------------------
 

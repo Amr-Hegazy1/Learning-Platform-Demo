@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Assignments</title>
+    <title> Assignments Manager</title>
 </head>
 <body>
 <?php
@@ -68,15 +68,17 @@
         $viewassignmentssql = "SELECT * FROM assignments";
         $res = mysqli_query($db, $viewassignmentssql);
         $resultCheck = mysqli_num_rows($res);
+        $out = '<table class="table" border="1"><thead><tr>';
         if($resultCheck>0){
-            echo "Assignment ID : Description : DueDate : MaxGrade <br>";
+            $out .="<th>Assignment ID</th><th>Description</th><th>Due Date</th><th>Maximum Grade</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($res)){
-                echo $row['AssignmentID']." : ";
-                echo $row['Description']." : ";
-                echo $row['DueDate']." : ";
-                echo $row['MaxGrade'];
-                echo "<br>";            
+                $out .="<tr><td>".$row['AssignmentID']."</td>";
+                $out .= "<td>".$row['Description']."</td>";
+                $out .= "<td>".$row['DueDate']."</td>";
+                $out .= "<td>".$row['MaxGrade']."</td></tr>";
             }
+            $out .="</tbody></table>";
+            echo $out;
         } else {
             echo "Empty";
         }
