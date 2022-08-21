@@ -43,7 +43,7 @@
                     $late = lateCheck($work['Late']);
                     echo "$late  :  ";
                     $grade = $work['Grade'];
-                    echo '<a href="./correctingpage.php?workFile='.$work['WorkFile'].'"/> Correct </a><br>';
+                    echo '<a href="http://localhost/TCD/correctingpage.php"/> Correct </a><br>';
                 }            
             } else {
                 echo "No Assignments Submitted yet";

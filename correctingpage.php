@@ -16,11 +16,10 @@
         $a = $_SESSION['assistant'];
         $opensql = "SELECT * FROM work WHERE `WorkID` = '$wid'";
         $res = mysqli_query($db, $opensql);
-    
         if(mysqli_num_rows($res)>0){
             while ($work = mysqli_fetch_assoc($res)){
             ?>
-                <embed src="./PdfEditor/index.php?workFile=<?php echo $_GET["workFile"]?>" style="height: 85%;width: 90%;">
+                <embed src="https://localhost/TCD/<?php echo $work['WorkFile'];?>" height = 400 width= 600>
                 <form method="POST" enctype="multipart/form-data">
                     Comments: <input type="text" name="comments">
                     Grade: <input type="number" name="grade">
