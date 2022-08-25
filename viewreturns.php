@@ -5,6 +5,7 @@
     <title>Assignment Submission</title>
 </head>
 <body>
+<?php include_once("nav-user.html"); ?>
     <?php
         $li = false;
         session_start();
@@ -23,9 +24,9 @@
                     echo "Grade: ".$row['Grade']." - ";
                     echo "Comments: ".$row ['Comments']." - Corrected by: ".$row['AssistantID']."<br><br>";
                     ?>
-                        <embed src="<?php echo $row['WorkFile'];?>" height = 400 width= 600><hr>
+                        <embed src="https://localhost/TCD/<?php echo $row['WorkFile'];?>" height = 400 width= 600><hr>
                     <?php
-                }//https://localhost/TCD/
+                }
             } else {
                 echo "No Assignments yet";
             }

@@ -16,10 +16,11 @@
         $a = $_SESSION['assistant'];
         $opensql = "SELECT * FROM work WHERE `WorkID` = '$wid'";
         $res = mysqli_query($db, $opensql);
+    
         if(mysqli_num_rows($res)>0){
             while ($work = mysqli_fetch_assoc($res)){
             ?>
-                <embed src="https://localhost/TCD/<?php echo $work['WorkFile'];?>" height = 400 width= 600>
+                <embed src="./PdfEditor/index.php?workFile=<?php echo $_GET["workFile"]?>" style="height: 85%;width: 90%;">
                 <form method="POST" enctype="multipart/form-data">
                     Comments: <input type="text" name="comments">
                     Grade: <input type="number" name="grade">
@@ -32,13 +33,13 @@
                 $comments = $_POST['comments'];
                 $updatesql = "UPDATE `work` SET `Grade`='$grade', `Comments`='$comments', `AssistantID`='$a', `Corrected`=1 WHERE `WorkID` = '$wid'";
                 if(!mysqli_query($db, $updatesql)){
-                    echo "<br><h2> NotReturned :(</h2>";
+                    echo "<div class='pop-up'>Not Returned</div>";
                 } else {
-                    echo "<br><h2>Returned</h2>";
+                    echo "<div class='pop-up'>Returned</div>";
                 }
             }
         } else {
-            echo "File not found";
+            echo "<div class='pop-up'>File not found</div>";
         }
     }else{
             echo "Access Denied";

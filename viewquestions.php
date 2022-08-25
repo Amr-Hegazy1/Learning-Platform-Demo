@@ -5,7 +5,9 @@
     <title>View Questions</title>
 </head>
 <body>
+<?php include_once("nav-user.html"); ?>
 <?php
+    
     $li = false;
     session_start();
     if(isset($_SESSION['loggedin'])){
@@ -31,7 +33,7 @@
                 echo "<br>";           
             }
         } else {
-            echo "Empty";
+            echo "<div class='pop-up'>Empty</div>";
         }
     }else{
         echo "Access denied";

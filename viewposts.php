@@ -3,9 +3,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
     <?php
+        include_once("nav-user.html");
         $li = false;
         session_start();
         if(isset($_SESSION['loggedin'])){
@@ -33,7 +36,7 @@
                     echo "<br>";            
                 }
             } else {
-                echo "No Posts yet";
+                echo "<div class='pop-up'>No posts yet</div>";
             }
         }else{
             echo "Access denied";

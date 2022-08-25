@@ -5,6 +5,7 @@
     <title>View Videos</title>
 </head>
 <body>
+    <?php include_once("nav-user.html"); ?>
     <?php
         $li = false;
         session_start();
@@ -23,7 +24,7 @@
                 <?php            
                 }
             } else {
-                echo "No Videos Yet";
+                echo "<div class='pop-up'>No videos yet</div>";
             }
         }else{
             echo "Access Denied";
