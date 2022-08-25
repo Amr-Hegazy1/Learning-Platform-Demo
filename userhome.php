@@ -6,6 +6,7 @@
 </head>
 <body>
     <?php
+        include_once("nav-user.html");
         include "configusers.php";
         $loggedin = false;
         if(isset($_POST['loginsubmit'])){
@@ -22,12 +23,12 @@
                 echo "<br>";
                 $loggedin = true;
                 $_SESSION['loggedin']=$loggedin;
-                echo '<a href="http://localhost/TCD/view.php">Stream</a><br>';
-                echo '<a href="http://localhost/TCD/submitassignment.php">Assignments</a><br>';
-                echo '<a href="http://localhost/TCD/viewposts.php/">Posts</a><br>';
-                echo '<a href="http://localhost/TCD/askquestion.php/">Ask Questions</a><br>';
-                echo '<a href="http://localhost/TCD/viewquestions.php/">View Questions</a><br>';
-                echo '<a href="http://localhost/TCD/viewreturns.php/">View Returns</a><br>';
+                echo '<a href="view.php">Stream</a><br>';
+                echo '<a href="submitassignment.php">Assignments</a><br>';
+                echo '<a href="viewposts.php/">Posts</a><br>';
+                echo '<a href="askquestion.php">Ask Questions</a><br>';
+                echo '<a href="viewquestions.php/">View Questions</a><br>';
+                echo '<a href="viewreturns.php/">View Returns</a><br>';
                 echo '<hr>';
                 ?>
                 <video width="640" height="400" src = "http://localhost/TCD/videos/orientation.mp4" controls></video><br>';

@@ -5,7 +5,9 @@
     <title>Assistant Home</title>
 </head>
 <body>
+    
     <?php
+        include_once("nav-assistant.html");
         include "configusers.php";
         $loggedin = false;
         if(isset($_POST['loginsubmit'])){
@@ -21,9 +23,9 @@
             if(password_verify($p, $row['AssistantPassword'])){
                 $loggedin = true;
                 $_SESSION['assistantloggedin'] = $loggedin;
-                echo '<a href="http://localhost/TCD/viewwork.php"> Start Correcting!</a><br>';
-                echo '<a href="http://localhost/TCD/answerquestions.php"> Answer Questions!</a><br>';
-                echo '<a href="http://localhost/TCD/changemyanswer.php"> Change or Delete my Answers</a><br>';
+                echo '<a href="./viewwork.php"> Start Correcting!</a><br>';
+                echo '<a href="./answerquestions.php"> Answer Questions!</a><br>';
+                echo '<a href="./changemyanswer.php"> Change or Delete my Answers</a><br>';
 
             }else {
                 $_SESSION['assistantloggedin'] = $loggedin;

@@ -1,3 +1,4 @@
+<?php include_once("nav-user.html"); ?>
 <?php
     include "configusers.php";
     $li = false;
@@ -15,9 +16,9 @@
             $question = $_POST['question'];
             $asksql = "INSERT INTO questions(`User`, `Question`)VALUES('$user', '$question')";
             if(!mysqli_query($db, $asksql)){
-                echo "<br><h2>Error :(</h2>";
+                echo "<div class='pop-up'>Error :(/div>";
             } else {
-                echo "<br><h2>Question Submitted</h2>";
+                echo "<div class='pop-up'>Question Submitted/div>";
             }
         }
     }else{

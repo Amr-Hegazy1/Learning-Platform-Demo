@@ -46,19 +46,18 @@
                 }
                 $out .="</tr>";
             }
-
-            $out .="</tbody></table>";
+            $out .="</tbody>";
 
             echo "$out";
             displayAssignmentDetails($db);
-            if(isset($_POST["export"])){
-                header('Content-Type: application/xls');
-                header('Content-Disposition: attachment; filename=report.xls');
-            }
 
 
             $a1 = array("UserID");
             $arrup = array_merge($a1, $arr);
+            if(isset($_POST["export"])){
+                header('Content-Type: application/xls');
+                header('Content-Disposition: attachment; filename=report.xls');
+            }
 
 
         }else{echo "Access Denied";}

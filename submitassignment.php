@@ -2,9 +2,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Assignment Submission</title>
 </head>
 <body>
+    <?php include_once("nav-user.html"); ?>
     <?php
         $li = false;
         session_start();
@@ -13,19 +15,52 @@
         if($li){
             include "configusers.php";
             $getavas = $db->query("SELECT * FROM assignments"); //Get available assignments?>
-            <form method="POST" enctype="multipart/form-data">
-                Assignment ID: <select name='id' id='id'>
-                <?php 
-                    while($rows = $getavas->fetch_assoc()){
-                        $thisid = $rows['AssignmentID'];
-                        $thisdesc = $rows['Description'];
-                        $thisdd = $rows['DueDate'];
-                        echo "<option value='$thisid'>$thisid : $thisdesc : $thisdd</option>";
-                    }
-                ?>   
-                <input type="file" name="work"><br><br>
-                <input type="submit" name="submit" value="Submit">
-            </form>
+            
+            <div class="container center">
+                    <div class="segment">
+                    <h1 class="title">Post</h1>
+                    <div class="line"></div>
+                    <form method="POST" enctype="multipart/form-data">
+                        <select name='id' id='id' hidden="hidden">
+                        <?php
+                            while($rows = $getavas->fetch_assoc()){
+                                $thisid = $rows['AssignmentID'];
+                                $thisdesc = $rows['Description'];
+                                $thisdd = $rows['DueDate'];
+                                echo "<option value='$thisid'>$thisid : $thisdesc : $thisdd</option>";
+                            }
+                        ?>   
+                        </select>
+                <div class="drop-down" id="drop-down">
+                    <div class="name" id="assign-drop">Assignment ID : <span id="selected-drop"></span></div>
+                    <div id="drop-button">▼</div>
+                </div>
+                <div class="options-cont" id="options">
+                    <ul>
+                        <?php
+                        $getavas = $db->query("SELECT * FROM assignments");
+                        while($rows = $getavas->fetch_assoc()){
+                            $thisid = $rows['AssignmentID'];
+                            $thisdesc = $rows['Description'];
+                            $thisdd = $rows['DueDate'];
+                                echo "<li class='option'>$thisid</li>";
+                            }
+                        ?>   
+
+                    </ul>
+                </div>
+                <div id="exit-drop" class="close"></div>
+
+                        <div class="name" id="submit-attachment">Attachments</div>
+                        <input type="file" id="file-button"required name="work" class="file-input" hidden="hidden">
+                        <label for="file-button" class="choose-file">
+                            Choose File :<span id="file-text">No File Chosen</span>
+                        </label>
+                        <span></span>
+                        <input type="submit" name="submit" value="Submit" class="submit">
+                        </form>
+                    </div>
+            </div>
     <?php
         $username = $_SESSION['username'];
         if(isset($_POST['submit'])){
@@ -50,18 +85,18 @@
                 $submitdate = date("Y-m-d H:i:s");
                 if($submitdate >= $duedate){
                     $latebit = 1;
-                    echo "You submitted late :(";
+                    echo "<div class='pop-up'>You submitted late :(</div>";
                 } else {
                     $latebit = 0;
-                    echo "You submitted on time (:";
+                    echo "<div class='pop-up'>You submitted on time</div>";
                 }
                 $insertworksql = "INSERT INTO `work`(`UserID`, `AssignmentID`, `WorkFile`, `Late`)VALUES('$username', '$inputid', '$folder', '$latebit')";
                 if(!mysqli_query($db, $insertworksql)){
-                    echo "<br><h2>Error :(</h2>";
+                    echo "<div class='pop-up'>Error :(</div>";
                 } else {
-                    echo "<br><h2>Submitted</h2>";
+                    echo "<div class='pop-up'>Submitted</div>";
                 }
-            }else{echo "You have already submitted this assignment";}
+            }else{echo "<div class='pop-up'>You have already submitted this assisgnment</div>";}
         }
         $viewassignmentssql = "SELECT * FROM assignments";
         $res = mysqli_query($db, $viewassignmentssql);
@@ -75,7 +110,7 @@
                 echo "<br>";            
             }
         } else {
-            echo "No Assignments yet";
+            echo "<div class='pop-up'>No assignments yet</div>";
         } 
     }else{
         echo "Access Denied";
@@ -87,5 +122,7 @@
         if($n == 1){return true;}else{return false;}; 
     }
     ?>
+    <script src="dropdown.js"></script>
+    <script src="chooseFile.js"></script>
 </body>
 </html>
