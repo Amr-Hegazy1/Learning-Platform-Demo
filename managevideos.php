@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Manager</title>
+    <title>Add Video</title>
 </head>
 <body>
     <?php
@@ -98,20 +98,18 @@
                 $setresult = mysqli_query($db, $sqlset);
                 echo "Change Made! <br>";
             }
-            $out = '<table class="table" border="1"><thead><tr>';
             $viewall = "SELECT * FROM videos;";
             $result = mysqli_query($db, $viewall);
             $resultCheck = mysqli_num_rows($result);
             if($resultCheck>0){
-                $out .="<th>VideoID</th><th>VideoName</th><th>Accessibility</th></tr></thead><tbody>";
+                echo "<h4>VideoID : VideoName : Accessibility</h4>";
                 while ($row = mysqli_fetch_assoc($result)){
                     $accessCheck = $row['Accessebility'];
-                    $out .="<tr><td>".$row['VideoID']."</td>";
-                    $out .="<td>".$row['VideoName']."</td>";
-                    $out .="<td>".checkViewing($accessCheck)."</td></tr>";
+                    echo $row['VideoID']." : ";
+                    echo $row['VideoName']." : ";
+                    echo checkViewing($accessCheck);
+                    echo "<br>";            
                 }
-                $out .="</tbody></table>";
-                echo $out;
             } else {
                 echo "Empty";
             }            

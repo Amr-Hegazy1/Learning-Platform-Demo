@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistants Manager</title>
+    <title>Add Assistant</title>
 </head>
 <body>
 <?php
@@ -37,6 +37,7 @@
     </form>
     <hr>
         <?php
+            include "configusers.php";
             if(isset($_POST['addsubmit'])){
                 $username = $_POST["username"];
                 $pass = $_POST["password"];
@@ -56,19 +57,14 @@
                 } else {
                     echo "<br><h2>Assistant Removed!</h2><br>";}
             }
-            $out = '<table class="table" border="1"><thead><tr>';
-
             $viewassistantssql = "SELECT * FROM assistants";
             $res = mysqli_query($db, $viewassistantssql);
             $resultCheck = mysqli_num_rows($res);
             if($resultCheck>0){
-                $out .="<th>Assistant ID</th><th>Name</th></tr></thead><tbody>";
                 while ($row = mysqli_fetch_assoc($res)){
-                    $out .= "<tr><td>".$row['AssistantID']."</td>";
-                    $out .= "<td>".$row['AssistantUsername']."</td></tr>";
+                    echo $row['AssistantUsername'];
+                    echo "<br>";            
                 }
-                $out .="</tbody></table>";
-                echo $out;
             } else {
                 echo "Empty";
             }

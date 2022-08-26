@@ -2,7 +2,7 @@
  * PDFAnnotate v1.0.1
  * Author: Ravisha Heshan
  */
-
+let redoStack = [];
 var PDFAnnotate = function (container_id, url, options = {}) {
   this.number_of_pages = 0;
   this.pages_rendered = 0;
@@ -23,13 +23,13 @@ var PDFAnnotate = function (container_id, url, options = {}) {
   this.format;
   this.orientation;
   var inst = this;
-
+  
   var loadingTask = pdfjsLib.getDocument(this.url);
   loadingTask.promise.then(
     function (pdf) {
       var scale = options.scale ? options.scale : 1.3;
       inst.number_of_pages = pdf.numPages;
-
+      
       for (var i = 1; i <= pdf.numPages; i++) {
         pdf.getPage(i).then(function (page) {
           if (typeof inst.format === 'undefined' ||
@@ -89,7 +89,8 @@ var PDFAnnotate = function (container_id, url, options = {}) {
           options.onPageUpdated(
             index + 1,
             oldValue,
-            inst.fabricObjectsData[index]
+            inst.fabricObjectsData[index],
+            inst.fabricObjects[inst.active_canvas]
           );
         });
       }
@@ -238,6 +239,32 @@ PDFAnnotate.prototype.deleteSelectedObject = function () {
       inst.fabricObjects[inst.active_canvas].remove(activeObject);
     }
   }
+};
+
+PDFAnnotate.prototype.undo = function (page) {
+  var inst = this;
+  
+  var activeObject = (inst.fabricObjects[page]["_objects"].length > 0)? true:false;
+  if (activeObject) {
+    
+    redoStack.push(inst.fabricObjects[page]["_objects"][inst.fabricObjects[page]["_objects"].length-1]);
+    inst.fabricObjects[page].remove(inst.fabricObjects[page]["_objects"][inst.fabricObjects[page]["_objects"].length-1]);
+    
+  }
+};
+
+PDFAnnotate.prototype.redo = function (page) {
+  var inst = this;
+  var activeObject = (redoStack.length > 0)? true:false;
+  if (activeObject) {
+    
+    inst.fabricObjects[page].add(redoStack.pop());
+    
+  }
+};
+
+PDFAnnotate.prototype.zoom = function (scale) {
+  $("#pdf-container").width = $("#pdf-container").width * scale;
 };
 
 PDFAnnotate.prototype.savePdf = function (fileName) {

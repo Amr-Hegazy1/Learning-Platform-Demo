@@ -58,20 +58,19 @@
                 echo "<br><h2>Post Added!</h2>";
             }
         }
-        $out = '<table class="table" border="1"><thead><tr>';
         $viewpostssql = "SELECT * FROM posts";
         $res = mysqli_query($db, $viewpostssql);
         $resultCheck = mysqli_num_rows($res);
         if($resultCheck>0){
-            echo "<h1>Posts Table</h1><hr>";
-            $out .="<th>Posts ID</th><th>Header</th><th>Description</th></tr></thead><tbody>";
+            echo "    <h1>Posts Table</h1>
+            <hr>
+            <h4> Posts ID : Header : Description </h4>";
             while ($row = mysqli_fetch_assoc($res)){
-                $out .= "<tr><td>".$row['PostID']."</td>";
-                $out .= "<td>".$row['Header']."</td>";
-                $out .= "<td>".$row['Description']."</td></tr>";
+                echo $row['PostID']." : ";
+                echo $row['Header']." : ";
+                echo $row['Description'];
+                echo "<br>";            
             }
-            $out .="</tbody></table>";
-            echo $out;
         } else {
             echo "Empty";
         }

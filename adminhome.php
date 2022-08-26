@@ -21,17 +21,17 @@
                 echo "<h6>Welcome $u</h6><hr>";
                 $loggedin = true;
                 $_SESSION['adminloggedin'] = $loggedin;
-                echo '<a href="http://localhost/TCD/addadmin.php"> Add Admin </a><br>';
-                echo '<a href="http://localhost/TCD/managevideos.php"> Manage Videos </a><br>';
-                echo '<a href="http://localhost/TCD/manageassignments.php"> Manage Assignments </a><br>';
-                echo '<a href="http://localhost/TCD/manageassistants.php"> Manage Assistants </a><br>';
-                echo '<a href="http://localhost/TCD/manageposts.php"> Manage Posts </a><br>';
-                echo '<a href="http://localhost/TCD/managequestions.php"> Manage Questions </a><br>';
-                echo '<a href="http://localhost/TCD/addfreeuser.php"> Add Free User </a><br>';
-                echo '<a href="http://localhost/TCD/adminanswer.php"> Answer Questions </a><br>';
-                echo '<a href="http://localhost/TCD/viewprogress.php"> View Progress </a><br>';
+                echo '<a href="./addadmin.php"> Add Admin </a><br>';
+                echo '<a href="./managevideos.php"> Manage Videos </a><br>';
+                echo '<a href="./manageassignments.php"> Manage Assignments </a><br>';
+                echo '<a href="./manageassistants.php"> Manage Assistants </a><br>';
+                echo '<a href="./manageposts.php"> Manage Posts </a><br>';
+                echo '<a href="./managequestions.php"> Manage Questions </a><br>';
+                echo '<a href="./addfreeuser.php"> Add Free User </a><br>';
+                echo '<a href="./adminanswer.php"> Answer Questions </a><br>';
+                echo '<a href="./viewprogress.php"> View Progress </a><br>';
                 ?>
-                    <video width="640" height="400" src = "http://localhost/TCD/videos/orientation.mp4" controls></video><br>';
+                    <video width="640" height="400" src = "./videos/orientation.mp4" controls></video><br>';
                 <?php
             }else {
                 $loggedin = false;
