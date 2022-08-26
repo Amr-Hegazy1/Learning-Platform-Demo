@@ -2,9 +2,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Post an Assignment</title>
 </head>
 <body>
+
+<?php include_once("nav.html")?>
 <?php
         $ali = false;
         session_start();
@@ -13,36 +16,79 @@
         if($ali == true){
             include "configusers.php";
             $getposts = $db->query("SELECT * FROM posts"); //Get available posts?>
-    <h1>Post</h1>
-    <hr>
-    <form method="POST" enctype="multipart/form-data">
-        Header: <input type='text' name='head' id='head'><br><br> 
-        Description: <input type="text" name="description"><br><br>
-        Attachments: <input type="file" name="attachment"><br><br>
-        <input type="submit" name="postsubmit" value="Submit">
-    </form>
-    <h1>Remove</h1>
-    <hr>
-    <form method="POST" enctype="multipart/form-data">
-        PostID: <select name='id' id='id'>
-        <?php 
+    
+    <div class="container">
+    <div class="segment">
+            <h1 class="title">Post</h1>
+            <div class="line"></div>
+            <form method="POST" enctype="multipart/form-data">
+
+                <div class="name">Header</div>
+                <div class="text-field">
+                    <input type="text" required name="head" id="head" placeholder="Enter Header">
+                    <span></span>
+                </div>
+
+                <div class="name">Description</div>
+                <div class="text-field">
+                    <input type="text" required name="description" placeholder="Enter Description">
+                    <span></span>
+                </div>
+
+                <div class="name">Attachments</div>
+                    <input type="file" id="file-button"required name="attachment" \class="file-input" hidden="hidden">
+                    <label for="file-button" class="choose-file">
+                        Choose File :<span id="file-text">No File Chosen</span>
+                    </label>
+                    <span></span>
+                <input type="submit" name="postsubmit" value="Post" class="submit">
+            </form>
+        </div>
+
+        <div class="segment">
+            <h1 class="title">Remove</h1>
+            <div class="line"></div>
+            <form method="POST" enctype="multipart/form-data">
+           <select name='id' id='id' hidden="hidden">
+            <?php
             while($rows = $getposts->fetch_assoc()){
                 $thisid = $rows['PostID'];
                 $thishead = $rows['Header'];
                 echo "<option value='$thisid'>$thisid : $thishead </option>";
             }
-        ?> 
-        <input type="submit" name="removesubmit" value="Submit">
-    </form>
+        ?>   
+            </select>
+                <div class="drop-down" id="drop-down">
+                    <div class="name" id="assign-drop">Post ID : <span id="selected-drop"></span></div>
+                    <div id="drop-button">▼</div>
+                </div>
+                <div class="options-cont" id="options">
+                    <ul>
+                        <?php
+                        $getposts = $db->query("SELECT * FROM posts");
+                            while($rows = $getposts->fetch_assoc()){
+                                $thisid = $rows['PostID'];
+                                $thishead = $rows['Header'];
+                                echo "<li class='option'>$thisid</li>";
+                            }
+                        ?>   
+
+                    </ul>
+                </div>
+                <div id="exit-drop" class="close"></div>
+                <input type="submit" name="removesubmit" value="Remove" class="submit">
+            </form>
+        </div>
+    </div>
     <?php
         include "configusers.php";
         if(isset($_POST['removesubmit'])){
             $id = $_POST["id"];
             $removepostsql = "DELETE FROM `posts` WHERE(`PostID`= '$id')";
             if(!mysqli_query($db, $removepostsql)){
-                echo "<br><h2>Post not Removed :(</h2><br>";
+                echo "<div class='pop-up'>Post not removed</div>";
             } else {
-                echo "<br><h2>Post Removed!</h2><br>";}
+                echo "<div class='pop-up'>Post removed</div>";}
         }
         if(isset($_POST['postsubmit'])){
             $h = $_POST['head'];
@@ -53,30 +99,34 @@
             move_uploaded_file($tempname, $folder);
             $postsql = "INSERT INTO posts(Header, Description, attachments)VALUES('$h', '$d', '$folder')";
             if(!mysqli_query($db, $postsql)){
-                echo "<br><h2>Post not Added :(</h2>";
+                echo "<div class='pop-up'>Post not added</div>";
             } else {
-                echo "<br><h2>Post Added!</h2>";
+                echo "<div class='pop-up'>Post added</div>";
             }
         }
+        $out = '<table class="table"><thead><tr>';
         $viewpostssql = "SELECT * FROM posts";
         $res = mysqli_query($db, $viewpostssql);
         $resultCheck = mysqli_num_rows($res);
         if($resultCheck>0){
-            echo "    <h1>Posts Table</h1>
-            <hr>
-            <h4> Posts ID : Header : Description </h4>";
+            echo "<h1>Posts Table</h1><hr>";
+            $out .="<th>Posts ID</th><th>Header</th><th>Description</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($res)){
-                echo $row['PostID']." : ";
-                echo $row['Header']." : ";
-                echo $row['Description'];
-                echo "<br>";            
+                $out .= "<tr><td>".$row['PostID']."</td>";
+                $out .= "<td>".$row['Header']."</td>";
+                $out .= "<td>".$row['Description']."</td></tr>";
             }
+            $out .="</tbody></table>";
+            echo $out;
         } else {
-            echo "Empty";
+            echo "<div class='pop-up'>Empty</div>";
         }
     }else{
         echo "Access denied";
     }
         ?>
+
+    <script src="chooseFile.js"></script>
+    <script src="dropdown.js"></script>
 </body>
 </html>

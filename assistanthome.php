@@ -5,7 +5,9 @@
     <title>Assistant Home</title>
 </head>
 <body>
+    
     <?php
+        include_once("nav-assistant.html");
         include "configusers.php";
         $loggedin = false;
         if(isset($_POST['loginsubmit'])){

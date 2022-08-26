@@ -32,14 +32,14 @@
                         $ans = $_POST['answer'];
                         $submitadminanswersql = "UPDATE `questions` SET `TeacherAnswer` = '$ans', `TeacherAnswered` = 1 WHERE `QuestionID` = '$id'";
                         if(!mysqli_query($db, $submitadminanswersql)){
-                            echo "<br><h2>Error :(</h2>";
+                            echo "<div class='pop-up'>Error</div>";
                         } else {
-                            echo "<br><h2>Answer Submitted</h2>";
+                            echo "<div class='pop-up'>Answer Submitted</div>";
                         }
                     }           
                 }
             } else {
-                echo "No Questions Yet";
+                echo "<div class='pop-up'>No Questions Yet</div>";
             }
         }else{
             echo "Access Denied";

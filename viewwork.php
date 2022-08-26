@@ -6,6 +6,7 @@
 </head>
 <body>
     <?php 
+        include_once("nav-assistant.html");
         include "configusers.php";
         echo "<h1>View Students' Work</h1>";
         $li = false;
@@ -46,7 +47,7 @@
                     echo '<a href="./correctingpage.php?workFile='.$work['WorkFile'].'"/> Correct </a><br>';
                 }            
             } else {
-                echo "No Assignments Submitted yet";
+                echo "<div class='pop-up'>No assignments submitted</div>";
             }
         }
         } else {

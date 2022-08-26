@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Assignments</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <?php
@@ -13,20 +14,43 @@
         if($ali == true){
             include "configusers.php";
             $getavas = $db->query("SELECT * FROM assignments"); //Get available assignments
-            ?>
-    <h1>Post</h1>
-    <hr>
-    <form method="POST" enctype="multipart/form-data">
-        Description: <input type='text' name='desc' id='desc'><br><br> 
-        Due date: <input type="text" name="duedate"> Enter in the form yy-mm-dd hh:mm:ss<br><br>
-        Maximum Grade: <input type='number' name='maxgrade'><br><br> 
-        <input type="submit" name="postsubmit" value="Submit">
-    </form>
-    <h1>Remove</h1>
-    <hr>
-    <form method="POST" enctype="multipart/form-data">
-        AssignmentID: <select name='id' id='id'>
-        <?php 
+?>
+
+    <?php include_once("nav.html")?>
+    <div class="container">
+    <div class="segment">
+            <h1 class="title">Post</h1>
+            <div class="line"></div>
+            <form method="POST" enctype="multipart/form-data">
+
+                <div class="name">Description</div>
+                <div class="text-field">
+                    <input type="text" required name="desc" id="desc" placeholder="Enter Description">
+                    <span></span>
+                </div>
+
+                <div class="name">Due Date</div>
+                <div class="text-field">
+                    <input type="text" required name="duedate" placeholder="YY-MM-DD HH-MM-SS">
+                    <span></span>
+                </div>
+
+                <div class="name">Max Grade</div>
+                <div class="text-field">
+                    <input type="text" required name="maxgrade" placeholder="Enter Maximum Grade">
+                    <span></span>
+                </div>
+                <input type="submit" name="postsubmit" value="Post" class="submit">
+            </form>
+        </div>
+
+    
+        <div class="segment">
+            <h1 class="title">Remove</h1>
+            <div class="line"></div>
+            <form method="POST" enctype="multipart/form-data">
+           <select name='id' id='id' hidden="hidden">
+            <?php
             while($rows = $getavas->fetch_assoc()){
                 $thisid = $rows['AssignmentID'];
                 $thisdesc = $rows['Description'];
@@ -34,19 +58,41 @@
                 echo "<option value='$thisid'>$thisid : $thisdesc : $thisdd</option>";
             }
         ?>   
-        <br><br> 
-        <input type="submit" name="removesubmit" value="Remove">
-    </form>
-    <h1>Assignments Table</h1>
+            </select>
+                <div class="drop-down" id="drop-down">
+                    <div class="name" id="assign-drop">Assignment ID : <span id="selected-drop"></span></div>
+                    <div id="drop-button">▼</div>
+                </div>
+                <div class="options-cont" id="options">
+                    <ul>
+                        <?php
+                        $getavas = $db->query("SELECT * FROM assignments");
+                            while($rows = $getavas->fetch_assoc()){
+                                $thisid = $rows['AssignmentID'];
+                                $thisdesc = $rows['Description'];
+                                $thisdd = $rows['DueDate'];
+                                echo "<li class='option'>$thisid</li>";
+                            }
+                        ?>   
+
+                    </ul>
+                </div>
+                <div id="exit-drop" class="close"></div>
+                <input type="submit" name="removesubmit" value="Remove" class="submit">
+            </form>
+        </div>
+    </div>        
+    </div>
+    <h1 class="table-title">Assignments Table</h1>
     <hr>
     <?php
         if(isset($_POST['removesubmit'])){
-            $id = $_POST["id"];
+            $id = $_POST['id'];
             $removeassistantsql = "DELETE FROM `assignments` WHERE(`AssignmentID`= '$id')";
             if(!mysqli_query($db, $removeassistantsql)){
-                echo "<br><h2>Assignment not Removed :(</h2><br>";
+                echo "<div class='pop-up'>Assignment not removed</div>";
             } else {
-                echo "<br><h2>Assignment Removed!</h2><br>";}
+                echo "<div class='pop-up'>Assignment removed</div>";}
         }
         if(isset($_POST['postsubmit'])){
             $d = $_POST['desc'];
@@ -54,9 +100,9 @@
             $mg = $_POST['maxgrade'];
             $postassignmentsql = "INSERT INTO assignments(Description, DueDate, MaxGrade)VALUES('$d', '$dd', '$mg')";
             if(!mysqli_query($db, $postassignmentsql)){
-                echo "<br><h2>Assignment not Added :(</h2>";
+                echo "<div class='pop-up'>Assignment not added</div>";
             } else {
-                echo "<br><h2>Assignment Added!</h2>";
+                echo "<div class='pop-up'>Assignment added</div>";
             }
             $getlastcol = $db->query("SELECT `AssignmentID` FROM `assignments` ORDER BY `AssignmentID` DESC LIMIT 1");
             while($rows = $getlastcol->fetch_assoc()){
@@ -68,21 +114,26 @@
         $viewassignmentssql = "SELECT * FROM assignments";
         $res = mysqli_query($db, $viewassignmentssql);
         $resultCheck = mysqli_num_rows($res);
+        $out = '<div class="table-cont">
+                <table class="table"><thead><tr>';
         if($resultCheck>0){
-            echo "Assignment ID : Description : DueDate : MaxGrade <br>";
+            $out .="<th>Assignment ID</th><th>Description</th><th>Due Date</th><th>Maximum Grade</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($res)){
-                echo $row['AssignmentID']." : ";
-                echo $row['Description']." : ";
-                echo $row['DueDate']." : ";
-                echo $row['MaxGrade'];
-                echo "<br>";            
+                $out .="<tr><td>".$row['AssignmentID']."</td>";
+                $out .= "<td>".$row['Description']."</td>";
+                $out .= "<td>".$row['DueDate']."</td>";
+                $out .= "<td>".$row['MaxGrade']."</td></tr>";
             }
+            $out .="</tbody></table></div>";
+            echo $out;
         } else {
-            echo "Empty";
+            echo "<div class='pop-up'>Empty</div>";
         }
     }else{
         echo "Access denied";
     }
         ?>
+
+        <script src="dropdown.js"></script>
 </body>
 </html>

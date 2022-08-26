@@ -33,13 +33,13 @@
                 $comments = $_POST['comments'];
                 $updatesql = "UPDATE `work` SET `Grade`='$grade', `Comments`='$comments', `AssistantID`='$a', `Corrected`=1 WHERE `WorkID` = '$wid'";
                 if(!mysqli_query($db, $updatesql)){
-                    echo "<br><h2> NotReturned :(</h2>";
+                    echo "<div class='pop-up'>Not Returned</div>";
                 } else {
-                    echo "<br><h2>Returned</h2>";
+                    echo "<div class='pop-up'>Returned</div>";
                 }
             }
         } else {
-            echo "File not found";
+            echo "<div class='pop-up'>File not found</div>";
         }
     }else{
             echo "Access Denied";

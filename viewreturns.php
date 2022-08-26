@@ -5,6 +5,7 @@
     <title>Assignment Submission</title>
 </head>
 <body>
+<?php include_once("nav-user.html"); ?>
     <?php
         $li = false;
         session_start();

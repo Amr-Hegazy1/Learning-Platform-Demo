@@ -3,23 +3,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Free User</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <?php include_once("nav.html") ?>
     <?php
         $ali = false;
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){?>
-    <form method="POST" enctype="multipart/form-data">
-        Add Admin:
-        <br>
-        Enter a Username: <input type="text" name="username"><br><br>
-        Enter a Password: <input type="text" name="password"><br><br>
-        Re-enter a Password: <input type="text" name="repassword"><br><br>  
-        <input type="submit" name="addsubmit" value="Add">
-    </form>
-    <hr>
+
+    <div class="container" id="cont-add-admin">
+        <div class="segment">
+                <h1 class="title">Add User</h1>
+                <div class="line"></div>
+                <form method="POST" enctype="multipart/form-data">
+
+                    <div class="name">Username</div>
+                    <div class="text-field">
+                        <input type="text" required name="username" id="desc" placeholder="Enter Username">
+                        <span></span>
+                    </div>
+
+                    <div class="name">Password</div>
+                    <div class="text-field">
+                        <input type="password" required name="password" placeholder="Enter Password">
+                        <span></span>
+                    </div>
+
+                    <div class="name">Confirm Password</div>
+                    <div class="text-field">
+                        <input type="password" required name="repassword" placeholder="Re-enter Password">
+                        <span></span>
+                    </div>
+                    <input type="submit" name="addsubmit" value="Add" class="submit">
+                </form>
+        </div>
+    </div>
     <?php
             include "configusers.php";
             if(isset($_POST['addsubmit'])){
@@ -32,11 +53,11 @@
                         $addassistantsql = "INSERT INTO `users`(`Username`,`Password`)VALUES('$username', '$hashedpass')";
                         $addtoprogress = $db->query("INSERT INTO `progress` (`UserID`)VALUES('$username')");
                         if(!mysqli_query($db, $addassistantsql)){
-                            echo "<br><h2>User not Added :(</h2><br>";
+                            echo "<div class='pop-up'>User not added</div>";
                         } else {
-                            echo "<br><h2>User Added!</h2><br>";}
-                    } else {echo "Passwords don't match";}
-                } else {echo "Username already taken, choose another one please";}
+                            echo "<div class='pop-up'>User added</div>";}
+                    } else {echo "<div class='pop-up'>Passwords dont match</div>";}
+                } else {echo "<div class='pop-up'>Username already taken, choose another one please</div>";}
             }
         }else{
             echo "Access denied";
