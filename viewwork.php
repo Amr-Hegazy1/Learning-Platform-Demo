@@ -3,12 +3,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Student Work</title>
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
     <?php 
         include_once("nav-assistant.html");
         include "configusers.php";
-        echo "<h1>View Students' Work</h1>";
+        echo "<h1>View Students' Work</h1><hr>";
         $li = false;
         session_start();
         $a = $_SESSION['assistant'];
@@ -26,8 +28,8 @@
                 $thisid = $rows['AssignmentID'];
                 echo "<option value='$thisid'> Assignment $thisid</option>";
             }
-        ?> 
-            <input type="submit" name='submit' value="Submit" id='submit'>
+        ?> </select>
+            <input type="submit" name='submit' value="Select" id='submit'>
         </form>
     <?php
         if(isset($_POST['submit'])){
@@ -44,14 +46,15 @@
                     $late = lateCheck($work['Late']);
                     echo "$late  :  ";
                     $grade = $work['Grade'];
-                    echo '<a href="./correctingpage.php?workFile='.$work['WorkFile'].'"/> Correct </a><br>';
-                }            
+                    echo '<a href="./correctingpage.php?workFile='.$work['WorkFile'].'"/> Correct </a><br>';                }            
             } else {
-                echo "<div class='pop-up'>No assignments submitted</div>";
+                echo "No Assignments Submitted yet";
             }
         }
         } else {
-            echo "Access Denied";
+                        echo "Access denied<br>";
+            echo '<a href="signin.php">Go Home</a><br>';;
+            echo '<br><a href="signin.php">Log in</a>';
         }
         function lateCheck($x){
             if($x == 0){

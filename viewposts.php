@@ -4,9 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav-style.css">
+
 </head>
 <body>
-    
     <?php
         include_once("nav-user.html");
         $li = false;
@@ -14,6 +15,7 @@
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
+            echo "<h1>Posts</h1><hr>";
             include "configusers.php";
             $viewpostssql = "SELECT * FROM posts ORDER BY PostID DESC";
             $res = mysqli_query($db, $viewpostssql);
@@ -28,20 +30,16 @@
                         echo "No attachments"."<br>";
                     }
                      else {
-                        ?>
-                            <embed src="https://localhost/TCD/<?php echo $row['attachments'];?>" height = 400 width= 600>
-                        <?php
-                        echo "<br><br>";
+                        echo '<a href="https://localhost/TCD/'.$row['attachments'].'">View</a><br>';
                      }
-                    echo "<br>";            
                 }
             } else {
                 echo "<div class='pop-up'>No posts yet</div>";
             }
         }else{
-            echo "Access denied";
+            echo "Access denied<br>";
+            echo '<a href="signin.php">Go Home</a><br>';;
         }
-        /*"localhost/TCD/<?php echo $row['attachments'];?>" */
     ?>
 </body>
 </html>

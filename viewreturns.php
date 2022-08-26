@@ -2,10 +2,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Submission</title>
+    <title>View Returns</title>
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-<?php include_once("nav-user.html"); ?>
+    <?php include_once("nav-user.html"); ?>
     <?php
         $li = false;
         session_start();
@@ -20,15 +22,13 @@
             if($resultCheck>0){
                 echo "<h4>Assignments Returned</h4>";
                 while ($row = mysqli_fetch_assoc($res)){
-                    echo "AssignmentID: ".$row['AssignmentID']." - ";
+                    echo "Assignment ID: ".$row['AssignmentID']." - ";
                     echo "Grade: ".$row['Grade']." - ";
-                    echo "Comments: ".$row ['Comments']." - Corrected by: ".$row['AssistantID']."<br><br>";
-                    ?>
-                        <embed src="https://localhost/TCD/<?php echo $row['WorkFile'];?>" height = 400 width= 600><hr>
-                    <?php
+                    echo "Comments: ".$row ['Comments']." - Corrected by: ".$row['AssistantID']." - ";
+                    echo '<a href="https://localhost/TCD/'.changeName($row['WorkFile']).'">View</a>.<br><br>';
                 }
             } else {
-                echo "No Assignments yet";
+                echo "No Assignments returned yet";
             }
             $respondsql = "SELECT * FROM questions WHERE `User` = '$u' AND (`Answered` = 1 OR `TeacherAnswered` = 1) ORDER BY `QuestionID` DESC";
             $qres = mysqli_query($db, $respondsql);
@@ -50,7 +50,13 @@
                 }
             }
         }else{
-            echo "Access Denied";
+                        echo "Access denied<br>";
+            echo '<a href="signin.php">Go Home</a><br>';;
+        }
+        function changeName($n){
+            $return = "returns".substr($n,4);
+            echo $return;
+            return $return;
         }
     ?>
 </body>

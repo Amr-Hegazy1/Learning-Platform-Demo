@@ -2,12 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts Manager</title>
     <link rel="stylesheet" href="styles.css">
-    <title>Post an Assignment</title>
+
 </head>
 <body>
+<?php include_once("nav.html") ?>
 
-<?php include_once("nav.html")?>
 <?php
         $ali = false;
         session_start();
@@ -16,7 +17,6 @@
         if($ali == true){
             include "configusers.php";
             $getposts = $db->query("SELECT * FROM posts"); //Get available posts?>
-    
     <div class="container">
     <div class="segment">
             <h1 class="title">Post</h1>
@@ -50,13 +50,13 @@
             <div class="line"></div>
             <form method="POST" enctype="multipart/form-data">
            <select name='id' id='id' hidden="hidden">
-            <?php
+            <?php 
             while($rows = $getposts->fetch_assoc()){
                 $thisid = $rows['PostID'];
                 $thishead = $rows['Header'];
                 echo "<option value='$thisid'>$thisid : $thishead </option>";
             }
-        ?>   
+            ?>   
             </select>
                 <div class="drop-down" id="drop-down">
                     <div class="name" id="assign-drop">Post ID : <span id="selected-drop"></span></div>
@@ -81,14 +81,14 @@
         </div>
     </div>
     <?php
-        include "configusers.php";
         if(isset($_POST['removesubmit'])){
             $id = $_POST["id"];
             $removepostsql = "DELETE FROM `posts` WHERE(`PostID`= '$id')";
             if(!mysqli_query($db, $removepostsql)){
                 echo "<div class='pop-up'>Post not removed</div>";
             } else {
-                echo "<div class='pop-up'>Post removed</div>";}
+                echo "<div class='pop-up'>Post removed</div>";
+            }
         }
         if(isset($_POST['postsubmit'])){
             $h = $_POST['head'];
@@ -96,13 +96,19 @@
             $filename = $_FILES["attachment"]["name"];
             $tempname = $_FILES["attachment"]["tmp_name"];
             $folder = "attachments/" . $filename;
-            move_uploaded_file($tempname, $folder);
-            $postsql = "INSERT INTO posts(Header, Description, attachments)VALUES('$h', '$d', '$folder')";
-            if(!mysqli_query($db, $postsql)){
-                echo "<div class='pop-up'>Post not added</div>";
-            } else {
-                echo "<div class='pop-up'>Post added</div>";
-            }
+            if(validName($h)){
+                if(validName($d)){
+                    if(validType($filename)){
+                        move_uploaded_file($tempname, $folder);
+                        $postsql = "INSERT INTO posts(Header, Description, attachments)VALUES('$h', '$d', '$folder')";
+                        if(!mysqli_query($db, $postsql)){
+                            echo "<div class='pop-up'>Post not added</div>";
+                        } else {
+                            echo "<div class='pop-up'>Post added</div>";
+                        }
+                    } else {echo "<div class='pop-up'>Invalid file type. Valid file types are: pdf, jpg, png, jpeg, pptx</div>";}
+                } else {echo "<div class='pop-up'>Description is empty</div>";}
+            } else {echo "<div class='pop-up'>Header is empty</div>";}
         }
         $out = '<table class="table"><thead><tr>';
         $viewpostssql = "SELECT * FROM posts";
@@ -122,10 +128,27 @@
             echo "<div class='pop-up'>Empty</div>";
         }
     }else{
-        echo "Access denied";
+            echo "Access denied<br>";
+            echo '<a href="signin.php">Go Home</a><br>';;
     }
-        ?>
 
+    function validName($name){
+        if(strlen($name)>0){
+            return true;
+        }
+        return false;
+    }
+
+    function validType($filename){
+        $allowed = array('pdf', 'jpg', 'png', 'jpeg', 'pptx');
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        if (!in_array($ext, $allowed)) {
+            return false;
+        }
+        return true;
+    }
+
+        ?>
     <script src="chooseFile.js"></script>
     <script src="dropdown.js"></script>
 </body>
