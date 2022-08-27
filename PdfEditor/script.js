@@ -11,6 +11,7 @@ let redoPageStack = [];
 	
 let zoom = 1;
 
+let originalHeight = 0;
 
   
 pdf = new PDFAnnotate('pdf-container',"../PdfEditor/fetch_pdf.php?workFile="+workFile , {
@@ -24,6 +25,7 @@ pdf = new PDFAnnotate('pdf-container',"../PdfEditor/fetch_pdf.php?workFile="+wor
     pdf.loadFromJSON(sampleOutput);
     $("#pdf-editor").show();
     $("body").css({"background-color":"rgb(82, 86, 89)"});
+    originalHeight =  $("#pdf-container").height();
     
   },
   scale: 1.5,
@@ -123,18 +125,27 @@ function showPdfData() {
 
 function zoomIn(){
   zoom += 0.25;
-  if(zoom > 0)
+  if(zoom > 0){
     $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
+    $("#pdf-container").height(originalHeight);
+    $("#pdf-editor").height(originalHeight);
+  }
 }
 
 function zoomOut(){
   zoom -= 0.25;
-  if(zoom > 0)
+  if(zoom > 0 && zoom < 1){
     $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
-    
-
-
-
+    $("#pdf-container").height(originalHeight*zoom);
+    $("#pdf-editor").height(originalHeight*zoom);
+  }else if(zoom >= 1){
+    $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
+    $("#pdf-container").height(originalHeight);
+    $("#pdf-editor").height(originalHeight);
+  }
+  if (zoom < 0)
+    zoom = 0.25;
+  
 }
 
 $(function () {
