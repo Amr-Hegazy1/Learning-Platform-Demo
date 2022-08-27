@@ -124,14 +124,16 @@ function showPdfData() {
 function zoomIn(){
   zoom += 0.25;
   if(zoom > 0)
-    $("#pdf-container").css({"zoom": zoom});
+    $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
 }
 
 function zoomOut(){
   zoom -= 0.25;
   if(zoom > 0)
-    $("#pdf-container").css({"zoom": zoom});
-  
+    $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
+    
+
+
 
 }
 
