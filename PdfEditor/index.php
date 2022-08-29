@@ -44,9 +44,11 @@
 		<div class="color-tool">
 			<input type="color" id="color-picker" class="field-radio" onchange="changeColor(this)">
 		</div>
-	
 		<div class="tool">
-			<button class="tool-button active"><i class="fa fa-hand-paper-o" title="Free Hand" onclick="enableSelector(event)"></i></button>
+			<button class="tool-button active"><i class="fa fa-mouse-pointer" aria-hidden="true" onclick="enablePointer(event)"></i></button>
+		</div>
+		<div class="tool">
+			<button class="tool-button"><i class="fa fa-hand-paper-o" title="Free Hand" onclick="enableSelector(event)"></i></button>
 		</div>
 		<div class="tool">
 			<button class="tool-button"><i class="fa fa-pencil" title="Pencil" onclick="enablePencil(event)"></i></button>

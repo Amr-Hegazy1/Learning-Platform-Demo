@@ -26,8 +26,7 @@ pdf = new PDFAnnotate('pdf-container',"../PdfEditor/fetch_pdf.php?workFile="+wor
     $("#pdf-editor").show();
     $("body").css({"background-color":"rgb(82, 86, 89)"});
     originalHeight =  $("#pdf-container").height();
-    pdf.enableSelector();
-    
+    pdf.enablePointer();
   },
   scale: 1.5,
   pageImageCompression: 'FAST', // FAST, MEDIUM, SLOW(Helps to control the new PDF file size)
@@ -51,7 +50,11 @@ function enableSelector(event) {
   pdf.enableSelector();
 }
 
-
+function enablePointer(event) {
+  event.preventDefault();
+  changeActiveTool(event);
+  pdf.enablePointer();
+}
 
 function enablePencil(event) {
   event.preventDefault();
@@ -91,13 +94,15 @@ function deleteSelectedObject(event) {
   pdf.deleteSelectedObject();
 }
 
-function undo(event,page) {
+function undo(event) {
   event.preventDefault();
-  pdf.undo(page);
+  var undone = undoStack.pop();
+  redoPageStack.push(undone);
+  pdf.undo(undone);
 }
 function redo(event,page) {
   event.preventDefault();
-  pdf.redo(page);
+  pdf.redo(redoPageStack.pop());
 }
 
 
@@ -175,12 +180,11 @@ document.onkeydown = function (e) {
 
   
     if( e.which === 90 && (e.ctrlKey || e.metaKey) && e.shiftKey ){
-      redo(e,redoPageStack.pop()); 
+      redo(e); 
    }
    else if( e.which === 90 && (e.ctrlKey || e.metaKey) ){
-      var undone = undoStack.pop();
-      redoPageStack.push(undone);
-      undo(e,undone); 
+      
+      undo(e); 
    }          
   
 

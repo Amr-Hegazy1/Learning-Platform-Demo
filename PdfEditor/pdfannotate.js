@@ -149,7 +149,24 @@ PDFAnnotate.prototype.enableSelector = function () {
     $.each(inst.fabricObjects, function (index, fabricObj) {
       fabricObj.isDrawingMode = false;
       fabricObj.selection = true;
+    });
+
+    var canvasContainers = document.getElementsByClassName("canvas-container");
+    for(var i = 0;i<canvasContainers.length;i++){
+      canvasContainers[i].style.pointerEvents = "";
+    }
+  }
+};
+
+PDFAnnotate.prototype.enablePointer = function () {
+  var inst = this;
+  inst.active_tool = 0;
+  if (inst.fabricObjects.length > 0) {
+    $.each(inst.fabricObjects, function (index, fabricObj) {
+      fabricObj.isDrawingMode = false;
+      fabricObj.selection = false;
       fabricObj.allowTouchScrolling = true;
+      
     });
 
     var canvasContainers = document.getElementsByClassName("canvas-container");
@@ -159,11 +176,10 @@ PDFAnnotate.prototype.enableSelector = function () {
   }
 };
 
-
-
 PDFAnnotate.prototype.enablePencil = function () {
   var inst = this;
   inst.active_tool = 1;
+  this.enableSelector();
   if (inst.fabricObjects.length > 0) {
     $.each(inst.fabricObjects, function (index, fabricObj) {
       fabricObj.isDrawingMode = true;
