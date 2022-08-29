@@ -33,6 +33,75 @@ overflow-x: hidden;
     justify-content: center;
 }
 
+#signin-cont{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+#signin-seg{
+    width: 80vw;
+    height: 62vh;
+    max-width: 600px;
+}
+
+#signin-seg .title{
+    font-size: 1.8rem;
+}
+
+#signin-seg .name{
+    font-size: 1.3rem;
+}
+
+#signin-seg .text-field{
+    height: 44px;
+}
+
+#signin-seg .text-field input{
+    font-size: 1rem;
+    margin-top: 0.7em;
+}
+
+#signin-seg .text-field input::placeholder{
+    font-size: 1rem;
+}
+
+#signin-seg .name{
+    margin-top: 0.6em;
+}
+
+#signin-seg .submit{
+    font-size: 1.1rem;
+}
+
+#signin-seg .bottom-name{
+    margin-top: 1.4em;
+}
+
+#signin-seg .text-field span::before{
+    top: 42px;
+}
+
+#signup-dir{
+    color: #adadad;
+    font-size: 1rem;
+    margin-top: 1.7em;
+    text-decoration: none;
+}
+
+#signup-dir a{
+    color: white;
+    margin-left: 0.3em;
+    text-decoration: none;
+}
+
+#signup-dir a:hover{
+    text-decoration: underline;
+}
+
 #login-seg{
     width: 400px;
     height: 300px;
@@ -54,12 +123,16 @@ overflow-x: hidden;
     font-size: 1.3em;
 }
 
+.vid-cont{
+    position: relative;
+    height: 500px;
+}
+
 video {
     left: 50%;
+    top:50%;
     position: absolute;
-    top: 50%;
     transform: translate(-50%, -50%);
-    margin-top: 4em;
 }
 
 .segment{
@@ -74,8 +147,13 @@ video {
     box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
 }
 
+.single-seg{
+    width: 65vw;
+    min-width: 300px;
+}
+
 .add-video-segment{
-    height: 380px;
+    height: 400px;
 }
 
 .title{
@@ -108,7 +186,7 @@ form{
     width: 100%;
     height: 25px;
     padding: 0 1px;
-    font-size: 16px;
+    font-size: 0.8rem;
     border:none;
     background:none;
     outline: none;
@@ -220,7 +298,7 @@ input:focus::placeholder {
 .options-cont{
     position: absolute;
     height: 0;
-    top: 112px;
+    top:112px;
     width: 40px;
     right:1.5em;
     background-color: white;
@@ -228,6 +306,10 @@ input:focus::placeholder {
     border-radius: 5px;
     overflow-y: auto;
     z-index: 701; /*More than exit options*/;
+}
+
+.remove-ans-wrapped,.change-acc-warpped,.change-ans-wrapped{
+    top: 148px;
 }
 
 #drop-button:hover{
@@ -258,11 +340,11 @@ input:focus::placeholder {
 }
 
 .drop-down-avai{
-    margin-top: 1.5em;
+    margin-top: 1.2em;
 }
 
 .avai-options{
-    top: 315px;
+    top: 327px;
     width: 100px;
 }
 
@@ -281,9 +363,6 @@ input:focus::placeholder {
     border-radius: 10px;
     min-height: 150px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-input[type="file"]{
 }
 
 .table-cont{
@@ -327,7 +406,9 @@ input[type="file"]{
 }
 
 .all-quest{
-    margin-top: 2em;
+    padding:0.8em 0;
+    height: 90vh;
+    overflow-y: auto;
 }
 
 .qa-cont{
@@ -345,14 +426,93 @@ input[type="file"]{
     height: 250px;
 }
 
-.qa-change .name{
+.post-cont{
+    padding: 1em 0;
+    height: auto;
+}
+
+
+.view-cont{
+    margin: 4em auto 1em auto;
+    text-align:center;
+}
+
+.center-header{
+    font-size: 2.5rem;
+    margin-top: 0.6em;
+    text-align: center;
+}
+
+.post-title{
+    text-align: center;
+}
+
+.post-desc{
+    text-align: center;
+    margin: 1em 2em;
+
+}
+
+.post-cont a{
+    color: var(--primary-color);
+    text-decoration: none;
+    border: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 0.7em 3em;
+    background-color: white;
+    cursor: pointer;
+}
+.post-cont a:hover{
+    padding:0.9em 4em;
+    transition: 0.5s;
+}
+.qa-change .name,.ask-quest-cont .name{
     font-size: 1.1rem;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.2em;
 }
 
 .qa-change .question{
     font-size: 1.3rem;
 }
+
+.all-assign{
+    width: 100vw;
+
+}
+
+.assignment-correct{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    width: 80vw;
+}
+
+.assignment-correct a{
+    color: var(--primary-color);
+    border: none;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 0.7em 3em;
+    background-color: white;
+    cursor: pointer;
+}
+
+.assignment-correct a{
+    font-family: "Poppins";
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.assignment-correct a:hover{
+    padding:0.8em 3.3em;
+    transition: 0.5s;
+}
+
+
 
 .pop-up{
     font-size: 1.5rem;
@@ -387,6 +547,16 @@ input[type="file"]{
     font-size: 1em;
     font-weight: bold;
     margin-bottom: 1.5em;
+    margin-top: 0.3em;
+}
+
+.ask-quest-cont{
+    margin-top: 2em;
+    height: 190px;
+}
+
+.ask-quest-cont .submit{
+    font-size: 0.9em;
 }
 
 .answer-teacher{
@@ -407,7 +577,7 @@ input[type="file"]{
     border-radius: 0 10px 0 0;
 }
 
-.table::-webkit-scrollbar,.table-cont::-webkit-scrollbar{
+.table::-webkit-scrollbar,.table-cont::-webkit-scrollbar,.all-quest::-webkit-scrollbar{
     height: 8px;
     width:8px;
 }
@@ -418,14 +588,41 @@ input[type="file"]{
 }
 
 /* Track */
-.table::-webkit-scrollbar-track,.table-cont::-webkit-scrollbar-track,.options-cont::-webkit-scrollbar-track  {
-    background:transparent
+.table::-webkit-scrollbar-track,.table-cont::-webkit-scrollbar-track,.options-cont::-webkit-scrollbar-track,.all-quest::-webkit-scrollbar-track{
+    background:transparent;
 }
 
 /* Handle */
-.table::-webkit-scrollbar-thumb,.table-cont::-webkit-scrollbar-thumb,.options-cont::-webkit-scrollbar-thumb{
+.table::-webkit-scrollbar-thumb,.table-cont::-webkit-scrollbar-thumb,.options-cont::-webkit-scrollbar-thumb,.all-quest::-webkit-scrollbar-thumb{
     background-color:#c2c2c2;
     border-radius: 10px;
+}
+
+@media screen and (min-width: 440px){
+    .add-video-segment{
+        height: 380px;
+    }
+    .avai-options-wrapped{
+        top: 312px;
+    }
+}
+
+@media screen and (min-width: 443px){
+    .remove-ans-wrapped{
+        top: 112px;
+    }
+}
+
+@media screen and (min-width: 465px){
+    .change-ans-wrapped{
+        top: 112px;
+    }
+}
+
+@media screen and (min-width: 565px){
+    .change-acc-warpped{
+        top: 112px;
+    }
 }
 
 @media screen and (min-width: 600px){
@@ -446,12 +643,16 @@ input[type="file"]{
         font-size: 1.1em;
     }
 
-    .drop-down .name{
-        font-size: 1.1em;
+    #assign-drop{
+        font-size: 1em;
     }
 
-    #assign-drop{
-        font-size: 1.1em;
+    .choose-file{
+        font-size: 0.9rem;
+    }
+
+    .add-video-segment {
+        height: 470px;
     }
 
     .text-field input{
@@ -471,8 +672,35 @@ input[type="file"]{
         font-size: 1em;
     }
 
-
     .options-cont{
-        top: 132px;
+        top: 130px;
+    }
+
+    .change-acc-warpped{
+        top: 174px;
+    }
+
+    .add-video-segment #options1{
+        top: 394px;
+        overflow-y: hidden;
+    }
+
+    #signin-seg .text-field input{
+        height: 25px;
+    }
+    #signin-seg .text-field{
+        height: 44px;
+    }
+    #signin-seg .text-field span::before{
+        top: 42px;
+    }
+    .text-field input{
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 676px){
+    .change-acc-warpped{
+        top: 130px;
     }
 }

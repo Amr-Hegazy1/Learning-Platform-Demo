@@ -46,7 +46,6 @@ dropDownEl2.addEventListener("click",()=>{
 })
 
 dropDownEl3.addEventListener("click",()=>{
-    console.log('done');
     currentDropOptionsEl = dropDownOptionsEl3
     exitDropEl.classList.toggle("close")
     dropDownOptionsEl3.classList.toggle("open-options")
@@ -59,7 +58,6 @@ for(let i=0;i<optionsArrayEl.length;i++){
         if(optionsArrayEl[i].innerHTML=="Available"){
             realDropdownEl.value = "1"
         }else{
-            console.log("enters second");
             realDropdownEl.value = "0"
         }
         dropDownOptionsEl.classList.toggle("avai-options-open")
@@ -81,6 +79,5 @@ for(let i=0;i<optionsArrayEl3.length;i++){
         selectedDropEl3.innerHTML = optionsArrayEl3[i].innerHTML
         realDropdownEl3.value = optionsArrayEl3[i].innerHTML
         dropDownOptionsEl3.classList.toggle("open-options")
-        console.log(realDropdownEl3.value);
     })
 }
