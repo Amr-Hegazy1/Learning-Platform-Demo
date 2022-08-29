@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="./styles.css">
 	<link rel="stylesheet" href="./pdfannotate.css">
 </head>
-<body>
+<body onload="init()" style="touch-action:pan-y">
 <div style="text-align: center">
 	<div class="spinner-border" role="status">
 		<span class="visually-hidden">Loading...</span>
@@ -44,6 +44,7 @@
 		<div class="color-tool">
 			<input type="color" id="color-picker" class="field-radio" onchange="changeColor(this)">
 		</div>
+	
 		<div class="tool">
 			<button class="tool-button active"><i class="fa fa-hand-paper-o" title="Free Hand" onclick="enableSelector(event)"></i></button>
 		</div>
@@ -69,18 +70,18 @@
 			<button class="btn btn-danger btn-sm" onclick="clearPage()">Clear Page</button>
 		</div>
 		<div class="tool">
-			<button class="btn btn-info btn-sm" onclick="undo(event)" title="Undo">⤺</button>
+			<button class="btn btn-info btn-sm" onclick="undo(event)" title="Undo" style="color: white;">⤺</button>
 		</div>
 		<div class="tool">
-			<button class="btn btn-info btn-sm" onclick="redo(event)" title="Redo">⤻</button>
-		</div>
-
-		<div class="tool">
-			<button class="btn btn-info btn-sm" onclick="zoomIn()" title="Zoom In">+</button>
+			<button class="btn btn-info btn-sm" onclick="redo(event)" title="Redo" style="color: white;">⤻</button>
 		</div>
 
 		<div class="tool">
-			<button class="btn btn-info btn-sm" onclick="zoomOut()" title="Zoom Out">-</button>
+			<button class="btn btn-info btn-sm" onclick="zoomIn()" title="Zoom In"><i class="fa fa-plus" aria-hidden="true" style="color: white;"></i></button>
+		</div>
+
+		<div class="tool">
+			<button class="btn btn-info btn-sm" onclick="zoomOut()" title="Zoom Out"><i class="fa fa-minus" aria-hidden="true" style="color: white;"></i></button>
 		</div>
 		<div class="tool">
 			<button class="btn btn-light btn-sm" onclick="savePDF()"><i class="fa fa-save"></i> Save</button>
@@ -123,6 +124,8 @@
 <script src="./pdfannotate.js"></script>
 
 <script src="script.js"></script>
+<script src="pinch.js"></script>
+
 
 
 

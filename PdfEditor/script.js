@@ -26,6 +26,7 @@ pdf = new PDFAnnotate('pdf-container',"../PdfEditor/fetch_pdf.php?workFile="+wor
     $("#pdf-editor").show();
     $("body").css({"background-color":"rgb(82, 86, 89)"});
     originalHeight =  $("#pdf-container").height();
+    pdf.enableSelector();
     
   },
   scale: 1.5,
@@ -49,6 +50,8 @@ function enableSelector(event) {
   changeActiveTool(event);
   pdf.enableSelector();
 }
+
+
 
 function enablePencil(event) {
   event.preventDefault();
@@ -125,7 +128,7 @@ function showPdfData() {
 
 function zoomIn(){
   zoom += 0.25;
-  if(zoom > 0){
+  if(zoom > 0 & zoom < 4){
     $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
     $("#pdf-container").height(originalHeight);
     $("#pdf-editor").height(originalHeight);

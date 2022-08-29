@@ -148,9 +148,18 @@ PDFAnnotate.prototype.enableSelector = function () {
   if (inst.fabricObjects.length > 0) {
     $.each(inst.fabricObjects, function (index, fabricObj) {
       fabricObj.isDrawingMode = false;
+      fabricObj.selection = true;
+      fabricObj.allowTouchScrolling = true;
     });
+
+    var canvasContainers = document.getElementsByClassName("canvas-container");
+    for(var i = 0;i<canvasContainers.length;i++){
+      canvasContainers[i].style.pointerEvents = "none";
+    }
   }
 };
+
+
 
 PDFAnnotate.prototype.enablePencil = function () {
   var inst = this;
