@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign in</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
     <link rel="stylesheet" href="nav-style.css">
 
 </head>
@@ -65,7 +65,8 @@
 
                         }
                     }}}
-            
+            header("Refresh:1");
+            echo "<div class='pop-up'>Wrong Credentials</div>";
         }
     ?>
 </body>
