@@ -72,7 +72,7 @@ li{
 }
 
 .open-nav{
-  width: 50vw;
+  width: 250px;
   transition: 0.5s;
   z-index: 900;
 }
@@ -172,10 +172,4 @@ li{
   z-index: 800;
   background-color: black;
   opacity: 0.5;
-}
-
-@media screen and (min-width: 480px) {
-  .open-nav{
-    width: 250px;
-  }
 }

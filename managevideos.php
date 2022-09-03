@@ -19,7 +19,7 @@
             ?>
             <div class="container">
                 <div class="segment add-video-segment">
-                    <h1 class="title">Add Video</h1>
+                    <h1 class="title">Add</h1>
                     <div class="line"></div>
                     <form method="POST" enctype="multipart/form-data">
 
@@ -51,10 +51,10 @@
                             </select>
 
                             <div class="drop-down drop-down-avai" id="drop-down">
-                                <div class="name" id="assign-drop">Availability : <span id="selected-drop"></span></div>
+                                <div class="name" id="assign-drop">Availability: <span id="selected-drop"></span></div>
                                 <div id="drop-button">▼</div>
                             </div>
-                            <div class="options-cont avai-options" id="options">
+                            <div class="options-cont avai-options avai-options-wrapped" id="options">
                                 <ul> 
                                     <li class="option">Available</li>
                                     <li class="option">Unavailable</li>
@@ -106,7 +106,7 @@
     ?>
                 <div class="segment add-video-segment">
 
-                    <h1 class="title">Remove Video</h1>
+                    <h1 class="title">Remove</h1>
                     <div class="line"></div>      
 
                     <form method="POST" enctype="multipart/form-data">
@@ -145,6 +145,7 @@
 
                     </form>
                 </div>
+            </div>
 
             <?php
                 if(isset($_POST['removesubmit'])){
@@ -161,10 +162,10 @@
                     }            
                 }
             ?>
-
-                <div class="segment add-video-segment">
+            <div class="container center">
+                <div class="segment add-video-segment single-segment">
                     
-                <h1 class="title" id="change-acc">Change Accessibilty</h1>
+                <h1 class="title">Change Accessibilty</h1>
                 <div class="line"></div>
 
                 <form method="POST" enctype="multipart/form-data">
@@ -191,7 +192,7 @@
                         <div id="drop-button">▼</div>
                     </div>
 
-                    <div class="options-cont" id="options3">
+                    <div class="options-cont change-acc-warpped" id="options3">
                         <ul>
                         <?php
                             $getav = $db->query("SELECT * FROM videos");
@@ -211,6 +212,10 @@
                     </form>
                 </div>
             </div>
+        </div>
+
+        <h1 class="table-title">Videos Table</h1>
+        <hr>
     <?php
 
         if(isset($_POST['complementsubmit'])){
@@ -226,8 +231,8 @@
             $setresult = mysqli_query($db, $sqlset);
             echo "<div class='pop-up'>Change Made!</div>";
         }
-
-        $out = '<table class="table"><thead><tr>';
+        $out = '<div class="table-cont">
+                <table class="table"><thead><tr>';
         $viewall = "SELECT * FROM videos;";
         $result = mysqli_query($db, $viewall);
         $resultCheck = mysqli_num_rows($result);

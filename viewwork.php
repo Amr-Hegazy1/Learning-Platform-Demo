@@ -10,7 +10,6 @@
     <?php 
         include_once("nav-assistant.html");
         include "configusers.php";
-        echo "<h1>View Students' Work</h1><hr>";
         $li = false;
         session_start();
         $a = $_SESSION['assistant'];
@@ -21,16 +20,50 @@
             $getavas = $db->query("SELECT `AssignmentID` FROM assignments"); //Get available assignments
 
             ?>
-        <form method="POST" enctype="multipart/form-data">
-            Assignment ID: <select name='id' id='id'>
-        <?php 
-            while($rows = $getavas->fetch_assoc()){
-                $thisid = $rows['AssignmentID'];
-                echo "<option value='$thisid'> Assignment $thisid</option>";
-            }
-        ?> </select>
-            <input type="submit" name='submit' value="Select" id='submit'>
-        </form>
+<div class="container center">
+    <div class="segment single-seg">
+
+    <h1 class="title">Remove</h1>
+    <div class="line"></div>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <select name='id' id='id' hidden="hidden">
+
+            <?php
+                $getavas = $db->query("SELECT * FROM `assignments`");
+
+                while($rows = $getavas->fetch_assoc()){
+                    $thisid = $rows['AssignmentID'];
+                    echo "<option value='$thisid'> Assignment $thisid</option>";
+                }
+            ?>   
+        </select>
+
+        <div class="drop-down" id="drop-down">
+            <div class="name" id="assign-drop">Assignment ID : <span id="selected-drop"></span></div>
+            <div id="drop-button">▼</div>
+        </div>
+
+        <div class="options-cont" id="options">
+            <ul>
+                <?php
+                    $getavas = $db->query("SELECT * FROM `assignments`");
+                    while($rows = $getavas->fetch_assoc()){
+                        $thisid = $rows['AssignmentID'];
+                        echo "<li class='option'>$thisid</li>";
+                    }
+                ?>   
+            </ul>
+        </div>
+        <div id="exit-drop" class="close"></div>
+
+        <input type="submit" name="submit" value="Select" class="submit">
+        
+    </form>
+    </div>
+</div>
+
     <?php
         if(isset($_POST['submit'])){
             $assignmentid = $_POST['id'];
@@ -38,6 +71,8 @@
             $res = mysqli_query($db, $viewworksql);
             if(mysqli_num_rows($res)>0){
                 while ($work = mysqli_fetch_assoc($res)){
+                    echo "<div class='all-assign'>";
+                    echo "<div class='qa-cont assignment-correct'>";
                     $wid = $work['WorkID'];
                     $_SESSION['wid'] = $wid;
                     echo "$wid  :  ";
@@ -46,7 +81,10 @@
                     $late = lateCheck($work['Late']);
                     echo "$late  :  ";
                     $grade = $work['Grade'];
-                    echo '<a href="./correctingpage.php?workFile='.$work['WorkFile'].'"/> Correct </a><br>';                }            
+                    echo '<a href="./correctingpage.php?workFile='.$work['WorkFile'].'"/> Correct </a>';
+                    echo "</div>";
+                } 
+                echo "</div>";           
             } else {
                 echo "No Assignments Submitted yet";
             }
@@ -64,5 +102,6 @@
             }
         }
     ?>
+    <script src="dropdown.js"></script>
 </body>
 </html>

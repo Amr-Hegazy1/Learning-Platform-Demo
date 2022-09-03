@@ -28,7 +28,8 @@
                 $per = (($grade / $mg)*100);
                 $insert = $db->query("UPDATE `progress` SET `$aid` = '$per' WHERE `UserID` = '$uid'");
             }
-            $out = '<table class="table"><thead><tr>';
+            $out = '<div class="table-cont">
+            <table class="table"><thead><tr>';
             $arr = getArray($db);
             $count = count($arr);
             $out .="<th>User</th>";
@@ -48,7 +49,7 @@
                 $out .="</tr>";
             }
 
-            $out .="</tbody></table>";
+            $out .="</tbody></table></div>";
 
             echo "$out";
             displayAssignmentDetails($db);

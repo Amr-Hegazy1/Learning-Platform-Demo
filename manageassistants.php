@@ -20,7 +20,7 @@
             ?>
         <div class="container">
         <div class="segment">
-            <h1 class="title assistant-title">Add Assistant</h1>
+            <h1 class="title">Add</h1>
             <div class="line"></div>
             <form method="POST" enctype="multipart/form-data">
 
@@ -49,7 +49,7 @@
 
         <div class="segment">
 
-            <h1 class="title assistant-title">Remove Assistant</h1>
+            <h1 class="title">Remove</h1>
             <div class="line"></div>
             <form method="POST" enctype="multipart/form-data">
             <select name='username2' id='id' hidden="hidden">
@@ -86,6 +86,7 @@
 
 <div id="lol" class="close"></div>    
 <h1 class="table-title">Assistant Table</h1>
+<hr>
     <?php
             if(isset($_POST['addsubmit'])){
                 $username = $_POST["username"];

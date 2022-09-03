@@ -15,24 +15,29 @@
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
-            echo "<h1>Posts</h1><hr>";
+            echo "<h1 class='center-header'>Posts</h1><hr>";
             include "configusers.php";
             $viewpostssql = "SELECT * FROM posts ORDER BY PostID DESC";
             $res = mysqli_query($db, $viewpostssql);
             $resultCheck = mysqli_num_rows($res);
             if($resultCheck>0){
+               echo  "<div class='posts-container'>";
                 while ($row = mysqli_fetch_array($res)){
-                    echo $row['Header']."<br>";
-                    echo $row['Description']."<br>";
-                    $f = $row['attachments'];
+                    echo "<div class='qa-cont post-cont'>";
+                    echo "<h2 class='post-title'>".$row['Header']."</h2>";
+                    echo "<hr>";
+                    echo "<div class='post-desc'>".$row['Description']."</div>";
+                    $f = "<div>".$row['attachments']."</div>";
                     $fn = substr($f,12);
                     if($fn == ""){
                         echo "No attachments"."<br>";
                     }
                      else {
-                        echo '<a href="https://localhost/TCD/'.$row['attachments'].'">View</a><br>';
+                        echo '<div class="view-cont"><a href='.$row['attachments'].'>View</a></div>';
                      }
+                     echo "</div>";
                 }
+                echo "</div>";
             } else {
                 echo "<div class='pop-up'>No posts yet</div>";
             }

@@ -115,14 +115,15 @@
         $res = mysqli_query($db, $viewpostssql);
         $resultCheck = mysqli_num_rows($res);
         if($resultCheck>0){
-            echo "<h1>Posts Table</h1><hr>";
+            echo "'<div class='table-cont'>
+            <h1 class=table-title>Posts Table</h1><hr>";
             $out .="<th>Posts ID</th><th>Header</th><th>Description</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($res)){
                 $out .= "<tr><td>".$row['PostID']."</td>";
                 $out .= "<td>".$row['Header']."</td>";
                 $out .= "<td>".$row['Description']."</td></tr>";
             }
-            $out .="</tbody></table>";
+            $out .="</tbody></table></div>";
             echo $out;
         } else {
             echo "<div class='pop-up'>Empty</div>";

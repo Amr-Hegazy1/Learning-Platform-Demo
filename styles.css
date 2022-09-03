@@ -28,9 +28,76 @@ overflow-x: hidden;
     justify-content: space-between;
 }
 
+.posts-container{
+    padding: 1em 0 1em 0;
+}
+
 #cont-add-admin{
     display: flex;
     justify-content: center;
+}
+
+#signin-cont{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+#signin-seg .title{
+    font-size: 1.8rem;
+}
+
+#signin-seg .name{
+    font-size: 1.3rem;
+}
+
+#signin-seg .text-field{
+    height: 44px;
+}
+
+#signin-seg .text-field input{
+    font-size: 1rem;
+    margin-top: 0.7em;
+}
+
+#signin-seg .text-field input::placeholder{
+    font-size: 1rem;
+}
+
+#signin-seg .name{
+    margin-top: 0.6em;
+}
+
+#signin-seg .submit{
+    font-size: 1.1rem;
+}
+
+#signin-seg .bottom-name{
+    margin-top: 1.4em;
+}
+
+#signin-seg .text-field span::before{
+    top: 42px;
+}
+
+#signup-dir{
+    color: #adadad;
+    font-size: 1rem;
+    margin-top: 1.7em;
+    text-decoration: none;
+}
+
+#signup-dir a{
+    color: white;
+    margin-left: 0.3em;
+    text-decoration: none;
+}
+
+#signup-dir a:hover{
+    text-decoration: underline;
 }
 
 #login-seg{
@@ -54,12 +121,16 @@ overflow-x: hidden;
     font-size: 1.3em;
 }
 
+.vid-cont{
+    position: relative;
+    height: 500px;
+}
+
 video {
     left: 50%;
+    top:50%;
     position: absolute;
-    top: 50%;
     transform: translate(-50%, -50%);
-    margin-top: 4em;
 }
 
 .segment{
@@ -67,6 +138,7 @@ video {
     color: white;
     width: 45vw;
     height:350px;
+    max-width: 800px;
     background-color: #006ff9;
     border-radius: 15px;
     margin: 0;
@@ -74,8 +146,44 @@ video {
     box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
 }
 
+
+.single-seg{
+    width: 65vw;
+    min-width: 300px;
+}
+
+.reset-seg{
+    height: 400px;
+}
+
+#signin-seg{
+    width: 80vw;
+    height: 420px;
+}
+
+.add-user-seg,.add-user-seg-bottom{
+    width: 90vw;
+    height: 450px;
+    overflow-y: auto;
+}
+
+.add-user-seg .submit{
+    position: relative;
+    margin-top: 3em;
+    margin-bottom: 0.4em;
+}
+
+.add-user-seg .name{
+    font-size: 0.9em;
+}
+
+.add-user-seg .drop-down{
+    margin: 1.5em 0 1.5em 0;
+    font-size: 1.2em;
+}
+
 .add-video-segment{
-    height: 380px;
+    height: 400px;
 }
 
 .title{
@@ -108,7 +216,7 @@ form{
     width: 100%;
     height: 25px;
     padding: 0 1px;
-    font-size: 16px;
+    font-size: 0.8rem;
     border:none;
     background:none;
     outline: none;
@@ -220,7 +328,7 @@ input:focus::placeholder {
 .options-cont{
     position: absolute;
     height: 0;
-    top: 112px;
+    top:112px;
     width: 40px;
     right:1.5em;
     background-color: white;
@@ -230,12 +338,16 @@ input:focus::placeholder {
     z-index: 701; /*More than exit options*/;
 }
 
+.remove-ans-wrapped,.change-acc-warpped,.change-ans-wrapped{
+    top: 148px;
+}
+
 #drop-button:hover{
     cursor: pointer;
 }
 
 .wide-options{
-    width:150px;
+    width:auto;
 }
 
 .open-options{
@@ -243,11 +355,19 @@ input:focus::placeholder {
     transition: 0.5s;
 }
 
+.open-optionsg{
+    height: 61px;
+    transition: 0.4s;
+}
+
+.add-user-seg .options-cont{
+    top: 258px;
+}
 
 .options-cont li{
     display: flex;
     justify-content: center;
-    padding-top: 0.1em;
+    padding: 0.2em 1em;
 }
 
 .options-cont li:hover{
@@ -258,16 +378,16 @@ input:focus::placeholder {
 }
 
 .drop-down-avai{
-    margin-top: 1.5em;
+    margin-top: 1.2em;
 }
 
 .avai-options{
-    top: 315px;
+    top: 327px;
     width: 100px;
 }
 
 .avai-options-open{
-    height: 51px;
+    height: 61px;
     transition: 0.4s;
 }
 
@@ -281,9 +401,6 @@ input:focus::placeholder {
     border-radius: 10px;
     min-height: 150px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-input[type="file"]{
 }
 
 .table-cont{
@@ -327,7 +444,9 @@ input[type="file"]{
 }
 
 .all-quest{
-    margin-top: 2em;
+    padding:0.8em 0;
+    height: 90vh;
+    overflow-y: auto;
 }
 
 .qa-cont{
@@ -345,13 +464,104 @@ input[type="file"]{
     height: 250px;
 }
 
-.qa-change .name{
+.post-cont{
+    padding: 1em 0;
+    height: auto;
+}
+
+
+.view-cont{
+    margin: 4em auto 1em auto;
+    text-align:center;
+}
+
+.center-header{
+    font-size: 2.5rem;
+    margin-top: 0.6em;
+    text-align: center;
+}
+
+#reset-desc{
+    margin-top: 0.5em;
+    font-size: 1em;
+}
+
+.check-cont{
+    margin-top: 0.5em;
+    margin-left: 0.9em;
+}
+
+.check-cont label{
+    font-size: 1em;
+}
+
+.post-title{
+    text-align: center;
+}
+
+.post-desc{
+    text-align: center;
+    margin: 1em 2em;
+
+}
+
+.post-cont a{
+    color: var(--primary-color);
+    text-decoration: none;
+    border: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 0.7em 3em;
+    background-color: white;
+    cursor: pointer;
+}
+.post-cont a:hover{
+    padding:0.9em 4em;
+    transition: 0.5s;
+}
+.qa-change .name,.ask-quest-cont .name{
     font-size: 1.1rem;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.2em;
 }
 
 .qa-change .question{
     font-size: 1.3rem;
+}
+
+.all-assign{
+    width: 100vw;
+
+}
+
+.assignment-correct{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    width: 80vw;
+}
+
+.assignment-correct a{
+    color: var(--primary-color);
+    border: none;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 0.7em 3em;
+    background-color: white;
+    cursor: pointer;
+}
+
+.assignment-correct a{
+    font-family: "Poppins";
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.assignment-correct a:hover{
+    padding:0.8em 3.3em;
+    transition: 0.5s;
 }
 
 .pop-up{
@@ -368,6 +578,10 @@ input[type="file"]{
 
 .qa-change input{
     font-size: 1rem;
+}
+
+.admin-ans-cont .submit{
+    font-size: 0.8em;
 }
 
 .qa-change input::placeholder{
@@ -387,6 +601,16 @@ input[type="file"]{
     font-size: 1em;
     font-weight: bold;
     margin-bottom: 1.5em;
+    margin-top: 0.3em;
+}
+
+.ask-quest-cont{
+    margin-top: 2em;
+    height: 190px;
+}
+
+.ask-quest-cont .submit{
+    font-size: 0.9em;
 }
 
 .answer-teacher{
@@ -407,7 +631,7 @@ input[type="file"]{
     border-radius: 0 10px 0 0;
 }
 
-.table::-webkit-scrollbar,.table-cont::-webkit-scrollbar{
+.table::-webkit-scrollbar,.table-cont::-webkit-scrollbar,.all-quest::-webkit-scrollbar,.add-user-seg::-webkit-scrollbar{
     height: 8px;
     width:8px;
 }
@@ -415,26 +639,75 @@ input[type="file"]{
 .options-cont::-webkit-scrollbar{
     height: 3px;
     width: 3px;
+    margin-right: 0.2em;
 }
 
 /* Track */
-.table::-webkit-scrollbar-track,.table-cont::-webkit-scrollbar-track,.options-cont::-webkit-scrollbar-track  {
-    background:transparent
+.table::-webkit-scrollbar-track,.table-cont::-webkit-scrollbar-track,.options-cont::-webkit-scrollbar-track,.all-quest::-webkit-scrollbar-track,.add-user-seg::-webkit-scrollbar-track{
+    background:transparent;
 }
 
 /* Handle */
-.table::-webkit-scrollbar-thumb,.table-cont::-webkit-scrollbar-thumb,.options-cont::-webkit-scrollbar-thumb{
+.table::-webkit-scrollbar-thumb,.table-cont::-webkit-scrollbar-thumb,.options-cont::-webkit-scrollbar-thumb,.all-quest::-webkit-scrollbar-thumb{
     background-color:#c2c2c2;
     border-radius: 10px;
 }
 
+.add-user-seg::-webkit-scrollbar-thumb{
+    background-color: white;
+    border-radius: 10px;
+}
+
+@media screen and (min-width: 440px){
+    .add-video-segment{
+        height: 380px;
+    }
+    .avai-options-wrapped{
+        top: 312px;
+    }
+}
+
+@media screen and (min-width: 443px){
+    .remove-ans-wrapped{
+        top: 112px;
+    }
+}
+
+@media screen and (min-width: 465px){
+    .change-ans-wrapped{
+        top: 112px;
+    }
+}
+
+@media screen and (min-width: 565px){
+    .change-acc-warpped{
+        top: 112px;
+    }
+}
+
 @media screen and (min-width: 600px){
     .title{
-        font-size: 1.8em;
+        font-size: 2em;
+    }
+
+    .add-user-seg .options-cont{
+        top: 552px;
     }
 
     .segment{
         height: 430px;
+    }
+
+    .add-user-seg,.add-user-seg-bottom{
+        height:500px;
+    }
+
+    #reset-desc{
+        font-size: 1.2em;
+    }
+
+    .check-cont label{
+        font-size: 1.1em;
     }
 
     #login-seg{
@@ -446,33 +719,101 @@ input[type="file"]{
         font-size: 1.1em;
     }
 
-    .drop-down .name{
-        font-size: 1.1em;
+    .add-user-seg .name{
+        font-size: 1.3em;
     }
 
     #assign-drop{
-        font-size: 1.1em;
+        font-size: 1em;
+    }
+
+    .choose-file{
+        font-size: 0.9rem;
+    }
+
+    .add-video-segment {
+        height: 470px;
     }
 
     .text-field input{
         margin-top: 0.2em;
-        height: 40px;
+        height: 35px;
     }
 
     .text-field span::before{
-        top: 44px;
+        top: 38px;
     }
 
     ::placeholder{
         font-size: 0.9em;
     }
 
-    .submit{
+    .options-cont{
+        top: 136px;
+    }
+
+    .add-user-seg .title{
+        margin-top: 0.55em;
+    }
+
+    .add-user-seg li{
+        padding-left: 1em;
+    }
+
+    .change-acc-warpped{
+        top: 174px;
+    }
+
+    .add-video-segment #options1{
+        top: 394px;
+        overflow-y: hidden;
+    }
+
+    #signin-seg .text-field input{
+        height: 25px;
+    }
+    #signin-seg .text-field{
+        height: 44px;
+    }
+    #signin-seg .text-field span::before{
+        top: 42px;
+    }
+    .text-field input{
+        font-size: 1rem;
+    }
+
+    .add-user-seg .options-cont{
+        top: 330px;
+    }
+
+    .submit,.admin-ans-cont .submit{
         font-size: 1em;
     }
 
+    .avai-options{
+        top: 390px;
+    }
 
-    .options-cont{
-        top: 132px;
+    .add-video-segment{
+        height: 480px;
+    }
+    .drop-down-avai #selected-drop{
+        font-size: 0.85em
+    }
+}
+
+@media screen and (min-width: 676px){
+    .change-acc-warpped{
+        top: 130px;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .container-manage-user{
+        display: flex;
+        justify-content: center;
+    }
+    .container-manage-user .segment{
+        width: 45vw;
     }
 }

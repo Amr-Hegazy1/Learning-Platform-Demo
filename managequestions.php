@@ -15,23 +15,29 @@
     if(isset($_SESSION['adminloggedin'])){
         $li = $_SESSION['adminloggedin'];}
     if($li){
-        echo "<h1>Answer</h1><hr>";
         include "configusers.php";
         $answersql = "SELECT * FROM questions WHERE `TeacherAnswered`= 0 ORDER BY QuestionID ASC LIMIT 1";
         $res = mysqli_query($db, $answersql);
         if(mysqli_num_rows($res)>0){
             while ($question = mysqli_fetch_assoc($res)){
-                echo $question['User']." : ";
-                echo $question['Question']." : ";
+                echo "<div class='qa-change admin-ans-cont'>";
+                echo "<div class='qa-cont'>";
+                echo "<div class='question'><span class='quest-title'>".$question['User']. ": </span>";
+                echo $question['Question'];
+                echo "</div>";
                 $id = $question['QuestionID'];
-                echo $question['Assistant']." : ";
-                echo $question['Answer']." : ";
                 ?>
-                    <form method="POST" enctype="multipart/form-data">
 
-                        Admin's Answer: <input type="text" name="answer">
-                        <input type="submit" name='submitanswer' value="Submit">
+                    <form method="POST" enctype="multipart/form-data">
+                    <div class="name">Answer</div>
+                        <div class="text-field">
+                            <input type="text" required name="answer" placeholder="Enter Your Answer">
+                            <span></span>
+                        </div>
+                        <input type="submit" name='submitanswer' value="Submit" class="submit ">
                     </form>
+                    </div>
+            </div>
                 <?php 
                 if(isset($_POST['submitanswer'])){
                     $ans = $_POST['answer'];

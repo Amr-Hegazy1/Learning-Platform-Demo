@@ -14,18 +14,18 @@
     if(isset($_SESSION['loggedin'])){
         $li = $_SESSION['loggedin'];}
     if($li){
-        echo "<h1>Questions</h1><hr>";
         include "configusers.php";
         ?>
+        <div class='qa-cont ask-quest-cont'>
         <form method="POST" enctype="multipart/form-data">
-            <div class="name">Question</div>
+            <div class="name">Ask Question</div>
                 <div class="text-field">
-                    <input type="text" required name="question" placeholder="Enter Question">
+                    <input type="text" required name="question" placeholder="Enter Your Question">
                     <span></span>
                 </div>
-                <input type="submit" name='submit' value="Submit" class="submit qsubmit">
+                <input type="submit" name='submit' value="Ask" class="submit">
         </form>
-            </div>
+        </div>
 <?php
         if(isset($_POST['submit'])){
             $user = $_SESSION['username'];
@@ -43,20 +43,25 @@
         $res = mysqli_query($db, $viewqssql);
         $resultCheck = mysqli_num_rows($res);
         if($resultCheck>0){
+            echo "<h1 class='table-title'>Q&A</h1><hr>";
+            echo "<div class='all-quest'>";
             while ($row = mysqli_fetch_assoc($res)){
-                echo "Question ".$row['QuestionID']." : ";
+                echo "<div class='qa-cont'>";
+                echo "<div class='question'><span class='quest-title'>Question ".$row['QuestionID'].": </span>";                    
                 echo $row['Question'];
-                echo " ~ ".$row['User'];                
-                echo "<br>";
-                echo "Assistant's Answer: ";
-                echo $row['Answer'];
-                echo " ~ ".$row['Assistant'];
-                echo "<br>";
-                echo "Teacher's Answer: ";
+                echo " ~ ".$row['User'];
+                echo "</div>"; 
+
+                echo "<div class='answer-teacher'><span class='answer-teacher-title'>Teacher's Answer: </span>";
                 echo $row['TeacherAnswer']; 
-                echo "<br>";
-                echo "<br>";           
+                echo "</div>";  
+
+                echo "<div class='answer-assistant'><span class='answer-assistant-title'>Assistant's Answer: </span>";
+                echo $row['Answer'];
+                echo "</div>";   
+                echo "</div>";      
             }
+            echo "</div>";  
         } else {
             echo "Empty";
         }

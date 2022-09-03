@@ -34,7 +34,7 @@
         
                         <div class="name">Due Date</div>
                         <div class="text-field">
-                            <input type="text" required name="duedate" placeholder="YY-MM-DD HH-MM-SS">
+                            <input type="text" required name="duedate" placeholder="YYYY-MM-DD HH-MM-SS">
                             <span></span>
                         </div>
         
@@ -133,6 +133,7 @@
 
 
     <h1 class="table-title">Assignments Table</h1>
+    <hr>
     
     <?php
         $viewassignmentssql = "SELECT * FROM assignments";
@@ -171,5 +172,6 @@
         return false;
     }
         ?>
+        <script src="dropdown.js"></script>
 </body>
 </html>

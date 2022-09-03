@@ -20,13 +20,21 @@ dropDownEl2.addEventListener("click",()=>{
 
 exitDropEl.addEventListener("click",()=>{
     exitDropEl.classList.toggle("close")
-    currentDropOptionsEl.classList.toggle("open-options")
+    if(currentDropOptionsEl.classList.contains("gender-options")){
+        currentDropOptionsEl.classList.toggle("open-optionsg")
+    }else{
+        currentDropOptionsEl.classList.toggle("open-options")
+    }
 })
 
 dropDownEl.addEventListener("click",()=>{
     currentDropOptionsEl = dropDownOptionsEl
     exitDropEl.classList.toggle("close")
-    dropDownOptionsEl.classList.toggle("open-options")
+    if(dropDownOptionsEl.classList.contains("gender-options")){
+        dropDownOptionsEl.classList.toggle("open-optionsg")
+    }else{
+        dropDownOptionsEl.classList.toggle("open-options")
+    }
 })
 
 for(let i=0;i<optionsArrayEl.length;i++){

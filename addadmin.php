@@ -15,7 +15,7 @@
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){?>
     <div class="container" id="cont-add-admin">
-        <div class="segment">
+        <div class="segment  single-seg">
                 <h1 class="title">Add Admin</h1>
                 <div class="line"></div>
                 <form method="POST" enctype="multipart/form-data">

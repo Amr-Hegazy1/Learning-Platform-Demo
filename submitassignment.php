@@ -14,7 +14,6 @@
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
-            echo "<h1>Assignments</h1><hr>";
             include "configusers.php";
             $getavas = $db->query("SELECT * FROM assignments"); //Get available assignments?>
                         <div class="container center">
@@ -106,7 +105,9 @@
         $viewassignmentssql = "SELECT * FROM assignments";
         $res = mysqli_query($db, $viewassignmentssql);
         $resultCheck = mysqli_num_rows($res);
-        $out = '<table class="table" border="1"><thead><tr>';
+        echo "<h1 class='table-title'>Assignments Table</h1><hr>";
+        $out = '<div class="table-cont">
+        <table class="table"><thead><tr>';
         if($resultCheck>0){
             $out .="<th>Assignment ID</th><th>Description</th><th>Due Date</th><th>Done</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($res)){
@@ -147,5 +148,7 @@
         return true;
     }
     ?>
+    <script src="dropdown.js"></script>
+    <script src="chooseFile.js"></script>
 </body>
 </html>

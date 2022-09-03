@@ -38,7 +38,7 @@
                     <div class="name" id="assign-drop">Question Id : <span id="selected-drop"></span></div>
                     <div id="drop-button">▼</div>
                 </div>
-                <div class="options-cont" id="options">
+                <div class="options-cont remove-ans-wrapped" id="options">
                     <ul>
                     <?php
                         $getques = $db->query("SELECT * FROM questions"); 
@@ -74,7 +74,7 @@
             <div class="name" id="assign-drop">Question Id : <span id="selected-drop2"></span></div>
             <div id="drop-button">▼</div>
         </div>
-        <div class="options-cont" id="options2">
+        <div class="options-cont change-ans-wrapped" id="options2">
             <ul>
             <?php
                 $getques2 = $db->query("SELECT * FROM questions");  
@@ -132,7 +132,8 @@
                 echo "<div class='all-quest'>";
                 while ($row = mysqli_fetch_assoc($res)){
                     echo "<div class='qa-cont'>";
-                    echo "<div class='question'><span class='quest-title'>Question ".$row['QuestionID'].": </span>";                    echo $row['Question'];
+                    echo "<div class='question'><span class='quest-title'>Question ".$row['QuestionID'].": </span>";                    
+                    echo $row['Question'];
                     echo " ~ ".$row['User'];
                     echo "</div>"; 
 

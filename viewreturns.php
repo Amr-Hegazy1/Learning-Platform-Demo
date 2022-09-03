@@ -20,13 +20,19 @@
             $res = mysqli_query($db, $viewsql);
             $resultCheck = mysqli_num_rows($res);
             if($resultCheck>0){
-                echo "<h4>Assignments Returned</h4>";
+                echo "<h1 class='table-title'>Assignments Returned</h1><hr>";
+                $out = '<div class="table-cont">
+                <table class="table"><thead><tr>'; 
+                $out .="<th>Assignment ID</th><th>Grade</th><th>Comments</th><th>Corrected By</th><th>File</th></tr></thead><tbody>";
                 while ($row = mysqli_fetch_assoc($res)){
-                    echo "Assignment ID: ".$row['AssignmentID']." - ";
-                    echo "Grade: ".$row['Grade']." - ";
-                    echo "Comments: ".$row ['Comments']." - Corrected by: ".$row['AssistantID']." - ";
-                    echo '<a href="https://localhost/TCD/'.changeName($row['WorkFile']).'">View</a>.<br><br>';
+                    $out .="<tr><td>".$row['AssignmentID']."</td>";
+                    $out .= "<td>".$row['Grade']."</td>";
+                    $out .= "<td>".$row['Comments']."</td>";
+                    $out .= "<td>".$row['AssistantID']."</td>";
+                    //$out .= "<td><a href='https://localhost/TCD/".changeName($row['WorkFile']).">View</a></td></tr>";
                 }
+                $out .="</tbody></table></td></div>";
+                echo $out;
             } else {
                 echo "No Assignments returned yet";
             }
@@ -34,20 +40,25 @@
             $qres = mysqli_query($db, $respondsql);
             $countCheck = mysqli_num_rows($qres);
             if($countCheck>0){
-                echo "<h4>Questions Answered</h4>";
+                echo "<h1 class='table-title'>Questions Answered</h1><hr>";
+                echo "<div class='all-quest'>";
                 while ($ques = mysqli_fetch_assoc($qres)){
-                    echo "Question ".$ques['QuestionID']." : ";
+                    echo "<div class='qa-cont'>";
+                    echo "<div class='question'><span class='quest-title'>Question ".$ques['QuestionID'].": </span>";                    
                     echo $ques['Question'];
-                    echo "<br>";
-                    echo "Answer: ";
-                    echo $ques['Answer'];
-                    echo " ~ ".$ques['Assistant'];
-                    echo "<br>";
-                    echo "Teacher's Answer: ";
+                    echo "</div>"; 
+
+                    echo "<div class='answer-teacher'><span class='answer-teacher-title'>Teacher's Answer: </span>";
                     echo $ques['TeacherAnswer']; 
-                    echo "<br>";
-                    echo "<br>";
+                    echo "</div>";  
+
+                    echo "<div class='answer-assistant'><span class='answer-assistant-title'>Assistant's Answer: </span>";
+                    echo $ques['Answer'];
+                    echo "</div>";   
+                    echo "</div>"; 
                 }
+                echo "</div>";
+                echo "</div>";  
             }
         }else{
                         echo "Access denied<br>";

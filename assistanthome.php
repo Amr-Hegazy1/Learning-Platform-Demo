@@ -15,6 +15,12 @@
         if($loggedin){
             $u = $_SESSION['assistant'];
             echo "<h1 id='welcome'>Welcome $u!</h1>";
+            echo "<div id='welcome-desc'>
+                    Here is a quick tutorial to show you around
+                </div>";
+            echo "<div class='vid-cont'>
+                <video width='640' height='400' src = './videos/orientation.mp4' controls></video><br>';
+            </div>";
         }else {
             echo "Access denied<br>";
             echo '<a href="signin.php">Go Home</a><br>';
