@@ -338,6 +338,7 @@ input:focus::placeholder {
     z-index: 701; /*More than exit options*/;
 }
 
+
 .remove-ans-wrapped,.change-acc-warpped,.change-ans-wrapped{
     top: 148px;
 }
@@ -405,14 +406,8 @@ input:focus::placeholder {
 
 .table-cont{
     overflow: auto;
-    max-height: 500px;
-}
-
-.nav-cont{
     padding: 0 0.8em;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+    max-height: 500px;
 }
 
 .table th, .table td{
