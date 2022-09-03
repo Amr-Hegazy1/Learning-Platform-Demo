@@ -4,8 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Progress</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
 </head>
 <body>
 <?php include_once("nav.html") ?>
@@ -30,7 +29,7 @@
                 $insert = $db->query("UPDATE `progress` SET `$aid` = '$per' WHERE `UserID` = '$uid'");
             }
             $out = '<div class="table-cont">
-            <table class="table" id="TableToExport"><thead><tr>';
+            <table class="table"><thead><tr>';
             $arr = getArray($db);
             $count = count($arr);
             $out .="<th>User</th>";
@@ -55,11 +54,16 @@
             echo "$out";
             displayAssignmentDetails($db);
             ?>
-            
-                <input name="export" value="Download" class="submit" id="sheetjsexport">
-            
+            <form method="POST" enctype="multipart/form-data">
+                <input type="submit" name="export" value="Download" class="submit">
+            </form>
             <?php
-            
+            if(isset($_POST["export"])){
+                header('Content-Type: application/xls');
+                header('Content-Disposition: attachment; filename=report.xls');
+                header("Refresh:1");
+            }
+
 
             $a1 = array("UserID");
             $arrup = array_merge($a1, $arr);
@@ -96,13 +100,5 @@
 
 
     ?>
-    <script>
-        document.getElementById("sheetjsexport").addEventListener('click', function() {
-        /* Create worksheet from HTML DOM TABLE */
-        var wb = XLSX.utils.table_to_book(document.getElementById("TableToExport"));
-        /* Export to file (start a download) */
-        XLSX.writeFile(wb, "report.xlsx");
-        });
-</script>
 </body>
 </html>
