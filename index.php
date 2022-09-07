@@ -1,16 +1,12 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Platform</title>
-    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
-    <link rel="stylesheet" href="http://localhost/TCD/nav-style.css">
-    <link rel="icon" href="http://localhost/TCD/images/icon.jpg">
-
-
-</head>
-<body>
-<a href="signin.php">Log in</a><br>
-<a href="signup.php">signup</a><br>
-</body>
-</html>
+<a href="manager.php">Manager</a><br><br>
+<?php 
+include "configcourses.php";
+$sql = $dbc->query("SELECT * FROM `courses`");
+while($row = $sql->fetch_assoc()){
+    $thistitle = $row['Title'];
+    $thisd = $row['D'];
+    $thisimg = $row['Image'];
+    //echo "<img src=$thisimg><br>";
+    echo "<a href='$thisd.php'>$thistitle</a><br>";
+}
+?>

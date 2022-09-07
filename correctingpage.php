@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Correcting</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
 
 </head>
 <body>
@@ -13,7 +13,7 @@
     if(isset($_SESSION['assistantloggedin'])){
         $li = $_SESSION['assistantloggedin'];}
     if($li){
-        include "configusers.php";
+        include "configeach.php";
         $wid = $_SESSION['wid'];
         $a = $_SESSION['assistant'];
         $opensql = "SELECT * FROM work WHERE `WorkID` = '$wid'";
@@ -44,7 +44,7 @@
             echo "<div class='pop-up'>File not found</div>";
         }
     }else{
-                        echo "Access denied<br>";
+            echo "Access denied<br>";
             echo '<a href="signin.php">Go Home</a><br>';;
         }
     ?>

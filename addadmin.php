@@ -3,19 +3,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Admin</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
 
 </head>
 <body>
-    <?php include_once("nav.html") ?>
     <?php
         $ali = false;
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
-        if($ali == true){?>
+        if($ali == true){
+            include_once("nav.html");?>
     <div class="container" id="cont-add-admin">
-        <div class="segment  single-seg">
+    <div class="segment  single-seg">
                 <h1 class="title">Add Admin</h1>
                 <div class="line"></div>
                 <form method="POST" enctype="multipart/form-data">
@@ -42,7 +42,7 @@
         </div>
     </div>
     <?php
-            include "configusers.php";
+            include "configeach.php";
             if(isset($_POST['addsubmit'])){
                 $username = $_POST["username"];
                 $pass = $_POST["password"];

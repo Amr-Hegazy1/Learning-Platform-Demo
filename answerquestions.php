@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer Questions</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
 
 </head>
 <body>
@@ -15,7 +15,7 @@
         $assistant = $_SESSION['assistant'];
         if($li){ 
             include_once("nav-assistant.html");
-            include "configusers.php";
+            include "configeach.php";
             $answersql = "SELECT * FROM questions WHERE `Answered`= 0 ORDER BY QuestionID ASC LIMIT 1";
             $res = mysqli_query($db, $answersql);
             if(mysqli_num_rows($res)>0){
@@ -53,7 +53,7 @@
                     }           
                 }
             } else {
-                echo "<div class='pop-up'>No Questions Yet</div>";
+                echo "<div class='pop-up'>No Questions to be answered</div>";
             }
         }else{
             echo "Access denied<br>";

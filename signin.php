@@ -3,12 +3,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign in</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/Outershell/styles.css">
+    <link rel="stylesheet" href="nav-style.css">
 
 </head>
 <body>
-<div class="container" id="signin-cont">
-        <div class="segment" id="signin-seg">
+<div class="container" id="cont-add-admin">
+        <div class="segment">
         <h1 class="title">Sign in</h1>
         <div class="line"></div>
     <form method="POST" enctype="multipart/form-data">
@@ -19,20 +20,17 @@
                 <span></span>
             </div>
 
-            <div class="name bottom-name">Password</div>
+            <div class="name">Password</div>
             <div class="text-field">
                     <input type="password" required name="password" placeholder="Enter Password">
                     <span></span>
             </div>
 
-            <div class="center" id="signup-dir">Not a member?<a href="signup.php">Sign up</a></div>
-
         <input type="submit" name="loginsubmit" value="Submit" class="submit">
     </form>
-</div>
     <?php
         session_start();
-        include "configusers.php"; 
+        include "configeach.php"; 
         if(isset($_POST['loginsubmit'])){
             $u = $_POST['username'];
             $p = $_POST['password'];

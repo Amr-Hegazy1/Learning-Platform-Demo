@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change My Answer</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
 
 </head>
 <body>
@@ -16,90 +16,96 @@
         if($li){
             $u = $_SESSION['assistant']; 
             include_once("nav-assistant.html");
-            include "configusers.php";
+            include "configeach.php";
             $getques = $db->query("SELECT * FROM questions WHERE `Assistant` = '$u'"); //Get available questions
             $getques2 = $db->query("SELECT * FROM questions WHERE `Assistant` = '$u'"); //Get available questions?>
-                <div class="container">  
-            <div class="segment">
-            <h1 class="title">Remove Answer</h1>
-            <div class="line"></div>
-            <form method="POST" enctype="multipart/form-data">
+<div class="container">  
+    <div class="segment">
+        <h1 class="title">Remove Answer</h1>
+        <div class="line"></div>
+
+        <form method="POST" enctype="multipart/form-data">
             <select name='id' id='id' hidden="hidden">
-           <?php 
-            while($rows = $getques->fetch_assoc()){
-                $thisid = $rows['QuestionID'];
-                $thisques = $rows['Question'];
-                $thisans = $rows['Answer'];
-                echo "<option value='$thisid'>$thisid : $thisques : $thisans</option>";
-            }
-        ?> 
+                <?php 
+                    while($rows = $getques->fetch_assoc()){
+                        $thisid = $rows['QuestionID'];
+                        $thisques = $rows['Question'];
+                        $thisans = $rows['Answer'];
+                        echo "<option value='$thisid'>$thisid : $thisques : $thisans</option>";
+                    }
+                ?> 
             </select>
-                <div class="drop-down" id="drop-down">
-                    <div class="name" id="assign-drop">Question Id : <span id="selected-drop"></span></div>
-                    <div id="drop-button">▼</div>
-                </div>
-                <div class="options-cont remove-ans-wrapped" id="options">
-                    <ul>
-                    <?php
-                        $getques = $db->query("SELECT * FROM questions"); 
-                        while($rows = $getques->fetch_assoc()){
-                            $thisid = $rows['QuestionID'];
-                            $thisques = $rows['Question'];
-                            $thisans = $rows['Answer'];
-                            echo "<li class='option'>$thisid</li>";
-                        }
-                    ?>  
-                    </ul>
-                </div>
-                <div id="exit-drop" class="close"></div>
-                <input type="submit" name="removesubmit" value="Remove" class="submit">
-            </form>
+            <div class="drop-down" id="drop-down">
+                <div class="name" id="assign-drop">Question Id : <span id="selected-drop"></span></div>
+                <div id="drop-button">▼</div>
+            </div>
+            <div class="options-cont remove-ans-wrapped" id="options">
+                <ul>
+                <?php
+                    $getques = $db->query("SELECT * FROM questions"); 
+                    while($rows = $getques->fetch_assoc()){
+                        $thisid = $rows['QuestionID'];
+                        $thisques = $rows['Question'];
+                        $thisans = $rows['Answer'];
+                        echo "<li class='option'>$thisid</li>";
+                    }
+                ?>  
+                </ul>
+            </div>
+            <div id="exit-drop" class="close"></div>
+            <input type="submit" name="removesubmit" value="Remove" class="submit">
+        </form>
+    </div>
+
+    <div class="segment">
+        <h1 class="title" id="change-ans">Change Answer</h1>
+        <div class="line"></div>
+        <form method="POST" enctype="multipart/form-data">
+
+            <select name='id2' id='id2' hidden="hidden">
+                <?php 
+                    while($rows2 = $getques2->fetch_assoc()){
+                        $thisid2 = $rows2['QuestionID'];
+                        $thisques2 = $rows2['Question'];
+                        $thisans2 = $rows2['Answer'];
+                        echo "<option value='$thisid2'>$thisid2 : $thisques2 : $thisans2</option>";
+                    }
+                ?> 
+            </select>
+
+            <div class="drop-down" id="drop-down2">
+                <div class="name" id="assign-drop">Question ID : <span id="selected-drop2"></span></div>
+                <div id="drop-button">▼</div>
             </div>
 
-<div class="segment">
-    <h1 class="title" id="change-ans">Change Answers</h1>
-    <div class="line"></div>
-    <form method="POST" enctype="multipart/form-data">
-   <select name='id2' id='id2' hidden="hidden">
-   <?php 
-    while($rows2 = $getques2->fetch_assoc()){
-        $thisid2 = $rows2['QuestionID'];
-        $thisques2 = $rows2['Question'];
-        $thisans2 = $rows2['Answer'];
-        echo "<option value='$thisid2'>$thisid2 : $thisques2 : $thisans2</option>";
-    }
-?> 
-    </select>
-        <div class="drop-down" id="drop-down2">
-            <div class="name" id="assign-drop">Question Id : <span id="selected-drop2"></span></div>
-            <div id="drop-button">▼</div>
-        </div>
-        <div class="options-cont change-ans-wrapped" id="options2">
-            <ul>
-            <?php
-                $getques2 = $db->query("SELECT * FROM questions");  
-                while($rows2 = $getques2->fetch_assoc()){
-                    $thisid2 = $rows2['QuestionID'];
-                    $thisques2 = $rows2['Question'];
-                    $thisans2 = $rows2['Answer'];
-                    echo "<li class='option2'>$thisid2</li>";
-                }
-            ?>  
-            </ul>
-        </div>
-        <div class="after-drop">
-            <div class="name">New Answer</div>
-            <div class="text-field">
-                <input type="text" required name="newans" placeholder="Enter New Answer">
-                <span></span>
+            <div class="options-cont change-ans-wrapped" id="options">
+                <ul>
+                <?php
+                    $getques2 = $db->query("SELECT * FROM questions");  
+                    while($rows2 = $getques2->fetch_assoc()){
+                        $thisid2 = $rows2['QuestionID'];
+                        $thisques2 = $rows2['Question'];
+                        $thisans2 = $rows2['Answer'];
+                        echo "<li class='option2'>$thisid2</li>";
+                    }
+                ?>  
+                </ul>
             </div>
 
-        </div>
-        <div id="exit-drop" class="close"></div>
-        <input type="submit" name="changesubmit" value="Change" class="submit">
-    </form>
-</div>
+            <div class="after-drop">
+                <div class="name">New Answer:</div>
+                <div class="text-field">
+                    <input type="text" required name="newans" placeholder="Enter New Answer">
+                    <span></span>
+                </div>
 
+            </div>
+
+            <div id="exit-drop" class="close"></div>
+
+            <input type="submit" name="changesubmit" value="Change" class="submit">
+        </form>
+    </div>
 </div>
             <?php
             if(isset($_POST['removesubmit'])){
@@ -132,8 +138,7 @@
                 echo "<div class='all-quest'>";
                 while ($row = mysqli_fetch_assoc($res)){
                     echo "<div class='qa-cont'>";
-                    echo "<div class='question'><span class='quest-title'>Question ".$row['QuestionID'].": </span>";                    
-                    echo $row['Question'];
+                    echo "<div class='question'><span class='quest-title'>Question ".$row['QuestionID'].": </span>";                    echo $row['Question'];
                     echo " ~ ".$row['User'];
                     echo "</div>"; 
 
@@ -165,6 +170,9 @@
             return false;
         }
         ?>
-        <script src="dropdown2.js"></script>
+    <script src="dropdown.js"></script>
+    <script src="dropdown-vid.js"></script>
+    <script src="dropdown2.js"></script>
+    <script src="chooseFile.js"></script>
 </body>
 </html>

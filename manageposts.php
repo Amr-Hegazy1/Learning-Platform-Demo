@@ -3,19 +3,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts Manager</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
 
 </head>
 <body>
-<?php include_once("nav.html") ?>
-
 <?php
         $ali = false;
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
-            include "configusers.php";
+            include_once("nav.html");
+            include "configeach.php";
             $getposts = $db->query("SELECT * FROM posts"); //Get available posts?>
     <div class="container">
     <div class="segment">
@@ -36,7 +35,7 @@
                 </div>
 
                 <div class="name">Attachments</div>
-                    <input type="file" id="file-button"required name="attachment" \class="file-input" hidden="hidden">
+                    <input type="file" id="file-button" name="attachment" \class="file-input" hidden="hidden">
                     <label for="file-button" class="choose-file">
                         Choose File :<span id="file-text">No File Chosen</span>
                     </label>
@@ -83,6 +82,7 @@
     <?php
         if(isset($_POST['removesubmit'])){
             $id = $_POST["id"];
+            removeAttach($db, $id);
             $removepostsql = "DELETE FROM `posts` WHERE(`PostID`= '$id')";
             if(!mysqli_query($db, $removepostsql)){
                 echo "<div class='pop-up'>Post not removed</div>";
@@ -91,6 +91,7 @@
             }
         }
         if(isset($_POST['postsubmit'])){
+            $filename ="";
             $h = $_POST['head'];
             $d = $_POST['description'];
             $filename = $_FILES["attachment"]["name"];
@@ -115,15 +116,14 @@
         $res = mysqli_query($db, $viewpostssql);
         $resultCheck = mysqli_num_rows($res);
         if($resultCheck>0){
-            echo "'<div class='table-cont'>
-            <h1 class=table-title>Posts Table</h1><hr>";
+            echo "<h1>Posts Table</h1><hr>";
             $out .="<th>Posts ID</th><th>Header</th><th>Description</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($res)){
                 $out .= "<tr><td>".$row['PostID']."</td>";
                 $out .= "<td>".$row['Header']."</td>";
                 $out .= "<td>".$row['Description']."</td></tr>";
             }
-            $out .="</tbody></table></div>";
+            $out .="</tbody></table>";
             echo $out;
         } else {
             echo "<div class='pop-up'>Empty</div>";
@@ -141,12 +141,21 @@
     }
 
     function validType($filename){
-        $allowed = array('pdf', 'jpg', 'png', 'jpeg', 'pptx');
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if (!in_array($ext, $allowed)) {
-            return false;
+        if($filename != ""){
+            $allowed = array('pdf', 'jpg', 'png', 'jpeg', 'pptx');
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if (!in_array($ext, $allowed)) {
+                return false;
+            }
         }
         return true;
+    }
+
+    function removeAttach($db, $id){
+        $sql = $db->query("SELECT `attachments` FROM `posts` WHERE `PostID` = '$id'");
+        $row = $sql->fetch_assoc();
+        $loc = $row['attachments'];
+        unlink($loc);
     }
 
         ?>

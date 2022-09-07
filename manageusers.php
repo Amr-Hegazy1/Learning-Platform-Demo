@@ -3,7 +3,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users Manager</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/nav-styles.css">
 
 </head>
 <body><?php 
@@ -13,15 +14,20 @@ if(isset($_SESSION['adminloggedin'])){
     $ali = $_SESSION['adminloggedin'];}
 if($ali == true){
     include_once("nav.html");
-    include "configusers.php";
+    include "configeach.php";
     ?>
-    <div class="container-manage-user">
     <div class="container" id="cont-add-admin">
-    <div class="segment single-seg add-user-seg signup-seg">
+    <div class="segment single-seg">
             <h1 class="title">Add User</h1>
             <div class="line"></div>
             <form method="POST" enctype="multipart/form-data">
-            <div class="add-user-cont">
+
+                <div class="name">E-mail</div>
+
+                    <div class="text-field">
+                        <input type="text" required name="username" placeholder="Enter a valid E-mail. This will be your username">
+                        <span></span>
+                    </div>
 
                 <div class="name">First Name</div>
 
@@ -37,18 +43,17 @@ if($ali == true){
                         <span></span>
                     </div>
 
-
                 <select name="gender" id="gender" required hidden="hidden">
                     <option value="M">M</option>
                     <option value="F">F</option>
                 </select>
 
                 <div class="drop-down" id="drop-down">
-                    <div class="name gender-manage" id="assign-drop">Gender: <span id="selected-drop"></span></div>
+                    <div class="name" id="assign-drop">Gender: <span id="selected-drop"></span></div>
                     <div id="drop-button">▼</div>
                 </div>
 
-                <div class="options-cont wide-options gender-options" id="options">
+                <div class="options-cont wide-options" id="options">
                     <ul>
                         <li class='option'>Male</li>
                         <li class='option'>Female</li>
@@ -58,7 +63,7 @@ if($ali == true){
                 <div id="exit-drop" class="close"></div>
 
 
-                    <div class="name">Student's Phone Number</div>
+                <div class="name">Student's Phone Number</div>
 
                     <div class="text-field">
                         <input type="text" required name="snumber" placeholder="Enter Student's Phone Number">
@@ -78,13 +83,6 @@ if($ali == true){
                         <input type="text" required name="school" placeholder="Enter your school. No abbreviations please">
                         <span></span>
                     </div>
-                
-                <div class="name">E-mail</div>
-
-                    <div class="text-field">
-                        <input type="text" required name="username" placeholder="Enter a valid E-mail. This will be your username">
-                        <span></span>
-                    </div>
 
                 <div class="name">Password</div>
 
@@ -100,14 +98,10 @@ if($ali == true){
                         <span></span>
                     </div>
 
-                </div>
                 <input type="submit" name="add" value="Add" class="submit">
             </form>
         </div>
-    </div>
-
-    <div class="container center">
-        <div class="segment add-user-seg-bottom">
+        <div class="segment">
 
             <h1 class="title">Remove User</h1>
             <div class="line"></div>      
@@ -128,12 +122,12 @@ if($ali == true){
 
                 </select>
 
-                <div class="drop-down" id="drop-down2">
+                <div class="drop-down" id="drop-down">
                     <div class="name" id="assign-drop">Username : <span id="selected-drop"></span></div>
                     <div id="drop-button">▼</div>
                 </div>
 
-                <div class="options-cont wide-options" id="options2">
+                <div class="options-cont wide-options" id="options">
                     <ul>
                     <?php
                         $getvr = $db->query("SELECT * FROM users"); 
@@ -153,7 +147,7 @@ if($ali == true){
             </form>
         </div>
     </div>
-</div>
+
     <?php
         if(isset($_POST['add'])){
             $username = $_POST['username'];
@@ -170,7 +164,8 @@ if($ali == true){
                     if(strong($pass)){
                         if(email($username)){
                             $hpass = password_hash($pass, PASSWORD_DEFAULT);
-                            $sql = $db->query("INSERT INTO `users`(`Username`, `Password`, `first name`, `last name`, `gender`, `school`, `phone no`, `parentphone`) VALUES ('$username', '$hpass', '$fname', '$lname', '$gender', '$school', '$snumber', '$pnumber')");                       
+                            $sql = $db->query("INSERT INTO `users`(`Username`, `Password`, `first name`, `last name`, `gender`, `school`, `phone no`, `parentphone`) VALUES ('$username', '$hpass', '$fname', '$lname', '$gender', '$school', '$snumber', '$pnumber')");
+                            $sqlprogress = $db->query("INSERT INTO `progress`('UserID')VALUES('$username')");                      
                             echo "<div class='pop-up'>User Added</div>";
                         }
                     }
@@ -183,10 +178,8 @@ if($ali == true){
             $sqlr = $db->query("DELETE FROM `users` WHERE `Username` = '$user'");
             echo "User Removed";
         }
-        echo "<h1 class='table-title'>Users Table</h1>
-        <hr>";
-        $out = '<div class="table-cont">
-        <table class="table"><thead><tr>';
+
+        $out = '<table class="table"><thead><tr>';
         $viewall = "SELECT * FROM `users`";
         $result = mysqli_query($db, $viewall);
         $resultCheck = mysqli_num_rows($result);
@@ -206,7 +199,7 @@ if($ali == true){
                 $out .="<td>".$row['gender']."</td></tr>";
             }
 
-            $out .="</tbody></table></div>";
+            $out .="</tbody></table>";
             echo $out;
         } else { echo "Empty";}
 }else{
@@ -250,6 +243,9 @@ if($ali == true){
         return true;
     }
 ?>
+    <script src="dropdown.js"></script>
+    <script src="dropdown-vid.js"></script>
     <script src="dropdown2.js"></script>
+    <script src="chooseFile.js"></script>
     </body>
 </html> 

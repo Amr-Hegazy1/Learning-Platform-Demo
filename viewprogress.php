@@ -3,18 +3,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Progress</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/TCD/styles.css">
 
 </head>
 <body>
-<?php include_once("nav.html") ?>
     <?php
         $ali = false;
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
-            include "configusers.php";
+            include_once("nav.html");
+            include "configeach.php";
             $getall =  $db->query("SELECT * FROM `work`");
             while($rows = $getall->fetch_assoc()){
                 $aid = $rows['AssignmentID'];
@@ -28,8 +28,7 @@
                 $per = (($grade / $mg)*100);
                 $insert = $db->query("UPDATE `progress` SET `$aid` = '$per' WHERE `UserID` = '$uid'");
             }
-            $out = '<div class="table-cont">
-            <table class="table"><thead><tr>';
+            $out = '<table class="table"><thead><tr>';
             $arr = getArray($db);
             $count = count($arr);
             $out .="<th>User</th>";
@@ -49,7 +48,7 @@
                 $out .="</tr>";
             }
 
-            $out .="</tbody></table></div>";
+            $out .="</tbody></table>";
 
             echo "$out";
             displayAssignmentDetails($db);
@@ -80,8 +79,6 @@
             while($x = $all->fetch_assoc()){
                 $y = $x['AssignmentID'];
                 array_push($return, $y);
-                //print_r($return); 
-                //echo "<br>";
             }
             return $return;
         }
