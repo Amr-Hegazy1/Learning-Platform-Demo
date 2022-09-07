@@ -27,7 +27,7 @@
 
             <div class="center" id="signup-dir">Not a member?<a href="signup.php">Sign up</a></div>
 
-        <input type="submit" name="loginsubmit" value="Submit" class="submit">
+        <input type="submit" name="loginsubmit" value="Sign in" class="submit">
     </form>
 </div>
     <?php
