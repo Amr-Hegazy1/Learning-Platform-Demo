@@ -20,7 +20,7 @@
         $res = mysqli_query($db, $answersql);
         if(mysqli_num_rows($res)>0){
             while ($question = mysqli_fetch_assoc($res)){
-                echo "<div class='all-quest qa-change admin-ans-cont'>";
+                echo "<div class='qa-change admin-ans-cont'>";
                 echo "<div class='qa-cont'>";
                 echo "<div class='question'><span class='quest-title'>".$question['User']. ": </span>";
                 echo $question['Question'];
@@ -34,7 +34,7 @@
                             <input type="text" required name="answer" placeholder="Enter Your Answer">
                             <span></span>
                         </div>
-                        <input type="submit" name='submitanswer' value="Submit" class="submit qsubmit">
+                        <input type="submit" name='submitanswer' value="Submit" class="submit ">
                     </form>
                     </div>
             </div>

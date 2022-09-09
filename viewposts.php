@@ -21,8 +21,8 @@
             $res = mysqli_query($db, $viewpostssql);
             $resultCheck = mysqli_num_rows($res);
             if($resultCheck>0){
+               echo  "<div class='posts-container'>";
                 while ($row = mysqli_fetch_array($res)){
-                    echo "<div class='all-quest'>";
                     echo "<div class='qa-cont post-cont'>";
                     echo "<h2 class='post-title'>".$row['Header']."</h2>";
                     echo "<hr>";
@@ -35,8 +35,9 @@
                      else {
                         echo '<div class="view-cont"><a href='.$row['attachments'].'>View</a></div>';
                      }
-                     echo "</div></div>";
+                     echo "</div>";
                 }
+                echo "</div>";
             } else {
                 echo "<div class='pop-up'>No posts yet</div>";
             }

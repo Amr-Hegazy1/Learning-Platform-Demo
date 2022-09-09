@@ -4,10 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign in</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="nav-style.css">
 
 </head>
-<body id="sign-body">
+<body>
 <div class="container" id="signin-cont">
         <div class="segment" id="signin-seg">
         <h1 class="title">Sign in</h1>
@@ -26,10 +25,11 @@
                     <span></span>
             </div>
 
-            <div class="center" id="signup-dir">Not a member?<a href="#">Sign up</a></div>
+            <div class="center" id="signup-dir">Not a member?<a href="signup.php">Sign up</a></div>
 
         <input type="submit" name="loginsubmit" value="Submit" class="submit">
     </form>
+</div>
     <?php
         session_start();
         include "configusers.php"; 
@@ -67,7 +67,8 @@
 
                         }
                     }}}
-            
+            header("Refresh:1");
+            echo "<div class='pop-up'>Wrong Credentials</div>";
         }
     ?>
 </body>

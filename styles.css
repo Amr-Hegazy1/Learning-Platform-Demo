@@ -28,6 +28,10 @@ overflow-x: hidden;
     justify-content: space-between;
 }
 
+.posts-container{
+    padding: 1em 0 1em 0;
+}
+
 #cont-add-admin{
     display: flex;
     justify-content: center;
@@ -40,12 +44,6 @@ overflow-x: hidden;
     justify-content: center;
     align-items: center;
     margin: 0;
-}
-
-#signin-seg{
-    width: 80vw;
-    height: 62vh;
-    max-width: 600px;
 }
 
 #signin-seg .title{
@@ -140,6 +138,7 @@ video {
     color: white;
     width: 45vw;
     height:350px;
+    max-width: 800px;
     background-color: #006ff9;
     border-radius: 15px;
     margin: 0;
@@ -147,9 +146,39 @@ video {
     box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
 }
 
+
 .single-seg{
     width: 65vw;
     min-width: 300px;
+}
+
+.reset-seg{
+    height: 400px;
+}
+
+#signin-seg{
+    width: 80vw;
+    height: 420px;
+}
+
+.add-user-seg,.add-user-seg-bottom{
+    width: 90vw;
+    height: 450px;
+    overflow-y: auto;
+}
+
+.add-user-seg .submit{
+    position: relative;
+    margin-top: 3em;
+    margin-bottom: 0.4em;
+}
+
+.add-user-seg .name{
+    font-size: 0.9em;
+}
+
+.add-user-seg .drop-down{
+    margin: 1.5em 0 1.5em 0;
 }
 
 .add-video-segment{
@@ -249,6 +278,7 @@ input:focus::placeholder {
 }
 
 .drop-down{
+    font-size: 1.2em;
     border: 3px solid white;
     padding: 0.3em 0.6em;
     border-radius: 15px;
@@ -308,6 +338,7 @@ input:focus::placeholder {
     z-index: 701; /*More than exit options*/;
 }
 
+
 .remove-ans-wrapped,.change-acc-warpped,.change-ans-wrapped{
     top: 148px;
 }
@@ -317,7 +348,7 @@ input:focus::placeholder {
 }
 
 .wide-options{
-    width:150px;
+    width:auto;
 }
 
 .open-options{
@@ -325,11 +356,19 @@ input:focus::placeholder {
     transition: 0.5s;
 }
 
+.open-optionsg{
+    height: 61px;
+    transition: 0.4s;
+}
+
+.add-user-seg .options-cont{
+    top: 258px;
+}
 
 .options-cont li{
     display: flex;
     justify-content: center;
-    padding-top: 0.1em;
+    padding: 0.2em 1em;
 }
 
 .options-cont li:hover{
@@ -349,7 +388,7 @@ input:focus::placeholder {
 }
 
 .avai-options-open{
-    height: 51px;
+    height: 61px;
     transition: 0.4s;
 }
 
@@ -443,6 +482,20 @@ input:focus::placeholder {
     text-align: center;
 }
 
+#reset-desc{
+    margin-top: 0.5em;
+    font-size: 1em;
+}
+
+.check-cont{
+    margin-top: 0.5em;
+    margin-left: 0.9em;
+}
+
+.check-cont label{
+    font-size: 1em;
+}
+
 .post-title{
     text-align: center;
 }
@@ -512,8 +565,6 @@ input:focus::placeholder {
     transition: 0.5s;
 }
 
-
-
 .pop-up{
     font-size: 1.5rem;
     margin: 1em;
@@ -528,6 +579,10 @@ input:focus::placeholder {
 
 .qa-change input{
     font-size: 1rem;
+}
+
+.admin-ans-cont .submit{
+    font-size: 0.8em;
 }
 
 .qa-change input::placeholder{
@@ -577,7 +632,7 @@ input:focus::placeholder {
     border-radius: 0 10px 0 0;
 }
 
-.table::-webkit-scrollbar,.table-cont::-webkit-scrollbar,.all-quest::-webkit-scrollbar{
+.table::-webkit-scrollbar,.table-cont::-webkit-scrollbar,.all-quest::-webkit-scrollbar,.add-user-seg::-webkit-scrollbar{
     height: 8px;
     width:8px;
 }
@@ -585,16 +640,22 @@ input:focus::placeholder {
 .options-cont::-webkit-scrollbar{
     height: 3px;
     width: 3px;
+    margin-right: 0.2em;
 }
 
 /* Track */
-.table::-webkit-scrollbar-track,.table-cont::-webkit-scrollbar-track,.options-cont::-webkit-scrollbar-track,.all-quest::-webkit-scrollbar-track{
+.table::-webkit-scrollbar-track,.table-cont::-webkit-scrollbar-track,.options-cont::-webkit-scrollbar-track,.all-quest::-webkit-scrollbar-track,.add-user-seg::-webkit-scrollbar-track{
     background:transparent;
 }
 
 /* Handle */
 .table::-webkit-scrollbar-thumb,.table-cont::-webkit-scrollbar-thumb,.options-cont::-webkit-scrollbar-thumb,.all-quest::-webkit-scrollbar-thumb{
     background-color:#c2c2c2;
+    border-radius: 10px;
+}
+
+.add-user-seg::-webkit-scrollbar-thumb{
+    background-color: white;
     border-radius: 10px;
 }
 
@@ -627,11 +688,27 @@ input:focus::placeholder {
 
 @media screen and (min-width: 600px){
     .title{
-        font-size: 1.8em;
+        font-size: 2em;
+    }
+
+    .add-user-seg .options-cont{
+        top: 552px;
     }
 
     .segment{
         height: 430px;
+    }
+
+    .add-user-seg,.add-user-seg-bottom{
+        height:500px;
+    }
+
+    #reset-desc{
+        font-size: 1.2em;
+    }
+
+    .check-cont label{
+        font-size: 1.1em;
     }
 
     #login-seg{
@@ -641,6 +718,10 @@ input:focus::placeholder {
 
     .name{
         font-size: 1.1em;
+    }
+
+    .add-user-seg .name{
+        font-size: 1.3em;
     }
 
     #assign-drop{
@@ -657,23 +738,27 @@ input:focus::placeholder {
 
     .text-field input{
         margin-top: 0.2em;
-        height: 40px;
+        height: 35px;
     }
 
     .text-field span::before{
-        top: 44px;
+        top: 38px;
     }
 
     ::placeholder{
         font-size: 0.9em;
     }
 
-    .submit{
-        font-size: 1em;
+    .options-cont{
+        top: 136px;
     }
 
-    .options-cont{
-        top: 130px;
+    .add-user-seg .title{
+        margin-top: 0.55em;
+    }
+
+    .add-user-seg li{
+        padding-left: 1em;
     }
 
     .change-acc-warpped{
@@ -697,10 +782,39 @@ input:focus::placeholder {
     .text-field input{
         font-size: 1rem;
     }
+
+    .add-user-seg .options-cont{
+        top: 330px;
+    }
+
+    .submit,.admin-ans-cont .submit{
+        font-size: 1em;
+    }
+
+    .avai-options{
+        top: 390px;
+    }
+
+    .add-video-segment{
+        height: 480px;
+    }
+    .drop-down-avai #selected-drop{
+        font-size: 0.85em
+    }
 }
 
 @media screen and (min-width: 676px){
     .change-acc-warpped{
         top: 130px;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .container-manage-user{
+        display: flex;
+        justify-content: center;
+    }
+    .container-manage-user .segment{
+        width: 45vw;
     }
 }

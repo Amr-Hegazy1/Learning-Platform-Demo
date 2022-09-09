@@ -51,7 +51,7 @@
                             </select>
 
                             <div class="drop-down drop-down-avai" id="drop-down">
-                                <div class="name" id="assign-drop">Availability : <span id="selected-drop"></span></div>
+                                <div class="name" id="assign-drop">Availability: <span id="selected-drop"></span></div>
                                 <div id="drop-button">▼</div>
                             </div>
                             <div class="options-cont avai-options avai-options-wrapped" id="options">

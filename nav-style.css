@@ -66,6 +66,13 @@ li{
   
 }
 
+.nav-cont{
+  margin:5em 0 0 1em;
+  padding-bottom: 1em;
+  overflow-y: scroll;
+  height: 85vh;
+}
+
 .right-col a:hover::after{
   width: 100%;
   transition: 0.5s;
@@ -78,8 +85,6 @@ li{
 }
 
 .right-col{
-  margin-top: 5em;
-  margin-left: 1em;
   font-size: 1.2em;
   list-style: none;
 }
@@ -95,9 +100,6 @@ li{
   text-decoration: none;
 }
 
-.right-col li a:hover{
-  
-}
 .close{
   display: none;
 }
@@ -172,4 +174,25 @@ li{
   z-index: 800;
   background-color: black;
   opacity: 0.5;
+}
+
+.nav-cont::-webkit-scrollbar{
+  height: 8px;
+  width:8px;
+}
+
+/* Track */
+.nav-cont::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+/* Handle */
+.nav-cont::-webkit-scrollbar-thumb{
+  background-color:#c2c2c2;
+  border-radius: 10px;
+}
+
+.nav-cont::-webkit-scrollbar-thumb{
+  background-color: white;
+  border-radius: 10px;
 }
