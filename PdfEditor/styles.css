@@ -1,5 +1,6 @@
 body {
-    background-color: rgb(82, 86, 89);
+    background-color: white;
+    
 }
 
 
@@ -8,6 +9,8 @@ canvas, .canvas-container {
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    
+    
 }
 
 .toolbar {
@@ -24,6 +27,8 @@ canvas, .canvas-container {
     margin-top: 60px;
     padding-left: 10px;
     text-align: center;
+    transform-origin: 50% 0%;
+    
 }
 
 button:focus {

@@ -1,24 +1,38 @@
 $(".spinner-border").show();
+$("#pdf-editor").hide();
 var paramString = window.location.href.split('?')[1];
 var queryString = new URLSearchParams(paramString);
 
 workFile = queryString.get("workFile");
 
+let undoStack = [];
 
+let redoPageStack = [];
 	
+let zoom = 1;
+
+let originalHeight = 0;
+
   
 pdf = new PDFAnnotate('pdf-container',"../PdfEditor/fetch_pdf.php?workFile="+workFile , {
-  onPageUpdated(page, oldData, newData) {
+  onPageUpdated(page, oldData, newData,objs) {
     console.log(page, oldData, newData);
+    undoStack.push(page-1);
   },
   ready() {
     console.log('Plugin initialized successfully');
     $(".spinner-border").hide();
     pdf.loadFromJSON(sampleOutput);
+    $("#pdf-editor").show();
+    $("body").css({"background-color":"rgb(82, 86, 89)"});
+    originalHeight =  $("#pdf-container").height();
+    pdf.enablePointer();
   },
   scale: 1.5,
   pageImageCompression: 'FAST', // FAST, MEDIUM, SLOW(Helps to control the new PDF file size)
 });
+
+
 
 
 
@@ -34,6 +48,12 @@ function enableSelector(event) {
   event.preventDefault();
   changeActiveTool(event);
   pdf.enableSelector();
+}
+
+function enablePointer(event) {
+  event.preventDefault();
+  changeActiveTool(event);
+  pdf.enablePointer();
 }
 
 function enablePencil(event) {
@@ -74,11 +94,26 @@ function deleteSelectedObject(event) {
   pdf.deleteSelectedObject();
 }
 
+function undo(event) {
+  event.preventDefault();
+  var undone = undoStack.pop();
+  redoPageStack.push(undone);
+  pdf.undo(undone);
+}
+function redo(event,page) {
+  event.preventDefault();
+  pdf.redo(redoPageStack.pop());
+}
+
+
 function savePDF() {
   // pdf.savePdf();
+  $("body").css({"background-color":"white"});
   $(".spinner-border").show();
+
   pdf.savePdf('output.pdf'); // save with given file name
   $(".spinner-border").hide();
+  $("body").css({"background-color":"rgb(82, 86, 89)"});
   
 }
 
@@ -94,6 +129,31 @@ function showPdfData() {
     PR.prettyPrint();
     $('#dataModal').modal('show');
   });
+}
+
+function zoomIn(){
+  zoom += 0.25;
+  if(zoom > 0 & zoom < 4){
+    $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
+    $("#pdf-container").height(originalHeight);
+    $("#pdf-editor").height(originalHeight);
+  }
+}
+
+function zoomOut(){
+  zoom -= 0.25;
+  if(zoom > 0 && zoom < 1){
+    $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
+    $("#pdf-container").height(originalHeight*zoom);
+    $("#pdf-editor").height(originalHeight*zoom);
+  }else if(zoom >= 1){
+    $("#pdf-container").css({"transform":"scale("+ zoom + ")"});
+    $("#pdf-container").height(originalHeight);
+    $("#pdf-editor").height(originalHeight);
+  }
+  if (zoom < 0)
+    zoom = 0.25;
+  
 }
 
 $(function () {
@@ -114,6 +174,22 @@ function changeColor(e){
 }
 
 document.onkeydown = function (e) {
+  
   if (e['key'] == "Delete")
     deleteSelectedObject(e);
+
+  
+    if( e.which === 90 && (e.ctrlKey || e.metaKey) && e.shiftKey ){
+      redo(e); 
+   }
+   else if( e.which === 90 && (e.ctrlKey || e.metaKey) ){
+      
+      undo(e); 
+   }          
+  
+
+  
+  
 };
+
+
