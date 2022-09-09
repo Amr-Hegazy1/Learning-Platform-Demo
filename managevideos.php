@@ -37,13 +37,11 @@
                                 <span></span>
                             </div>
 
-                        <div class="name">Attach Video</div>
-
-                                <input type="file" id="file-button" required name="file" class="file-input" hidden="hidden">
-                                <label for="file-button" class="choose-file">
-                                    Choose File :<span id="file-text">No File Chosen</span>
-                                </label>
-                                <span></span>
+                            <input type="file" id="file-button" required name="file" class="file-input" hidden="hidden">
+                            <label for="file-button" class="choose-file">
+                                Choose Video :<span id="file-text">No File Chosen</span>
+                            </label>
+                            <span></span>
 
                             <select name="accessbit" id="id" required hidden="hidden">
                                 <option value="1">Available</option>
@@ -51,7 +49,7 @@
                             </select>
 
                             <div class="drop-down drop-down-avai" id="drop-down">
-                                <div class="name" id="assign-drop">Availability: <span id="selected-drop"></span></div>
+                                <div class="name" id="assign-drop">Availability : <span id="selected-drop"></span></div>
                                 <div id="drop-button">▼</div>
                             </div>
                             <div class="options-cont avai-options avai-options-wrapped" id="options">

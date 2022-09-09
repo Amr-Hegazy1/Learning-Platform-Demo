@@ -57,6 +57,7 @@
             <form method="POST" enctype="multipart/form-data">
                 <input type="submit" name="export" value="Download" class="submit">
             </form>
+            </div> 
             <?php
             if(isset($_POST["export"])){
                 header('Content-Type: application/xls');
@@ -88,14 +89,11 @@
 
         function displayAssignmentDetails($db){
             $all = $db->query("SELECT * FROM `assignments`");
-            echo "<div class='all-quest'>";
             echo "<div class='qa-cont'>";
             while($x = $all->fetch_assoc()){
                 echo $x['AssignmentID']." : ";
                 echo $x['Description']."<br>";
-            }
-            echo "</div>";     
-            echo "</div>";   
+            }     
         }
 
 

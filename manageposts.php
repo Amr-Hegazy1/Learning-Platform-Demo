@@ -35,7 +35,6 @@
                     <span></span>
                 </div>
 
-                <div class="name">Attachments</div>
                     <input type="file" id="file-button"required name="attachment" \class="file-input" hidden="hidden">
                     <label for="file-button" class="choose-file">
                         Choose File :<span id="file-text">No File Chosen</span>

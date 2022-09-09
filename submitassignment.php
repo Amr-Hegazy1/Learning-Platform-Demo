@@ -18,7 +18,7 @@
             $getavas = $db->query("SELECT * FROM assignments"); //Get available assignments?>
                         <div class="container center">
                     <div class="segment">
-                    <h1 class="title">Post</h1>
+                    <h1 class="title">Submit</h1>
                     <div class="line"></div>
                     <form method="POST" enctype="multipart/form-data">
                         <select name='id' id='id' hidden="hidden">
@@ -50,8 +50,6 @@
                     </ul>
                 </div>
                 <div id="exit-drop" class="close"></div>
-
-                        <div class="name" id="submit-attachment">Attachments</div>
                         <input type="file" id="file-button"required name="work" class="file-input" hidden="hidden">
                         <label for="file-button" class="choose-file">
                             Choose File :<span id="file-text">No File Chosen</span>
