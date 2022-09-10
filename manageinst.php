@@ -30,7 +30,7 @@
             </div>
 
             <div class="name">Attach Image</div>
-                <input type="file" id="file-button" required name="cimage" class="file-input" hidden="hidden">
+                <input type="file" id="file-button" required name="iimage" class="file-input" hidden="hidden">
                 <label for="file-button" class="choose-file">
                     Choose Image :<span id="file-text">No Image Chosen</span>
                 </label>
@@ -92,7 +92,7 @@ if($_SESSION['manager']){?>
                 <div class="name" id="assign-drop">Instructor : <span id="selected-drop"></span></div>
                 <div id="drop-button">▼</div>
             </div>
-            <div class="options-cont" id="options">
+            <div class="options-cont wide-options" id="options">
                 <ul>
                 <?php
                     $results1 = $dbc->query("SELECT * FROM `instructors`"); 
