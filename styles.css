@@ -373,6 +373,10 @@ input:focus::placeholder {
     padding: 0.2em 1em;
 }
 
+.database-options{
+    transform: translateY(66px);
+}
+
 .options-cont li:hover{
     background-color: var(--primary-color);
     color: white;
@@ -799,7 +803,7 @@ input:focus::placeholder {
     }
 
     .add-user-seg .options-cont{
-        top: 330px;
+        top: 325px;
     }
 
     .submit,.admin-ans-cont .submit{
@@ -816,6 +820,10 @@ input:focus::placeholder {
 
     .drop-down-avai #selected-drop{
         font-size: 0.85em
+    }
+
+    .database-options{
+        transform: translateY(70px);
     }
 }
 
