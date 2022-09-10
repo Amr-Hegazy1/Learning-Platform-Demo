@@ -186,7 +186,7 @@ if($_SESSION['manager']){
 
                     </select>
                     <div class="drop-down" id="drop-down3">
-                        <div class="name" id="assign-drop">Video ID : <span id="selected-drop3"></span></div>
+                        <div class="name" id="assign-drop">Instructor ID : <span id="selected-drop3"></span></div>
                         <div id="drop-button">▼</div>
                     </div>
                     <div class="options-cont" id="options3">
