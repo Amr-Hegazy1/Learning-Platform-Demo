@@ -3,12 +3,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning Platform</title>
-    <link rel="stylesheet" href="styles.css">
-    <!--<link rel="icon" href="http://localhost/TCD/images/icon.jpg">-->
-
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/nav-style.css">
 
 </head>
-<body>
+<body> <?php session_start(); ?>
 <div class="container" id="signin-cont">
     <div class="segment add-user-seg">
         <h1 class="title">Sign Up</h1>
@@ -88,16 +87,46 @@
                     <span></span>
                 </div>
             
-                <div class="center" id="signup-dir">Already a member?<a href="signin.php">Sign in</a></div>
+            <input type="radio" name="online" id="online" value="online" />
+                <label for="contact_email">Pay Online</label>
+
+            <input type="radio" name="cash" id="cash" value="cash" />
+                <label for="contact_phone">Pay in cash at centre</label><br> <?php if(isset($_POST['online'])){ ?>
+
+            <div class="name">Card Number</div>
+
+                <div class="text-field">
+                    <input type="text" name="cnumber" placeholder="Enter Card Number">
+                    <span></span>
+                </div>
+
+            <div class="name">CVV</div>
+
+                <div class="text-field">
+                    <input type="text" required name="cvv" placeholder="Enter CVV">
+                    <span></span>
+                </div>
+
+            <div class="name">Expiry</div>
+
+                <div class="text-field">
+                    <input type="text" required name="expiry" placeholder="Enter expiry">
+                    <span></span>
+                </div>
+
+            <?php } ?>
 
             <input type="submit" name="add" value="Proceed to checkout" class="submit">
+
+            <div class="center" id="signup-dir">Already a member?<a href="signin.php">Sign in</a></div>
+
         </form>
     </div>
     <div id="exit-drop" class="close"></div>
 </div>
 
 <?php
-    include "configusers.php";
+    include "configeach.php";
     if(isset($_POST['add'])){
         $username = $_POST['username'];
         $fname = $_POST['fname'];
@@ -112,8 +141,10 @@
             if($pass == $repass){
                 if(strong($pass)){
                     if(email($username)){
+                        $paid = checkPayment();
                         $hpass = password_hash($pass, PASSWORD_DEFAULT);
-                        $sql = $db->query("INSERT INTO `users`(`Username`, `Password`, `first name`, `last name`, `gender`, `school`, `phone no`, `parentphone`) VALUES ('$username', '$hpass', '$fname', '$lname', '$gender', '$school', '$snumber', '$pnumber')");
+                        $sql = $db->query("INSERT INTO `users`(`Username`, `Password`, `first name`, `last name`, `gender`, `school`, `phone no`, `parentphone`, `paid`) VALUES ('$username', '$hpass', '$fname', '$lname', '$gender', '$school', '$snumber', '$pnumber', '$paid')");
+                        $sql2 = $db->query("INSERT INTO `progress`(`UserID`) VALUES ('$username')");
                         header("Location:signin.php");                  
                     }
                 }
@@ -156,7 +187,14 @@
           }
         return true;
     }
+
+    function checkPayment(){
+        if(isset($_POST['cnumber']) && isset($_POST['cvv']) && isset($_POST['expiry']) && isset($_POST['online'])){
+            return 1;
+        }
+        return 0;
+    }
 ?>
-<script src="dropdown.js"></script>
+<script src="styles/dropdown.js"></script>
 </body>
 </html>

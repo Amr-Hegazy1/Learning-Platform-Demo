@@ -3,11 +3,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Manager</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/nav-style.css">
+
 
 </head>
 <body>
-<?php include_once("nav.html") ?>
 
     <?php
         $ali = false;
@@ -15,11 +16,13 @@
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
-            include "configusers.php";
+            include_once("nav.html");
+            include "configeach.php";
+            $selected = $_SESSION['selected'];
             ?>
             <div class="container">
                 <div class="segment add-video-segment">
-                    <h1 class="title">Add</h1>
+                    <h1 class="title">Add Video</h1>
                     <div class="line"></div>
                     <form method="POST" enctype="multipart/form-data">
 
@@ -51,10 +54,10 @@
                             </select>
 
                             <div class="drop-down drop-down-avai" id="drop-down">
-                                <div class="name" id="assign-drop">Availability: <span id="selected-drop"></span></div>
+                                <div class="name" id="assign-drop">Availability : <span id="selected-drop"></span></div>
                                 <div id="drop-button">▼</div>
                             </div>
-                            <div class="options-cont avai-options avai-options-wrapped" id="options">
+                            <div class="options-cont avai-options" id="options">
                                 <ul> 
                                     <li class="option">Available</li>
                                     <li class="option">Unavailable</li>
@@ -70,7 +73,7 @@
 
         $getvr = $db->query("SELECT * FROM `videos`");
 
-        if(isset($_POST['submit'])){
+        if(isset($_POST['submit']) && isset($_POST['accessbit'])){
 
             $testid = $_POST['id'];
 
@@ -83,7 +86,7 @@
                     $testaccessbit = $_POST["accessbit"];
                     $filename = $_FILES["file"]["name"];
                     $tempname = $_FILES["file"]["tmp_name"];
-                    $folder = "videos/" . $filename;
+                    $folder = "videos/".$selected."/".$filename;
 
                     if(notExists($folder, $db, "VideoLocation", "videos")){
 
@@ -106,12 +109,12 @@
     ?>
                 <div class="segment add-video-segment">
 
-                    <h1 class="title">Remove</h1>
+                    <h1 class="title">Remove Video</h1>
                     <div class="line"></div>      
 
                     <form method="POST" enctype="multipart/form-data">
 
-                        <select name='id2' id='id2' hidden="hidden">
+                        <select name='id2' id='id2' required hidden="hidden">
 
                             <?php
                                 while($rows = $getvr->fetch_assoc()){
@@ -145,10 +148,9 @@
 
                     </form>
                 </div>
-            </div>
 
             <?php
-                if(isset($_POST['removesubmit'])){
+                if(isset($_POST['removesubmit']) && isset($_POST['id2'])){
 
                     $rid = $_POST['id2'];
                     $rvsql = "DELETE FROM `videos` WHERE `VideoID`= '$rid'";
@@ -162,10 +164,11 @@
                     }            
                 }
             ?>
-            <div class="container center">
-                <div class="segment add-video-segment single-segment">
+            </div>
+            <div class="container">
+                <div class="segment add-video-segment">
                     
-                <h1 class="title">Change Accessibilty</h1>
+                <h1 class="title" id="change-acc">Change Accessibilty</h1>
                 <div class="line"></div>
 
                 <form method="POST" enctype="multipart/form-data">
@@ -192,7 +195,7 @@
                         <div id="drop-button">▼</div>
                     </div>
 
-                    <div class="options-cont change-acc-warpped" id="options3">
+                    <div class="options-cont" id="options3">
                         <ul>
                         <?php
                             $getav = $db->query("SELECT * FROM videos");
@@ -211,14 +214,10 @@
 
                     </form>
                 </div>
-            </div>
         </div>
-
-        <h1 class="table-title">Videos Table</h1>
-        <hr>
     <?php
 
-        if(isset($_POST['complementsubmit'])){
+        if(isset($_POST['complementsubmit']) && isset($_POST['id'])){
 
             $idtobeset = $_POST['id'];
             $getaccess = $db->query("SELECT `Accessebility` FROM `videos` WHERE `VideoID` = '$idtobeset'");
@@ -229,14 +228,14 @@
 
             $sqlset = "UPDATE `videos` SET Accessebility = $newaccess WHERE `VideoID` = $idtobeset";
             $setresult = mysqli_query($db, $sqlset);
-            echo "<div class='pop-up'>Change Made!</div>";
+            ?><div class='pop-up'>Change Made!</div><?php
         }
-        $out = '<div class="table-cont">
-                <table class="table"><thead><tr>';
+
+        $out = '<table class="table"><thead><tr>';
         $viewall = "SELECT * FROM videos;";
         $result = mysqli_query($db, $viewall);
         $resultCheck = mysqli_num_rows($result);
-
+        echo '<h1 class="table-title">Videos Table</h1>';
         if($resultCheck>0){
 
             $out .="<th>VideoID</th><th>VideoName</th><th>Accessibility</th></tr></thead><tbody>";
@@ -253,7 +252,7 @@
             $out .="</tbody></table>";
             echo $out;
 
-        } else { echo "<div class='pop-up'>Empty</div>";} 
+        } else { echo "<div class='pop-up'>No videos yet</div>";} 
 
     }else{  
         echo "Access denied<br>";
@@ -312,7 +311,7 @@
         }
     }
     ?>
-    <script src="chooseFile.js"></script>
-    <script src="dropdown-vid.js"></script>
+    <script src="styles/chooseFile.js"></script>
+    <script src="styles/dropdown-vid.js"></script>
 </body>
 </html>

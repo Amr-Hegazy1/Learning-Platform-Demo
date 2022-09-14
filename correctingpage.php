@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Correcting</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 
 </head>
 <body>
@@ -13,17 +13,19 @@
     if(isset($_SESSION['assistantloggedin'])){
         $li = $_SESSION['assistantloggedin'];}
     if($li){
-        include "configusers.php";
+        include "configeach.php";
         $wid = $_SESSION['wid'];
+        getMaxGrade($db, $wid);
         $a = $_SESSION['assistant'];
         $opensql = "SELECT * FROM work WHERE `WorkID` = '$wid'";
         $res = mysqli_query($db, $opensql);
         if(mysqli_num_rows($res)>0){
             while ($work = mysqli_fetch_assoc($res)){
             ?>
-                <embed src="./PdfEditor/index.php?workFile=<?php echo $_GET["workFile"]?>" style="height: 85%;width: 90%;">  <br><br>              <form method="POST" enctype="multipart/form-data">
-                    Comments: <input type="text" name="comments">
-                    Grade: <input type="number" name="grade">
+                <embed src="./PdfEditor/index.php?workFile=<?php echo $_GET["workFile"]?>" style="height: 85%;width: 90%;">  <br><br>              
+                <form method="POST" enctype="multipart/form-data">
+                    Comments: <input type="text" required name="comments">
+                    Grade: <input type="number" required name="grade">
                     <input type="submit" name='returnsubmit' value="Return">
                 </form>
             <?php
@@ -44,8 +46,20 @@
             echo "<div class='pop-up'>File not found</div>";
         }
     }else{
-                        echo "Access denied<br>";
+            echo "Access denied<br>";
             echo '<a href="signin.php">Go Home</a><br>';;
+        }
+
+        function getMaxGrade($db, $id){
+            $sql = $db->query("SELECT `AssignmentID` FROM `work` WHERE `WorkID`='$id' LIMIT 1");
+            if($row = $sql->fetch_assoc()){
+                $aid = $row['AssignmentID'];
+            }
+            $sql2 = $db->query("SELECT `MaxGrade` FROM `assignments` WHERE `AssignmentID`='$aid'");
+            if($x = $sql2->fetch_assoc()){
+                $y = $x['MaxGrade'];
+            }
+            return "/$y";
         }
     ?>
 </body>

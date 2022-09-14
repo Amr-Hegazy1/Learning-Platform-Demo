@@ -3,22 +3,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment Submission</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
 
 </head>
 <body>    
-    <?php include_once("nav-user.html"); ?>
     <?php
         $li = false;
         session_start();
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
-            include "configusers.php";
+            include_once("nav-user.html");
+            echo "<h1 class='center-header'>Assignments</h1>";
+            include "configeach.php";
             $getavas = $db->query("SELECT * FROM assignments"); //Get available assignments?>
                         <div class="container center">
                     <div class="segment">
-                    <h1 class="title">Post</h1>
+                    <h1 class="title">Submit</h1>
                     <div class="line"></div>
                     <form method="POST" enctype="multipart/form-data">
                         <select name='id' id='id' hidden="hidden">
@@ -79,7 +80,7 @@
 
                 $filename = $_FILES["work"]["name"];
                 $tempname = $_FILES["work"]["tmp_name"];
-                $folder = "work/" . $filename;
+                $folder = "work/".$selected."/" . $filename;
                 if(validType($filename)){
                     move_uploaded_file($tempname, $folder);
                     date_default_timezone_set('Africa/Cairo');
@@ -90,24 +91,22 @@
                     } else {
                         $latebit = 0;
                         echo "<div class='pop-up'>You submitted on time</div>";
-                        header("Refreh:1");
                     }
                     $insertworksql = "INSERT INTO `work`(`UserID`, `AssignmentID`, `WorkFile`, `Late`)VALUES('$username', '$inputid', '$folder', '$latebit')";
                     if(!mysqli_query($db, $insertworksql)){
                         echo "<div class='pop-up'>Error</div>";
                     } else {
                         echo "<div class='pop-up'>Submitted</div>";
-                        header("Refresh:1");
                     }
                 } else {echo "<div class='pop-up'>You must submit as .pdf";}
             }else{echo "<div class='pop-up'>You have already submitted this assignment</div>";}
         }
-        $viewassignmentssql = "SELECT * FROM assignments";
+
+
+        $viewassignmentssql = "SELECT * FROM assignments ORDER BY DueDate ASC";
         $res = mysqli_query($db, $viewassignmentssql);
         $resultCheck = mysqli_num_rows($res);
-        echo "<h1 class='table-title'>Assignments Table</h1><hr>";
-        $out = '<div class="table-cont">
-        <table class="table"><thead><tr>';
+        $out = '<table class="table"><thead><tr>';
         if($resultCheck>0){
             $out .="<th>Assignment ID</th><th>Description</th><th>Due Date</th><th>Done</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($res)){
@@ -119,11 +118,11 @@
             $out .="</tbody></table>";
             echo $out;
         } else {
-            echo "No Assignments yet";
+            echo "<div class='pop-up'>No Assignments yet</div>";
         } 
     }else{
-                    echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';;
+        echo "Access denied<br>";
+        echo '<a href="signin.php">Go Home</a><br>';;
     }
     function alreadySubmitted($u, $aid, $db){
         $checksql = "SELECT * FROM `work` WHERE `UserID` = '$u' AND `AssignmentID` = '$aid'";
@@ -148,7 +147,9 @@
         return true;
     }
     ?>
-    <script src="dropdown.js"></script>
-    <script src="chooseFile.js"></script>
+    <script src="styles/dropdown.js"></script>
+    <script src="styles/dropdown-vid.js"></script>
+    <script src="styles/dropdown2.js"></script>
+    <script src="styles/chooseFile.js"></script>
 </body>
 </html>

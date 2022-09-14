@@ -3,28 +3,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assistant Home</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
 
 </head>
 <body>
     <?php
-        include_once("nav-assistant.html");
         session_start();
         $loggedin = false;
         if(isset($_SESSION['assistantloggedin'])){$loggedin = $_SESSION['assistantloggedin'];}
         if($loggedin){
+            include_once("nav-assistant.html");
             $u = $_SESSION['assistant'];
-            echo "<h1 id='welcome'>Welcome $u!</h1>";
-            echo "<div id='welcome-desc'>
-                    Here is a quick tutorial to show you around
-                </div>";
-            echo "<div class='vid-cont'>
-                <video width='640' height='400' src = './videos/orientation.mp4' controls></video><br>';
-            </div>";
+            $name = getName($u);
+            echo "<h1 id='welcome'>Welcome $name!</h1>";
         }else {
             echo "Access denied<br>";
             echo '<a href="signin.php">Go Home</a><br>';
 
+        }
+
+        function getName($email){
+            $name = strstr($email, '@', true);
+            return $name;             
         }
     ?>
 </body>

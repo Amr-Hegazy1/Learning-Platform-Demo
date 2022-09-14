@@ -3,8 +3,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning Platform</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="nav-style.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/nav-style.css">
 </head>
 <body>
 <?php 
@@ -15,7 +15,7 @@ include_once "nav-index.html";
         <h1 class="website-title">
             Best e-learning  platform
         </h1>
-        <img src="images/Hero-right-pic-lower-shadow.png" alt="Preview">
+        <img src="images/background.jpg" alt="Preview">
         <div class="website-desc">
             Learn today with many new features to make your life easier.
         </div>
@@ -32,11 +32,12 @@ while($row = $sql->fetch_assoc()){
     $thisd = $row['D'];
     $thisimg = $row['Image'];
     $thisprice = $row['Price'];
+    $thisinst = $row['Instructor'];
     echo "<a class='course' href='$thisd.php' >";
     //echo "<img src=$thisimg><br>";
     echo "<img src='$thisimg'>";
     echo "<div class='course-title'>$thistitle</div>";
-    echo "<div class='course-inst'>By <span class=inst-name>Zlatan</span></div>";
+    echo '<div class="course-inst">By <span class=inst-name>'.$thisinst.'</span></div>';
     echo "<div class='course-price'>$$thisprice</div>";
     echo "</a>";
     // $i+=1;

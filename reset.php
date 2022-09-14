@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Format</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 
 </head>
 <body>
@@ -13,7 +13,8 @@
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
-            include_once("nav.html");?>
+            include_once("nav.html");
+            $selected = $_SESSION['selected'];?>
         
             <div class="container center">
                 <div class="segment single-seg reset-seg">
@@ -57,7 +58,7 @@
             </div>
 
         <?php 
-            include "configusers.php";
+            include "configeach.php";
             if(isset($_POST['format'])&&isset($_POST["tables"])){
 
                 $tables = $_POST["tables"];
@@ -81,9 +82,8 @@
 
                 }
 
-                clearProgCols($db);
+                clearProgCols($db, $selected);
             }
-
         }else{
             echo "Access denied<br>";
             echo '<a href="signin.php">Go Home</a><br>';;
@@ -124,16 +124,16 @@
             }
         }
 
-        function clearProgCols($db){
-            $array = getProgColNames($db);
+        function clearProgCols($db, $selected){
+            $array = getProgColNames($db, $selected);
             $len = count($array);
             for($i = 0; $i < $len; $i++){
                 $sql = $db->query("ALTER TABLE `progress` DROP COLUMN `$array[$i]`");
             }
         }
 
-        function getProgColNames($db){
-            $sql = $db->query("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='users' AND `TABLE_NAME`='progress'");
+        function getProgColNames($db, $selected){
+            $sql = $db->query("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='$selected' AND `TABLE_NAME`='progress'");
             $array = array();
             while($row = $sql->fetch_assoc()){
                 $name = $row['COLUMN_NAME'];

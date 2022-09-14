@@ -3,24 +3,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assistants Manager</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
 
 </head>
 <body>
-<?php include_once("nav.html") ?>
-
 <?php
         $ali = false;
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
-            include "configusers.php";
+            include_once("nav.html");
+            include "configeach.php";
             $getavas = $db->query("SELECT * FROM assistants"); //Get available assistants
             ?>
         <div class="container">
         <div class="segment">
-            <h1 class="title">Add</h1>
+            <h1 class="title assistant-title">Add Assistant</h1>
             <div class="line"></div>
             <form method="POST" enctype="multipart/form-data">
 
@@ -49,44 +48,51 @@
 
         <div class="segment">
 
-            <h1 class="title">Remove</h1>
+            <h1 class="title assistant-title">Remove Assistant</h1>
             <div class="line"></div>
+
             <form method="POST" enctype="multipart/form-data">
-            <select name='username2' id='id' hidden="hidden">
-            <?php 
-            while($rows = $getavas->fetch_assoc()){
-                $thisusername = $rows['AssistantUsername'];
-                echo "<option value='$thisusername'>$thisusername</option>";
-            }
-        ?>   
-                    </select>
+                <select name='username2' id='id' hidden="hidden">
 
-<div class="drop-down" id="drop-down">
-    <div class="name" id="assign-drop">Username: <span id="selected-drop"></span></div>
-    <div id="drop-button">▼</div>
-</div>
-<div class="options-cont wide-options" id="options">
-    <ul>
-        <?php
-        $getavas = $db->query("SELECT * FROM assistants");
-        while($rows = $getavas->fetch_assoc()){
-            $thisusername = $rows['AssistantUsername'];
-            echo "<li class='option'>$thisusername</li>";
-            }
-        ?>   
+                <?php 
+                    while($rows = $getavas->fetch_assoc()){
+                        $thisusername = $rows['AssistantUsername'];
+                        echo "<option value='$thisusername'>$thisusername</option>";
+                    }
+                ?>   
 
-    </ul>
-</div>
-<div id="exit-drop" class="close"></div>
-<input type="submit" name="removesubmit" value="Remove" class="submit">
-</form>
-</div>
+                </select>
 
-</div>
+                <div class="drop-down" id="drop-down">
+                    <div class="name" id="assign-drop">Username: <span id="selected-drop"></span></div>
+                    <div id="drop-button">▼</div>
+                </div>
+
+                <div class="options-cont wide-options" id="options">
+                    <ul>
+                        
+                        <?php
+                            $getavas = $db->query("SELECT * FROM assistants");
+                            while($rows = $getavas->fetch_assoc()){
+                                $thisusername = $rows['AssistantUsername'];
+                                $n = getName($thisusername);
+                                echo "<li class='option'>$thisusername</li>";
+                            }
+                        ?>   
+
+                    </ul>
+                </div>
+                
+                <div id="exit-drop" class="close"></div>
+
+                <input type="submit" name="removesubmit" value="Remove" class="submit">
+
+            </form>
+        </div>
+    </div>
 
 <div id="lol" class="close"></div>    
-<h1 class="table-title">Assistant Table</h1>
-<hr>
+<h1 class="table-title">Assistants Table</h1>
     <?php
             if(isset($_POST['addsubmit'])){
                 $username = $_POST["username"];
@@ -107,7 +113,7 @@
                     } else {echo "<div class='pop-up'>Passwords don't match</div>";}
                 } else {echo "<div class='pop-up'>This username already exists</div>";}
             }
-            if(isset($_POST['removesubmit'])){
+            if(isset($_POST['removesubmit']) && isset($_POST["username2"])){
                 $username2 = $_POST["username2"];
                 $removeassistantsql = "DELETE FROM `assistants` WHERE(`AssistantUsername`= '$username2')";
                 if(!mysqli_query($db, $removeassistantsql)){
@@ -122,15 +128,16 @@
             $res = mysqli_query($db, $viewassistantssql);
             $resultCheck = mysqli_num_rows($res);
             if($resultCheck>0){
-                $out .="<th>Assistant ID</th><th>Name</th></tr></thead><tbody>";
+                $out .="<th>Name</th><th>No. Assignments Corrected</th><th>No. Questions Answered</th></tr></thead><tbody>";
                 while ($row = mysqli_fetch_assoc($res)){
-                    $out .= "<tr><td>".$row['AssistantID']."</td>";
-                    $out .= "<td>".$row['AssistantUsername']."</td></tr>";
+                    $out .= "<tr><td>".$row['AssistantUsername']."</td>";
+                    $out .= "<td>".getNoAC($db, $row['AssistantUsername'])."</td>";
+                    $out .= "<td>".getNoQA($db, $row['AssistantUsername'])."</td></tr>";
                 }
                 $out .="</tbody></table></div>";
                 echo $out;
             } else {
-                echo "<div class='pop-up'>Empty</div>";
+                echo "<div class='pop-up'>No assistants yet</div>";
             }
         }else{
             echo "Access denied<br>";
@@ -159,19 +166,42 @@
                 echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
                 return false;
             }else{
-                echo 'Strong password.';
+                echo "<div class='pop-up'>Strong password.";
                 return true;
             }
         }
 
         function email($username){
             if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
-                echo "<br>Invalid email format";
+                echo "<div class='pop-up'>Invalid email format</div>";
                 return false;
               }
             return true;
         }
+        
+        function getName($email){
+            $name = strstr($email, '@', true);
+            return $name;             
+        }
+
+        function getNoAC($db, $name){
+            $count = 0;
+            $sql = $db->query("SELECT * FROM `work` WHERE `AssistantID` = '$name'");
+            while($row = $sql->fetch_assoc()){
+                $count += 1;
+            }
+            return $count;
+        }
+
+        function getNoQA($db, $name){
+            $count = 0;
+            $sql = $db->query("SELECT * FROM `questions` WHERE `Assistant` = '$name'");
+            while($row = $sql->fetch_assoc()){
+                $count += 1;
+            }
+            return $count;
+        }
         ?>
-        <script src="dropdown.js"></script>
+        <script src="styles/dropdown.js"></script>
 </body>
 </html>

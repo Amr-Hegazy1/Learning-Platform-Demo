@@ -17,18 +17,19 @@
             include_once("nav-user.html");
             include "configeach.php";
 
-            $viewsql = $db->query("SELECT * FROM `videos` WHERE `Accessebility`= 1 ORDER BY VideoID ASC");?>
+            $viewsql = $db->query("SELECT * FROM `videos` WHERE `Accessebility`= 1 ORDER BY VideoID ASC");
+            $selected = $_SESSION['selected'];?>
             <h3 class="heading">Videos</h3>
             <div class="vcontainer">
                 <div class="main-video">
                     <div class="video">
-                        <video src="http://localhost/Outershell/videos/orientation.mp4" controls autoplay height="500px"></video>
+                        <video src="http://localhost/Outershell/videos/<?php echo $selected ?>/courseorientation.mp4" controls autoplay height="500px"></video>
                         <h3 class="title">Orientation</h3>
                     </div>
                 </div>
                 <div class="video-list">  
                     <div class="vid active">
-                        <video src="http://localhost/Outershell/videos/orientation.mp4" muted></video>
+                        <video src="http://localhost/Outershell/videos/<?php echo $selected ?>/courseorientation.mp4" muted></video>
                         <h3 class="title">Orientation</h3>
                     </div>  
                     <?php 
@@ -40,7 +41,7 @@
                         <div class="vid">
                             <?php 
                                 echo '<video src="'.$loc.'" muted></video>';
-                                echo '<h3 class="title">'.$id.'.'.$name.'</h3>';
+                                echo '<h3 class="title">'.$id.'. '.$name.'</h3>';
                             ?>
                         </div>
                         <?php } ?>

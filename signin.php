@@ -3,7 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign in</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/nav-style.css">
+
 
 </head>
 <body>
@@ -32,13 +34,13 @@
 </div>
     <?php
         session_start();
-        include "configusers.php"; 
+        include "configeach.php"; 
         if(isset($_POST['loginsubmit'])){
             $u = $_POST['username'];
             $p = $_POST['password'];
             $adminloginsql = $db->query("SELECT `Password` FROM `admins` WHERE `Username` = '$u' ");
             $assistantloginsql = $db->query("SELECT `AssistantPassword` FROM `assistants` WHERE `AssistantUsername` = '$u' ");
-            $userloginsql = $db->query("SELECT `Password` FROM `users` WHERE `Username` = '$u' ");
+            $userloginsql = $db->query("SELECT `Password` FROM `users` WHERE `Username` = '$u' AND `paid` = 1");
             if(mysqli_num_rows($userloginsql) > 0){
                 $r = $userloginsql->fetch_assoc();
                 if(password_verify($p, $r['Password'])){

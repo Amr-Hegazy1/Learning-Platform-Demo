@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change My Answer</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 
 </head>
 <body>
@@ -16,7 +16,7 @@
         if($li){
             $u = $_SESSION['assistant']; 
             include_once("nav-assistant.html");
-            include "configusers.php";
+            include "configeach.php";
             $getques = $db->query("SELECT * FROM questions WHERE `Assistant` = '$u'"); //Get available questions
             $getques2 = $db->query("SELECT * FROM questions WHERE `Assistant` = '$u'"); //Get available questions?>
                 <div class="container">  
@@ -127,8 +127,7 @@
             $res = mysqli_query($db, $viewqssql);
             $resultCheck = mysqli_num_rows($res);
             if($resultCheck>0){
-                echo "<h1 class='table-title'>Q&A</h1>
-                <hr>";
+                echo "<h1 class='table-title'>Q&A</h1>";
                 echo "<div class='all-quest'>";
                 while ($row = mysqli_fetch_assoc($res)){
                     echo "<div class='qa-cont'>";
@@ -143,6 +142,7 @@
 
                     echo "<div class='answer-assistant'><span class='answer-assistant-title'>Assistant's Answer: </span>";
                     echo $row['Answer'];
+                    echo " ~ ".$row['Assistant'];
 
                     echo "</div>";     
                     echo "</div>";       
@@ -165,6 +165,6 @@
             return false;
         }
         ?>
-        <script src="dropdown2.js"></script>
+        <script src="styles/dropdown2.js"></script>
 </body>
 </html>

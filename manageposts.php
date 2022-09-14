@@ -3,19 +3,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts Manager</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
 
 </head>
 <body>
-<?php include_once("nav.html") ?>
-
 <?php
         $ali = false;
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
-            include "configusers.php";
+            include_once("nav.html");
+            include "configeach.php";
+            $selected = $_SESSION['selected'];
             $getposts = $db->query("SELECT * FROM posts"); //Get available posts?>
     <div class="container">
     <div class="segment">
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="name">Attachments</div>
-                    <input type="file" id="file-button"required name="attachment" \class="file-input" hidden="hidden">
+                    <input type="file" id="file-button" name="attachment" \class="file-input" hidden="hidden">
                     <label for="file-button" class="choose-file">
                         Choose File :<span id="file-text">No File Chosen</span>
                     </label>
@@ -81,8 +81,9 @@
         </div>
     </div>
     <?php
-        if(isset($_POST['removesubmit'])){
+        if(isset($_POST['removesubmit']) && isset($_POST['id'])){
             $id = $_POST["id"];
+            removeAttach($db, $id);
             $removepostsql = "DELETE FROM `posts` WHERE(`PostID`= '$id')";
             if(!mysqli_query($db, $removepostsql)){
                 echo "<div class='pop-up'>Post not removed</div>";
@@ -91,11 +92,12 @@
             }
         }
         if(isset($_POST['postsubmit'])){
+            $filename ="";
             $h = $_POST['head'];
             $d = $_POST['description'];
             $filename = $_FILES["attachment"]["name"];
             $tempname = $_FILES["attachment"]["tmp_name"];
-            $folder = "attachments/" . $filename;
+            $folder = "attachments/".$selected."/". $filename;
             if(validName($h)){
                 if(validName($d)){
                     if(validType($filename)){
@@ -115,18 +117,17 @@
         $res = mysqli_query($db, $viewpostssql);
         $resultCheck = mysqli_num_rows($res);
         if($resultCheck>0){
-            echo "'<div class='table-cont'>
-            <h1 class=table-title>Posts Table</h1><hr>";
+            echo '<h1 class="table-title">Posts Table</h1>';
             $out .="<th>Posts ID</th><th>Header</th><th>Description</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($res)){
                 $out .= "<tr><td>".$row['PostID']."</td>";
                 $out .= "<td>".$row['Header']."</td>";
                 $out .= "<td>".$row['Description']."</td></tr>";
             }
-            $out .="</tbody></table></div>";
+            $out .="</tbody></table>";
             echo $out;
         } else {
-            echo "<div class='pop-up'>Empty</div>";
+            echo "<div class='pop-up'>No posts yet</div>";
         }
     }else{
             echo "Access denied<br>";
@@ -141,16 +142,25 @@
     }
 
     function validType($filename){
-        $allowed = array('pdf', 'jpg', 'png', 'jpeg', 'pptx');
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if (!in_array($ext, $allowed)) {
-            return false;
+        if($filename != ""){
+            $allowed = array('pdf', 'jpg', 'png', 'jpeg', 'pptx');
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if (!in_array($ext, $allowed)) {
+                return false;
+            }
         }
         return true;
     }
 
+    function removeAttach($db, $id){
+        $sql = $db->query("SELECT `attachments` FROM `posts` WHERE `PostID` = '$id'");
+        $row = $sql->fetch_assoc();
+        $loc = $row['attachments'];
+        unlink($loc);
+    }
+
         ?>
-    <script src="chooseFile.js"></script>
-    <script src="dropdown.js"></script>
+    <script src="styles/chooseFile.js"></script>
+    <script src="styles/dropdown.js"></script>
 </body>
 </html>

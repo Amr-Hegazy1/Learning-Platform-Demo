@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users Manager</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 
 </head>
 <body><?php 
@@ -13,7 +13,7 @@ if(isset($_SESSION['adminloggedin'])){
     $ali = $_SESSION['adminloggedin'];}
 if($ali == true){
     include_once("nav.html");
-    include "configusers.php";
+    include "configeach.php";
     ?>
     <div class="container-manage-user">
     <div class="container" id="cont-add-admin">
@@ -101,7 +101,7 @@ if($ali == true){
                     </div>
 
                 </div>
-                <input type="submit" name="add" value="Add" class="submit">
+                <input type="submit" name="add" value="Add For Free" class="submit">
             </form>
         </div>
     </div>
@@ -117,7 +117,7 @@ if($ali == true){
                 <select name='username2' id='id' hidden="hidden">
 
                     <?php
-                        $getvr = $db->query("SELECT * FROM `users`");
+                        $getvr = $db->query("SELECT * FROM `users` WHERE `paid` = 1");
                         while($rows = $getvr->fetch_assoc()){
                             $thisidr = $rows['Username'];
                             $thisnamer = $rows['first name'];
@@ -136,7 +136,7 @@ if($ali == true){
                 <div class="options-cont wide-options" id="options2">
                     <ul>
                     <?php
-                        $getvr = $db->query("SELECT * FROM users"); 
+                        $getvr = $db->query("SELECT * FROM `users` WHERE `paid` = 1"); 
                         while($rows = $getvr->fetch_assoc()){
                             $thisidr = $rows['Username'];
                             echo "<li class='option'>$thisidr</li>";
@@ -170,7 +170,8 @@ if($ali == true){
                     if(strong($pass)){
                         if(email($username)){
                             $hpass = password_hash($pass, PASSWORD_DEFAULT);
-                            $sql = $db->query("INSERT INTO `users`(`Username`, `Password`, `first name`, `last name`, `gender`, `school`, `phone no`, `parentphone`) VALUES ('$username', '$hpass', '$fname', '$lname', '$gender', '$school', '$snumber', '$pnumber')");                       
+                            $sql = $db->query("INSERT INTO `users`(`Username`, `Password`, `first name`, `last name`, `gender`, `school`, `phone no`, `parentphone`, `paid`) VALUES ('$username', '$hpass', '$fname', '$lname', '$gender', '$school', '$snumber', '$pnumber', 1)");                       
+                            $sql2 = $db->query("INSERT INTO `progress`(`UserID`) VALUES ('$username')");
                             echo "<div class='pop-up'>User Added</div>";
                         }
                     }
@@ -183,15 +184,16 @@ if($ali == true){
             $sqlr = $db->query("DELETE FROM `users` WHERE `Username` = '$user'");
             echo "User Removed";
         }
-        echo "<h1 class='table-title'>Users Table</h1>
-        <hr>";
-        $out = '<div class="table-cont">
-        <table class="table"><thead><tr>';
-        $viewall = "SELECT * FROM `users`";
+
+        $viewall = "SELECT * FROM `users` WHERE `paid` = 1";
         $result = mysqli_query($db, $viewall);
         $resultCheck = mysqli_num_rows($result);
 
         if($resultCheck>0){
+
+            echo "<h1 class='table-title'>Users Table</h1>";
+            $out = '<div class="table-cont">
+            <table class="table"><thead><tr>';
 
             $out .="<th>Username</th><th>First Name</th><th>Last Name</th><th>Student's Number</th><th>Parent's Number</th><th>School</th><th>Gender</th></tr></thead><tbody>";
 
@@ -208,10 +210,13 @@ if($ali == true){
 
             $out .="</tbody></table></div>";
             echo $out;
-        } else { echo "Empty";}
+
+            echo '<div class="pop-up">'.$resultCheck.' students enrolled</div>';
+
+        } else { echo '<div class="pop-up">No users yet</div>';}
 }else{
     echo "Access denied<br>";
-    echo '<a href="signin.php">Go Home</a><br>';;
+    echo '<a href="signin.php">Go Home</a><br>';
 }
 
 
@@ -250,6 +255,6 @@ if($ali == true){
         return true;
     }
 ?>
-    <script src="dropdown2.js"></script>
+    <script src="styles/dropdown2.js"></script>
     </body>
 </html> 

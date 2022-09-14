@@ -3,18 +3,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Assignments Manager</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
 
 </head>
 <body>
-<?php include_once("nav.html") ?>
 <?php
         $ali = false;
         session_start();
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
-            include "configusers.php";
+            include_once("nav.html");
+            include "configeach.php";
             ?>
 
             <div class="container">
@@ -34,7 +34,7 @@
         
                         <div class="name">Due Date</div>
                         <div class="text-field">
-                            <input type="text" required name="duedate" placeholder="YYYY-MM-DD HH-MM-SS">
+                            <input type="text" required name="duedate" placeholder="YYYY-MM-DD HH:MM:SS">
                             <span></span>
                         </div>
         
@@ -100,11 +100,11 @@
         if(isset($_POST['removesubmit'])){
             $id = $_POST['id'];
             $removeassistantsql = "DELETE FROM `assignments` WHERE(`AssignmentID`= '$id')";
+            $removefromprogress = $db->query("ALTER TABLE `progress` DROP COLUMN `$id`");
             if(!mysqli_query($db, $removeassistantsql)){
                 echo "<div class='pop-up'>Assignment not removed</div>";
             } else {
                 echo "<div class='pop-up'>Assignment removed</div>";
-                header("Refresh:1");
             }
         }
         if(isset($_POST['postsubmit'])){
@@ -133,7 +133,6 @@
 
 
     <h1 class="table-title">Assignments Table</h1>
-    <hr>
     
     <?php
         $viewassignmentssql = "SELECT * FROM assignments";
@@ -172,6 +171,9 @@
         return false;
     }
         ?>
-        <script src="dropdown.js"></script>
+    <script src="styles/dropdown.js"></script>
+    <script src="styles/dropdown-vid.js"></script>
+    <script src="styles/dropdown2.js"></script>
+    <script src="styles/chooseFile.js"></script>
 </body>
 </html>

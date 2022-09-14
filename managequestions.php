@@ -3,22 +3,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Questions</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
 
 </head>
 <body>
-<?php include_once("nav.html") ?>
-
 <?php
     $li = false;
     session_start();
     if(isset($_SESSION['adminloggedin'])){
         $li = $_SESSION['adminloggedin'];}
     if($li){
-        include "configusers.php";
+        include_once("nav.html");
+        include "configeach.php";
         $answersql = "SELECT * FROM questions WHERE `TeacherAnswered`= 0 ORDER BY QuestionID ASC LIMIT 1";
         $res = mysqli_query($db, $answersql);
         if(mysqli_num_rows($res)>0){
+            echo "<h1 class='table-title'>Answer</h1>";
             while ($question = mysqli_fetch_assoc($res)){
                 echo "<div class='qa-change admin-ans-cont'>";
                 echo "<div class='qa-cont'>";
@@ -92,7 +92,7 @@
             </form>
         </div>
         <?php
-        if(isset($_POST['removesubmit'])){
+        if(isset($_POST['removesubmit']) && isset($_POST['id'])){
             $id = $_POST['id'];
             $removeqsql = "DELETE FROM `questions` WHERE(`QuestionID`= '$id')";
             if(!mysqli_query($db, $removeqsql)){
@@ -150,9 +150,8 @@
 </div>
 
 <h1 class="table-title">Q&A</h1>
-<hr>
         <?php
-        if(isset($_POST['changesubmit'])){
+        if(isset($_POST['changesubmit']) && isset($_POST['id2'])){
             $id2 = $_POST['id2'];
             $na = $_POST['newans']; //New Answer
             if(validName($na)){
@@ -187,7 +186,7 @@
                 echo "</div>";       
             }
         } else {
-            echo "<div class='pop-up'>No questions</div>";
+            echo "<div class='pop-up'>No questions yet</div>";
         }
     }else{
             echo "Access denied<br>";
@@ -201,6 +200,6 @@
         return false;
     }
 ?>
-<script src="dropdown2.js"></script>
+<script src="styles/dropdown2.js"></script>
 </body>
 </html>
