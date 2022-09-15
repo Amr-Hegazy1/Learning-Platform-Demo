@@ -338,6 +338,9 @@ input:focus::placeholder {
     border-radius: 5px;
     overflow-y: auto;
     z-index: 701; /*More than exit options*/;
+    transform: scaleY(0);
+    transform-origin: top;
+    max-height: 150px
 }
 
 
@@ -354,8 +357,8 @@ input:focus::placeholder {
 }
 
 .open-options{
-    height: 150px;
-    transition: 0.5s;
+    transform: scaleY(1);
+    transition: 0.5s !important;
 }
 
 .open-optionsg{
