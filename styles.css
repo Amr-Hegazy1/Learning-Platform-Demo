@@ -329,7 +329,7 @@ input:focus::placeholder {
 
 .options-cont{
     position: absolute;
-    height: 0;
+    height: auto;
     top:116px;
     width: 40px;
     right:1.5em;
@@ -340,7 +340,7 @@ input:focus::placeholder {
     z-index: 701; /*More than exit options*/;
     transform: scaleY(0);
     transform-origin: top;
-    max-height: 150px
+    max-height: 150px;
 }
 
 
