@@ -339,7 +339,7 @@ input:focus::placeholder {
 }
 
 #assign-drop{
-    font-size: 0.55em;
+    font-size: 0.65em;
 }
 
 .options-cont{
@@ -849,9 +849,6 @@ header .website-desc{
         margin-top: 0.5em;
     }
 
-    #assign-drop{
-        font-size: 0.60em;
-    }
 }
 
 @media screen and (min-width: 443px){
@@ -1004,8 +1001,8 @@ header .website-desc{
         font-size: 0.85em
     }
 
-    .database-options{
-        transform: translateY(70px);
+    .add-user-seg .database-options{
+        top: 394px;
     }
 
     .course{
