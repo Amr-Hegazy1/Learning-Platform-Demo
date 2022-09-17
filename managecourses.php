@@ -321,7 +321,7 @@ function getAvailableDatabases($db){
 }
 
 ?>
-<script src="dropdown-vid.js"></script>
+<script src="dropdown3.js"></script>
 <script src="chooseFile.js"></script>
 </body>
 </html>
