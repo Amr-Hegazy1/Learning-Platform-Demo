@@ -38,7 +38,7 @@ if($ali == true){
                     </div>
 
 
-                <select name="gender" id="gender" required hidden="hidden">
+                <select name="gender" id="id" required hidden="hidden">
                     <option value="M">M</option>
                     <option value="F">F</option>
                 </select>
