@@ -89,7 +89,7 @@
 
         function displayAssignmentDetails($db){
             $all = $db->query("SELECT * FROM `assignments`");
-            echo "<div class='qa-cont'>";
+            echo "<div class='qa-cont export-cont'>";
             while($x = $all->fetch_assoc()){
                 echo $x['AssignmentID']." : ";
                 echo $x['Description']."<br>";

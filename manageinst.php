@@ -29,7 +29,6 @@
                 <span></span>
             </div>
 
-            <div class="name">Attach Image</div>
                 <input type="file" id="file-button" required name="iimage" class="file-input" hidden="hidden">
                 <label for="file-button" class="choose-file">
                     Choose Image :<span id="file-text">No Image Chosen</span>
@@ -55,11 +54,6 @@ if($_SESSION['manager']){
         header("Refresh:1");
     }
 } else { echo "Access denied<br>"; echo '<a href="signin.php">Go Home</a><br>';}
-
-
-
-
-
 
 
 
@@ -92,7 +86,7 @@ if($_SESSION['manager']){?>
                 <div class="name" id="assign-drop">Instructor : <span id="selected-drop"></span></div>
                 <div id="drop-button">▼</div>
             </div>
-            <div class="options-cont wide-options" id="options">
+            <div class="options-cont wide-options remove-inst-wrapped" id="options">
                 <ul>
                 <?php
                     $results1 = $dbc->query("SELECT * FROM `instructors`"); 

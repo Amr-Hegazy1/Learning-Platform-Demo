@@ -311,6 +311,6 @@
     }
     ?>
     <script src="chooseFile.js"></script>
-    <script src="dropdown-vid.js"></script>
+    <script src="dropdown3.js"></script>
 </body>
 </html>

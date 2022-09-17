@@ -48,7 +48,7 @@ if($ali == true){
                     <div id="drop-button">▼</div>
                 </div>
 
-                <div class="options-cont wide-options gender-options" id="options">
+                <div class="options-cont wide-options" id="options">
                     <ul>
                         <li class='option'>Male</li>
                         <li class='option'>Female</li>
@@ -114,7 +114,7 @@ if($ali == true){
 
             <form method="POST" enctype="multipart/form-data">
 
-                <select name='username2' id='id' hidden="hidden">
+                <select name='username2' id='id2' hidden="hidden">
 
                     <?php
                         $getvr = $db->query("SELECT * FROM `users`");
@@ -129,7 +129,7 @@ if($ali == true){
                 </select>
 
                 <div class="drop-down" id="drop-down2">
-                    <div class="name" id="assign-drop">Username : <span id="selected-drop"></span></div>
+                    <div class="name" id="assign-drop">Username : <span id="selected-drop2"></span></div>
                     <div id="drop-button">▼</div>
                 </div>
 
@@ -139,7 +139,7 @@ if($ali == true){
                         $getvr = $db->query("SELECT * FROM users"); 
                         while($rows = $getvr->fetch_assoc()){
                             $thisidr = $rows['Username'];
-                            echo "<li class='option'>$thisidr</li>";
+                            echo "<li class='option2'>$thisidr</li>";
                         }
                     ?>  
                     </ul>

@@ -247,6 +247,17 @@ input:focus::placeholder {
     width: 100%;
 } 
 
+.text-field input{
+   background-color: transparent;
+}
+
+.text-field input:-webkit-autofill,
+.text-field input:-webkit-autofill:hover,
+.text-field input:-webkit-autofill:focus,
+.text-field input:-webkit-autofill:active {
+    -webkit-transition-delay: 99999s;
+}
+
 .name{
     font-size: 0.8em;
     font-weight: 800;
@@ -286,6 +297,8 @@ input:focus::placeholder {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    white-space: nowrap;
+    overflow-x: auto;
 }
 
 .choose-file{
@@ -321,10 +334,12 @@ input:focus::placeholder {
     border: none;
     height: 15px;
     width: 22px;
+    min-width: 22px;
+    margin-left:5px;
 }
 
 #assign-drop{
-    font-size: 0.65em;
+    font-size: 0.55em;
 }
 
 .options-cont{
@@ -343,8 +358,7 @@ input:focus::placeholder {
     max-height: 150px;
 }
 
-
-.remove-ans-wrapped,.change-acc-warpped,.change-ans-wrapped{
+.remove-ans-wrapped,.change-acc-warpped,.change-ans-wrapped,.remove-inst-wrapped{
     top: 153px;
 }
 
@@ -370,14 +384,15 @@ input:focus::placeholder {
     top: 258px;
 }
 
+.add-user-seg .database-options{
+    top: 323px;
+}
+
 .options-cont li{
+    font-size: 0.7em;
     display: flex;
     justify-content: center;
     padding: 0.2em 1em;
-}
-
-.database-options{
-    transform: translateY(66px);
 }
 
 .options-cont li:hover{
@@ -390,18 +405,11 @@ input:focus::placeholder {
 .drop-down-avai{
     border-radius: 12px;
     margin-top: 0.9em;
-    white-space: nowrap;
-    overflow-x: auto;
 }
 
 .avai-options{
-    top: 293px;
+    top: 304px;
     width: 100px;
-}
-
-.avai-options-open{
-    height: 61px;
-    transition: 0.4s;
 }
 
 .table{
@@ -462,7 +470,7 @@ input:focus::placeholder {
 
 .all-quest{
     padding:0.8em 0;
-    height: 90vh;
+    max-height: 90vh;
     overflow-y: auto;
 }
 
@@ -656,7 +664,7 @@ input:focus::placeholder {
     border-radius: 0 10px 0 0;
 }
 
-.table::-webkit-scrollbar,.table-cont::-webkit-scrollbar,.all-quest::-webkit-scrollbar,.add-user-seg::-webkit-scrollbar,.choose-file::-webkit-scrollbar,.drop-down-avai::-webkit-scrollbar{
+.table::-webkit-scrollbar,.table-cont::-webkit-scrollbar,.all-quest::-webkit-scrollbar,.add-user-seg::-webkit-scrollbar,.choose-file::-webkit-scrollbar,.drop-down::-webkit-scrollbar{
     height: 8px;
     width:8px;
 }
@@ -783,8 +791,19 @@ header .website-desc{
     margin-top: 2em;
 }
 
+
+.export-cont form{
+    margin: 0;
+    padding: 0;
+    height: 50px;
+}
+.export-cont .submit{
+    position: relative;
+    margin-top: 3em;
+}
+
 /* Track */
-.table::-webkit-scrollbar-track,.table-cont::-webkit-scrollbar-track,.options-cont::-webkit-scrollbar-track,.all-quest::-webkit-scrollbar-track,.add-user-seg::-webkit-scrollbar-track,.choose-file::-webkit-scrollbar-track,.drop-down-avai::-webkit-scrollbar-track{
+.table::-webkit-scrollbar-track,.table-cont::-webkit-scrollbar-track,.options-cont::-webkit-scrollbar-track,.all-quest::-webkit-scrollbar-track,.add-user-seg::-webkit-scrollbar-track,.choose-file::-webkit-scrollbar-track,.drop-down::-webkit-scrollbar-track{
     background:transparent;
 }
 
@@ -794,7 +813,7 @@ header .website-desc{
     border-radius: 10px;
 }
 
-.add-user-seg::-webkit-scrollbar-thumb,.choose-file::-webkit-scrollbar-thumb,.drop-down-avai::-webkit-scrollbar-thumb{
+.add-user-seg::-webkit-scrollbar-thumb,.choose-file::-webkit-scrollbar-thumb,.drop-down::-webkit-scrollbar-thumb{
     background-color: white;
     border-radius: 10px;
 }
@@ -829,8 +848,11 @@ header .website-desc{
         font-size: 0.9em;
         margin-top: 0.5em;
     }
-}
 
+    #assign-drop{
+        font-size: 0.60em;
+    }
+}
 
 @media screen and (min-width: 443px){
     .remove-ans-wrapped{
@@ -846,6 +868,12 @@ header .website-desc{
 
 @media screen and (min-width: 565px){
     .change-acc-warpped{
+        top: 116px;
+    }
+}
+
+@media screen and (min-width: 509px){
+    .remove-inst-wrapped{
         top: 116px;
     }
 }
@@ -1001,6 +1029,34 @@ header .website-desc{
         display: block;
         background-color: black;
     }
+    .remove-inst-wrapped,.change-ans-wrapped{
+        top: 186px;
+    }
+
+    .export-cont form{
+        height: 70px;
+    }
+
+    .export-cont .submit{
+        position: relative;
+        margin-top: 2.5em;
+    }
+
+    .options-cont li{
+        font-size: 1em;
+    }
+}
+
+@media screen and (min-width: 621px){
+    .change-ans-wrapped{
+        top: 138px;
+    }
+}
+
+@media screen and (min-width: 678px){
+    .remove-inst-wrapped{
+        top: 138px;
+    }
 }
 
 @media screen and (min-width: 752px){
@@ -1008,7 +1064,6 @@ header .website-desc{
         top: 138px;
     }
 }
-
 
 
 @media screen and (min-width: 850px){
