@@ -3,8 +3,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Sign in</title>
-    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
-    <link rel="stylesheet" href="http://localhost/Outershell/styles/nav-style.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/nav-style.css">
 
 </head>
 <body>
@@ -29,8 +29,15 @@
         <input type="submit" name="loginsubmit" value="Submit" class="submit">
     </form>
 <?php
-
-if(isset($_POST['loginsubmit'])){
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if(isset($_SESSION['manager'])){
+    echo " <script type='text/javascript'>
+        window.location.href = './manageinst.php';
+        </script> ";
+}
+else if(isset($_POST['loginsubmit'])){
     include "configcourses.php";
     $u = $_POST['username'];
     $p = $_POST['password'];
@@ -38,7 +45,9 @@ if(isset($_POST['loginsubmit'])){
     if(mysqli_num_rows($sql) > 0){
         $row = $sql->fetch_assoc();
         if(password_verify($p, $row['Password'])){
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
             $_SESSION['manager'] = true;
             echo    '<a href="managecourses.php">Manage Courses</a>
                     <a href="manageinst.php">Manage Instructors</a>';

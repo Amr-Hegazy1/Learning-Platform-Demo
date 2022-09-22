@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="styles/nav-style.css">
 
 </head>
-<body> <?php session_start(); ?>
+<body> <?php if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} ?>
 <div class="container" id="signin-cont">
     <div class="segment add-user-seg">
         <h1 class="title">Sign Up</h1>
@@ -35,7 +37,7 @@
                     <span></span>
                 </div>
 
-                <select name="gender" id="gender" required hidden="hidden">
+                <select name="gender" id="id" hidden="hidden">
                     <option value="M">M</option>
                     <option value="F">F</option>
                 </select>

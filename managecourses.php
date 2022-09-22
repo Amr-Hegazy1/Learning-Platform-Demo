@@ -8,7 +8,11 @@
 </head>
 <body>
 <?php 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+}
 include "configcourses.php";
 include_once("nav-manager.html");
 if($_SESSION['manager']){
@@ -52,7 +56,7 @@ if($_SESSION['manager']){
                     <div id="drop-button">▼</div>
                 </div>
 
-                <div name= "inst" class="options-cont wide-options" id="options">
+                <div name="inst" class="options-cont wide-options" id="options">
                     <ul>
                         <?php
                         $results1 = $dbc->query("SELECT * FROM `instructors`"); 
@@ -140,7 +144,7 @@ if($_SESSION['manager']){
 
                 <form method="POST" enctype="multipart/form-data">
 
-                    <select name="course" id='id3' >
+                    <select name="course" id='id3' hidden="hidden">
 
                         <?php
                             $results = $dbc->query("SELECT * FROM `courses`"); 
@@ -148,13 +152,13 @@ if($_SESSION['manager']){
                                 $thiscourse = $each['Title'];
                                 $thisd = $each['D'];
                                 $thisinst = $each['Instructor'];
-                                echo "<option value='$thisd'>$thiscourse By $thisinst</option>";
+                                echo "<option value='$thisd'>$thiscourse</option>";
                             }
                         ?>
 
                     </select>
 
-                    <!--<div class="drop-down" id="drop-down3">
+                    <div class="drop-down" id="drop-down3">
                         <div class="name" id="assign-drop">Course : <span id="selected-drop3"></span></div>
                         <div id="drop-button">▼</div>
                     </div>
@@ -162,14 +166,14 @@ if($_SESSION['manager']){
                     <div class="options-cont wide-options" id="options3">
                         <ul>
                         <?php
-                            /*$results = $dbc->query("SELECT * FROM `courses`"); 
+                            $results = $dbc->query("SELECT * FROM `courses`"); 
                             while($each = $results->fetch_assoc()){
                                 $thiscourse = $each['Title'];
                                 echo "<li class='option3'>$thiscourse</li>";
-                            }*/
+                            }
                         ?>  
                         </ul>
-                    </div>-->
+                    </div>
 
                     <input type="submit" name="removec" value="Remove" class="submit">
 
@@ -266,7 +270,7 @@ function getProgColNames($db, $d){
 }
 
 function addCourse($db, $title, $d, $inst, $desc, $price, $img){
-    $db->query("INSERT INTO `courses`(`Title`, `D`, `Instructor`, `Description`, `Price`, `Image`) VALUES ('$title', '$d', '$inst', '$desc', $price, '$img')");
+    $db->query("INSERT INTO `courses`(`Title`, `D`, `Instructor`, `Description1`, `Price`, `Image`) VALUES ('$title', '$d', '$inst', '$desc', $price, '$img')");
     echo $title." added";
 }
 
@@ -289,7 +293,7 @@ function getAvailableDatabases($db){
 }
 
 ?>
-<script src="styles/dropdown-vid.js"></script>
+<script src="styles/dropdown3.js"></script>
 <script src="styles/chooseFile.js"></script>
 </body>
 </html>

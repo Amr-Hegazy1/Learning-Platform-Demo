@@ -10,7 +10,9 @@
     <?php include_once("nav.html") ?>
     <?php
         $ali = false;
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){?>

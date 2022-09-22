@@ -3,13 +3,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment Submission</title>
-    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 
 </head>
 <body>    
     <?php
         $li = false;
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
@@ -28,7 +30,7 @@
                                 $thisid = $rows['AssignmentID'];
                                 $thisdesc = $rows['Description'];
                                 $thisdd = $rows['DueDate'];
-                                echo "<option value='$thisid'>$thisid : $thisdesc : $thisdd</option>";
+                                echo "<option value='$thisdesc'>$thisid : $thisdesc : $thisdd</option>";
                             }
                         ?>   
                         </select>
@@ -36,7 +38,7 @@
                     <div class="name" id="assign-drop">Assignment ID : <span id="selected-drop"></span></div>
                     <div id="drop-button">▼</div>
                 </div>
-                <div class="options-cont" id="options">
+                <div class="options-cont wide-options" id="options">
                     <ul>
                         <?php
                         $getavas = $db->query("SELECT * FROM assignments");
@@ -44,7 +46,7 @@
                             $thisid = $rows['AssignmentID'];
                             $thisdesc = $rows['Description'];
                             $thisdd = $rows['DueDate'];
-                                echo "<li class='option'>$thisid</li>";
+                                echo "<li class='option'>$thisdesc</li>";
                             }
                         ?>   
 
@@ -65,9 +67,12 @@
     <?php
         $username = $_SESSION['username'];
         if(isset($_POST['submit'])){
-            $inputid = $_POST['id'];
+            $inputdesc = $_POST['id'];
+            $inputidsql = "SELECT AssignmentID FROM assignments WHERE `Description`= '$inputdesc'";
+            $inputid = mysqli_query($db, $inputidsql,MYSQLI_USE_RESULT);
+            $inputid = mysqli_fetch_assoc($inputid)["AssignmentID"];
             if(!alreadySubmitted($username, $inputid, $db)){
-                $viewduedatesql = "SELECT DueDate FROM assignments WHERE `AssignmentID`= $inputid";
+                $viewduedatesql = "SELECT DueDate FROM assignments WHERE `Description`= '$inputdesc'";
                 $res = mysqli_query($db, $viewduedatesql);
                 $resultCheck = mysqli_num_rows($res);
                 if($resultCheck=1){
@@ -80,7 +85,9 @@
 
                 $filename = $_FILES["work"]["name"];
                 $tempname = $_FILES["work"]["tmp_name"];
-                $folder = "work/".$selected."/" . $filename;
+                $folder = "work/".$selected."/" . $username . "-" . $inputid . ".pdf";
+                if (!is_dir("work/".$selected))
+                    mkdir("work/".$selected);
                 if(validType($filename)){
                     move_uploaded_file($tempname, $folder);
                     date_default_timezone_set('Africa/Cairo');

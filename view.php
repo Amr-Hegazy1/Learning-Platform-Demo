@@ -3,33 +3,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Videos</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="http://localhost/Outershell/styles/video.css">
+    <link rel="stylesheet" href="./styles/video.css">
 
 </head>
 <body>
     <?php
         $li = false;
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
             include_once("nav-user.html");
-            include "configeach.php";
+            include ("configeach.php");
 
-            $viewsql = $db->query("SELECT * FROM `videos` WHERE `Accessebility`= 1 ORDER BY VideoID ASC");
-            $selected = $_SESSION['selected'];?>
+            $viewsql = $db->query("SELECT * FROM `videos` WHERE `Accessebility`= 1 ORDER BY VideoID ASC");?>
             <h3 class="heading">Videos</h3>
             <div class="vcontainer">
                 <div class="main-video">
                     <div class="video">
-                        <video src="http://localhost/Outershell/videos/<?php echo $selected ?>/courseorientation.mp4" controls autoplay height="500px"></video>
+                        <video src="./videos/<?php echo $selected ?>/orientation.mp4" controls autoplay height="500px"></video>
                         <h3 class="title">Orientation</h3>
                     </div>
                 </div>
                 <div class="video-list">  
                     <div class="vid active">
-                        <video src="http://localhost/Outershell/videos/<?php echo $selected ?>/courseorientation.mp4" muted></video>
+                        <video src="./videos/<?php echo $selected ?>/orientation.mp4" muted></video>
                         <h3 class="title">Orientation</h3>
                     </div>  
                     <?php 
@@ -41,7 +41,7 @@
                         <div class="vid">
                             <?php 
                                 echo '<video src="'.$loc.'" muted></video>';
-                                echo '<h3 class="title">'.$id.'. '.$name.'</h3>';
+                                echo '<h3 class="title">'.$id.'.'.$name.'</h3>';
                             ?>
                         </div>
                         <?php } ?>

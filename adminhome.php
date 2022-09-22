@@ -3,12 +3,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Home</title>
-    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 
 </head>
 <body>
     <?php
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         $loggedin = false;
         if(isset($_SESSION['adminloggedin'])){$loggedin = $_SESSION['adminloggedin'];}
         if($loggedin){

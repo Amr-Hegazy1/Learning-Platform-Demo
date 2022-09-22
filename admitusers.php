@@ -9,7 +9,9 @@
 <body>
     <?php 
         $li = false;
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         if(isset($_SESSION['assistant'])){$a = $_SESSION['assistant'];}
         if(isset($_SESSION['assistantloggedin'])){
             $li = $_SESSION['assistantloggedin'];}

@@ -19,7 +19,7 @@ include_once "nav-index.html";
         <div class="website-desc">
             Learn today with many new features to make your life easier.
         </div>
-        <button onclick="window.location.href = '#course-cont'">Our Courses</button>
+        <button onclick="var e = document.getElementById('course-cont');window.scroll({top:e.getBoundingClientRect().top+window.pageYOffset,behaviour:'smooth',});">Our Courses</button>
     </header>
 <?php 
 $sql = $dbc->query("SELECT * FROM `courses`");

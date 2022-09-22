@@ -3,13 +3,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Assignments Manager</title>
-    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 
 </head>
 <body>
 <?php
         $ali = false;
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
@@ -118,6 +120,9 @@
                         if(!mysqli_query($db, $postassignmentsql)){
                             echo "<div class='pop-up'>Assignment not Added</div>";
                         } else {
+                            echo " <script type='text/javascript'>
+                            window.location.href = window.location;
+                            </script> ";
                             echo "<div class='pop-up'>Assignment Added!</div>";
                             $getlastcol = $db->query("SELECT `AssignmentID` FROM `assignments` ORDER BY `AssignmentID` DESC LIMIT 1");
                             while($rows = $getlastcol->fetch_assoc()){

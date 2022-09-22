@@ -3,14 +3,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts</title>
-    <link rel="stylesheet" href="http://localhost/Outershell/styles/styles.css">
-    <link rel="stylesheet" href="http://localhost/Outershell/styles/nav-style.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/nav-style.css">
 
 </head>
 <body>
     <?php
         $li = false;
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
@@ -32,7 +34,7 @@
                     if($fn == ""){
                     }
                      else {
-                        echo '<div class="view-cont"><a href="https://localhost/Outershell/'.$row['attachments'].'">View Attachments</a></div>';
+                        echo '<div class="view-cont"><a href="./'.$row['attachments'].'">View Attachments</a></div>';
                     }
                     echo "</div>";  
                 }

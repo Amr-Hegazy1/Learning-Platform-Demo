@@ -9,31 +9,51 @@
 
 </head>
 <body>
+
 <div class="container" id="signin-cont">
-        <div class="segment" id="signin-seg">
+    
+    <div class="segment" id="signin-seg">
         <h1 class="title">Sign in</h1>
         <div class="line"></div>
-    <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
 
-            <div class="name">Username</div>
-            <div class="text-field">
-                <input type="text" required name="username" id="desc" placeholder="Enter Username">
-                <span></span>
-            </div>
-
-            <div class="name bottom-name">Password</div>
-            <div class="text-field">
-                    <input type="password" required name="password" placeholder="Enter Password">
+                <div class="name">Username</div>
+                <div class="text-field">
+                    <input type="text" required name="username" id="desc" placeholder="Enter Username">
                     <span></span>
-            </div>
+                </div>
 
-            <div class="center" id="signup-dir">Not a member?<a href="signup.php">Sign up</a></div>
+                <div class="name bottom-name">Password</div>
+                <div class="text-field">
+                        <input type="password" required name="password" placeholder="Enter Password">
+                        <span></span>
+                </div>
 
-        <input type="submit" name="loginsubmit" value="Sign in" class="submit">
-    </form>
+    
+
+                <div class="center" id="signup-dir">Not a member?<a href="signup.php">Sign up</a></div>
+
+            <input type="submit" name="loginsubmit" value="Sign in" class="submit">
+        </form>
+    </div>
 </div>
-    <?php
-        session_start();
+<?php
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']){
+            echo " <script type='text/javascript'>
+            window.location.href = './userhome.php';
+            </script> ";
+        }else if(isset($_SESSION['assistantloggedin']) && $_SESSION['assistantloggedin']){
+            echo " <script type='text/javascript'>
+            window.location.href = './assistanthome.php';
+            </script> ";
+        }else if (isset($_SESSION['adminloggedin']) && $_SESSION['adminloggedin']){
+            echo " <script type='text/javascript'>
+            window.location.href = './adminhome.php';
+            </script> ";
+        }
         include "configeach.php"; 
         if(isset($_POST['loginsubmit'])){
             $u = $_POST['username'];
@@ -69,9 +89,10 @@
 
                         }
                     }}}
-            header("Refresh:1");
-            echo "<div class='pop-up'>Wrong Credentials</div>";
+            
+            echo "<div class='pop-up'>Invalid Username or Password</div>";
         }
     ?>
+    
 </body>
 </html>

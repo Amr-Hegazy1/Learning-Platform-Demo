@@ -1,0 +1,263 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+:root {
+  --background-color: #F2F2F2;
+  --dark-grey:#222222;
+  --light-grey: #272727;
+  --primary-color: #006ff9;
+  --secondary-color: #005ff3; 
+}
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins";
+  background-color: var(--background-color);
+  color: var(--dark-grey);
+  min-width: 370px;
+  overflow-x: hidden;
+}
+
+.nav {
+  display: flex;
+  padding: 0;
+  background-color: white;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16);
+  /* -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  align-items: center;
+}
+
+.nav .logo {
+  margin: 1em 1.5em;
+  font-size: 1.2em;
+}
+
+.nav-index .logo{
+  font-size: 1em;
+  margin-left: 1em;
+}
+
+.nav .logo span{
+  color:#006ff9;
+}
+
+nav {
+  padding: 0;
+  position: fixed;
+  background-color: var(--primary-color);
+  color: white;
+  height: 100vh;
+  right: 0;
+  top:0;
+  width: 0px; /* "px" is important */
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 20px;
+          box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 20px;
+  transition: width 0.5s;
+  z-index: 900;
+}
+
+li{
+  display: flex;
+}
+
+.right-col a::after{
+  content: " ";
+  display: block;
+  width: 0%;
+  height: 2px;
+  background-color: white;
+  
+}
+
+.nav-cont{
+  margin:5em 0 0 1em;
+  padding-bottom: 1em;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 85vh;
+}
+
+.right-col a:hover::after{
+  width: 100%;
+  transition: 0.5s;
+}
+
+.open-nav{
+  width: 250px;
+  transition: 0.5s;
+  z-index: 900;
+}
+
+.right-col{
+  font-size: 1.2em;
+  list-style: none;
+}
+
+.right-col li{
+   margin-top: 1.3em;
+   white-space: nowrap;
+
+}
+
+.right-col li a{
+  color:white;
+  text-decoration: none;
+}
+
+.close{
+  display: none;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+
+.menu{
+  z-index: 999;
+  width:40px;
+  height:40px;
+  border-radius:5px;
+  cursor:pointer;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left:auto;
+}
+
+.menu div{
+  width:30px;
+  height:30px;
+  position: relative;
+}
+
+.menu span{
+  width:30px;
+  background:black;
+  height:3px;
+  border-radius:5px;
+  display:block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.5s, width 0.5s;
+}
+
+.menu #line1{
+  transform: translate(-50%,-10px);
+}
+
+.menu #line3{
+  transform: translate(-50%,8px);
+}
+
+.openmenu #line1{
+  background-color: white;
+    transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+.openmenu #line3{
+  background-color: white;
+  transform: translate(-50%,-50%) rotate(45deg);
+}
+
+.openmenu #line2{
+  background-color: white;
+  width: 0;
+}
+
+#cover-nav{
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 800;
+  background-color: black;
+  opacity: 0.5;
+}
+
+.nav-cont::-webkit-scrollbar{
+  height: 8px;
+  width:8px;
+}
+
+/* Track */
+.nav-cont::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+/* Handle */
+.nav-cont::-webkit-scrollbar-thumb{
+  background-color:#c2c2c2;
+  border-radius: 10px;
+}
+
+.nav-cont::-webkit-scrollbar-thumb{
+  background-color: white;
+  border-radius: 10px;
+}
+
+.nav-right-cont{
+  margin-left: auto;
+  margin-right: 1em;
+}
+
+.nav-right-cont ul{
+  display: flex;
+}
+
+.nav-index a{
+  font-size: 0.8em;
+  text-decoration: none;
+  color: black;
+  margin-left: 1em;
+}
+
+.nav-index a:hover{
+  color: var(--primary-color);
+  transition: 0.3s;
+}
+
+@media screen and (min-width: 450px){
+  .nav-index .logo{
+    font-size: 1.2em;
+  }
+
+  .nav-index a{
+    font-size: 1em;
+    margin-left: 1.5em;
+  }
+
+}
+
+@media screen and (min-width: 600px){
+  .nav-index .logo{
+    margin-left: 6vw;
+  }
+
+  .nav-index a{
+    margin-left: 5em;
+  }
+
+  .nav-right-cont{
+    margin-right: 6vw;
+  }
+
+}
+#logo{
+  margin-left: 1em;
+  text-decoration: none;
+  color:black;
+}
+#logo:hover{
+  color:black;
+}

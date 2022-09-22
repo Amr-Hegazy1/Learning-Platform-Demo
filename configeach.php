@@ -3,7 +3,7 @@
     $user = 'root';
     $pass = '';
     $db = $selected;
-    $db = new mysqli('127.0.0.1:3308', $user, $pass, $db) or die("Error");
+    $db = new mysqli('127.0.0.1:3306', $user, $pass, $db) or die("Error");
     /*echo "<h1>".getTitle($db, $selected)."</h1>";*/
 
     function getTitle($db, $selected){
