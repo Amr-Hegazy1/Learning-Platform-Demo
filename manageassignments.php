@@ -8,10 +8,11 @@
 </head>
 <body>
 <?php
+ try{
         $ali = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
@@ -67,7 +68,7 @@
                                     $thisid = $rows['AssignmentID'];
                                     $thisdesc = $rows['Description'];
                                     $thisdd = $rows['DueDate'];
-                                    echo "<option value='$thisid'>$thisid : $thisdesc : $thisdd</option>";
+                                    echo "<option value='$thisdesc'>$thisid : $thisdesc : $thisdd</option>";
                                 }
                             ?>   
                         </select>
@@ -77,7 +78,7 @@
                             <div id="drop-button">▼</div>
                         </div>
 
-                        <div class="options-cont" id="options">
+                        <div class="options-cont wide-options" id="options">
                             <ul>
                                 <?php
                                     $getavax = $db->query("SELECT * FROM `assignments`");
@@ -85,7 +86,7 @@
                                         $thisid = $rows['AssignmentID'];
                                         $thisdesc = $rows['Description'];
                                         $thisdd = $rows['DueDate'];
-                                        echo "<li class='option'>$thisid</li>";
+                                        echo "<li class='option'>$thisdesc</li>";
                                     }
                                 ?>   
                             </ul>
@@ -160,22 +161,33 @@
         }
     }else{
         echo "Access denied<br>";
-        echo '<a href="signin.php">Go Home</a><br>';;
+        echo '<a href="index.php">Go Home</a><br>';;
     }
 
-    function validateDate($date){
-        $format = 'Y-m-d H:i:s';
-        $d = DateTime::createFromFormat($format, $date);
-        return $d && $d->format($format) === $date;
-    }
-
-    function maxGradeVal($n){
-        if($n>0){
-            return true;
-        }
-        return false;
-    }
+    
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
+}
         ?>
+
+<?php
+
+function validateDate($date){
+    $format = 'Y-m-d H:i:s';
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) === $date;
+}
+
+function maxGradeVal($n){
+    if($n>0){
+        return true;
+    }
+    return false;
+}
+
+?>
     <script src="styles/dropdown.js"></script>
     <script src="styles/dropdown-vid.js"></script>
     <script src="styles/dropdown2.js"></script>

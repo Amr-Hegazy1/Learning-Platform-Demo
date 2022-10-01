@@ -38,23 +38,38 @@
     </div>
 </div>
 <?php
+ try{
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']){
-            echo " <script type='text/javascript'>
-            window.location.href = './userhome.php';
-            </script> ";
-        }else if(isset($_SESSION['assistantloggedin']) && $_SESSION['assistantloggedin']){
-            echo " <script type='text/javascript'>
-            window.location.href = './assistanthome.php';
-            </script> ";
-        }else if (isset($_SESSION['adminloggedin']) && $_SESSION['adminloggedin']){
-            echo " <script type='text/javascript'>
-            window.location.href = './adminhome.php';
-            </script> ";
-        }
         include "configeach.php"; 
+        $selected = $_SESSION['selected'];
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']){
+            $user = $_SESSION['user'];
+            $sql = "SELECT * FROM users WHERE `Username` = '$user'";
+            $res = $db->query($sql);
+            if (mysqli_num_rows($res) > 0)
+                echo " <script type='text/javascript'>
+                window.location.href = './userhome.php';
+                </script> ";
+        }else if(isset($_SESSION['assistantloggedin']) && $_SESSION['assistantloggedin']){
+            $assistant = $_SESSION['assistant'];
+            $sql = "SELECT * FROM assistants WHERE `AssistantUsername` = '$assistant'";
+            $res = $db->query($sql);
+            if (mysqli_num_rows($res) > 0)
+                echo " <script type='text/javascript'>
+                window.location.href = './assistanthome.php';
+                </script> ";
+        }else if (isset($_SESSION['adminloggedin']) && $_SESSION['adminloggedin']){
+            $admin = $_SESSION['admin'];
+            $sql = "SELECT * FROM admins WHERE `Username` = '$admin'";
+            $res = $db->query($sql);
+            if (mysqli_num_rows($res) > 0)
+                echo " <script type='text/javascript'>
+                window.location.href = './adminhome.php';
+                </script> ";
+        }
+        
         if(isset($_POST['loginsubmit'])){
             $u = $_POST['username'];
             $p = $_POST['password'];
@@ -92,6 +107,11 @@
             
             echo "<div class='pop-up'>Invalid Username or Password</div>";
         }
+    }catch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
     ?>
     
 </body>

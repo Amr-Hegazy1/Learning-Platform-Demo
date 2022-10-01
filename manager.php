@@ -29,30 +29,36 @@
         <input type="submit" name="loginsubmit" value="Submit" class="submit">
     </form>
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if(isset($_SESSION['manager'])){
-    echo " <script type='text/javascript'>
-        window.location.href = './manageinst.php';
-        </script> ";
-}
-else if(isset($_POST['loginsubmit'])){
-    include "configcourses.php";
-    $u = $_POST['username'];
-    $p = $_POST['password'];
-    $sql = $dbc->query("SELECT `Password` FROM `managers` WHERE `Manager`='$u'");
-    if(mysqli_num_rows($sql) > 0){
-        $row = $sql->fetch_assoc();
-        if(password_verify($p, $row['Password'])){
-            if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-            $_SESSION['manager'] = true;
-            echo    '<a href="managecourses.php">Manage Courses</a>
-                    <a href="manageinst.php">Manage Instructors</a>';
-        }else{echo "Incorrect credentials";header("Refresh:1");}
-    } else {echo "Incorrect credentials";}
+ try{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if(isset($_SESSION['manager'])){
+        echo " <script type='text/javascript'>
+            window.location.href = './manageinst.php';
+            </script> ";
+    }
+    else if(isset($_POST['loginsubmit'])){
+        include "configcourses.php";
+        $u = $_POST['username'];
+        $p = $_POST['password'];
+        $sql = $dbc->query("SELECT `Password` FROM `managers` WHERE `Manager`='$u'");
+        if(mysqli_num_rows($sql) > 0){
+            $row = $sql->fetch_assoc();
+            if(password_verify($p, $row['Password'])){
+                if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+                $_SESSION['manager'] = true;
+                echo    '<a href="managecourses.php">Manage Courses</a>
+                        <a href="manageinst.php">Manage Instructors</a>';
+            }else{echo "Incorrect credentials";header("Refresh:1");}
+        } else {echo "Incorrect credentials";}
+    }
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
 }
 ?>
 </body>

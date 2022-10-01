@@ -8,6 +8,7 @@
 </head>
 <body>
 <?php 
+ try{
 include "configeach.php";
 $viewsql = $db->query("SELECT * FROM `videos` WHERE `Accessebility`= 1 ORDER BY VideoID ASC");?>
 <h3 class="heading">Videos</h3>
@@ -35,7 +36,13 @@ $viewsql = $db->query("SELECT * FROM `videos` WHERE `Accessebility`= 1 ORDER BY 
                     echo '<h3 class="title">'.$id.'.'.$name.'</h3>';
                 ?>
             </div>
-            <?php } ?>
+            <?php } 
+            }catch( Error $ex){
+                echo $ex;
+            }catch(Exception $ex){
+                echo $ex;
+            }
+    ?>
     </div>
 </div> 
 

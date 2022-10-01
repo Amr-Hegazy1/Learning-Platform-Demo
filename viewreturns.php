@@ -8,10 +8,11 @@
 </head>
 <body>
     <?php
+     try{
         $li = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
@@ -67,25 +68,36 @@
             } else {echo "<div class='pop-up'>No Questions answered yet</div>";}
         }else{
             echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';;
+            echo '<a href="index.php">Go Home</a><br>';;
         }
 
-        function changeName($n){
-            $return = "returns".substr($n,4);
-            return $return;
-        }
-
-        function getMaxGrade($db, $id){
-            $sql = $db->query("SELECT `AssignmentID` FROM `work` WHERE `WorkID`='$id' LIMIT 1");
-            if($row = $sql->fetch_assoc()){
-                $aid = $row['AssignmentID'];
-            }
-            $sql2 = $db->query("SELECT `MaxGrade` FROM `assignments` WHERE `AssignmentID`='$aid'");
-            if($x = $sql2->fetch_assoc()){
-                $y = $x['MaxGrade'];
-            }
-            return "/$y";
-        }
+        
+    }ccatch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
     ?>
+
+<?php 
+
+function changeName($n){
+    $return = "returns".substr($n,4);
+    return $return;
+}
+
+function getMaxGrade($db, $id){
+    $sql = $db->query("SELECT `AssignmentID` FROM `work` WHERE `WorkID`='$id' LIMIT 1");
+    if($row = $sql->fetch_assoc()){
+        $aid = $row['AssignmentID'];
+    }
+    $sql2 = $db->query("SELECT `MaxGrade` FROM `assignments` WHERE `AssignmentID`='$aid'");
+    if($x = $sql2->fetch_assoc()){
+        $y = $x['MaxGrade'];
+    }
+    return "/$y";
+}
+
+?>
 </body>
 </html>

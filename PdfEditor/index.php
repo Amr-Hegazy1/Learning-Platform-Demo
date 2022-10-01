@@ -85,9 +85,9 @@
 		<div class="tool">
 			<button class="btn btn-info btn-sm" onclick="zoomOut()" title="Zoom Out"><i class="fa fa-minus" aria-hidden="true" style="color: white;"></i></button>
 		</div>
-		<div class="tool">
+		<!-- <div class="tool">
 			<button class="btn btn-light btn-sm" onclick="savePDF()"><i class="fa fa-save"></i> Save</button>
-		</div>
+		</div> -->
 		
 	</div>
 	
@@ -127,9 +127,6 @@
 
 <script src="script.js"></script>
 <script src="pinch.js"></script>
-
-
-
 
 
 

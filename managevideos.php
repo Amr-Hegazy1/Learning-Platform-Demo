@@ -7,13 +7,16 @@
 
 </head>
 <body>
-<?php include_once("nav.html") ?>
+<?php 
+ try{
+    include_once("nav.html");
+?>
 
     <?php
         $ali = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
@@ -83,11 +86,14 @@
                     $testaccessbit = $_POST["accessbit"];
                     $filename = $_FILES["file"]["name"];
                     $tempname = $_FILES["file"]["tmp_name"];
-                    $folder = "videos/" . $filename;
+                    $folder = "videos/" . $_SESSION['selected'] . '/' . $filename;
 
                     if(notExists($folder, $db, "VideoLocation", "videos")){
 
                         if(validType($filename)){
+                            
+                            if(!is_dir("videos/".$_SESSION['selected']))
+                                mkdir("videos/".$_SESSION['selected']);
 
                             move_uploaded_file($tempname, $folder);
                             $sql = "INSERT INTO `videos`(`VideoID`,`VideoName`,`VideoLocation`,`Accessebility`)VALUES('$testid', '$testname', '$folder', '$testaccessbit')";
@@ -120,22 +126,23 @@
                                     $thisar = $rows['Accessebility'];
                                     $thisloc = $rows['VideoLocation'];
                                     $thischeckr = checkViewing($thisar);
-                                    echo "<option value='$thisidr'>$thisidr : $thisnamer : $thischeckr</option>";
+                                    echo "<option value='$thisnamer'>$thisidr : $thisnamer : $thischeckr</option>";
                                 }
                             ?>
 
                         </select>
                         <div class="drop-down" id="drop-down2">
-                            <div class="name" id="assign-drop">Video ID : <span id="selected-drop2"></span></div>
+                            <div class="name" id="assign-drop">Video Name : <span id="selected-drop2"></span></div>
                             <div id="drop-button">▼</div>
                         </div>
-                        <div class="options-cont" id="options2">
+                        <div class="options-cont wide-options" id="options2">
                             <ul>
                             <?php
                                 $getvx = $db->query("SELECT * FROM `videos`"); 
                                 while($rows = $getvx->fetch_assoc()){
                                     $thisidr = $rows['VideoID'];
-                                    echo "<li class='option2'>$thisidr</li>";
+                                    $thisnamer = $rows['VideoName'];
+                                    echo "<li class='option2'>$thisnamer</li>";
                                 }
                             ?>  
                             </ul>
@@ -181,18 +188,18 @@
                                 $thisname = $rows['VideoName'];
                                 $thisa = $rows['Accessebility'];
                                 $thischeck = checkViewing($thisa);
-                                echo "<option value='$thisid'>$thisid : $thisname : $thischeck</option>";
+                                echo "<option value='$thisname'>$thisid : $thisname : $thischeck</option>";
                             }
 
                         ?>
                     </select>
 
                     <div class="drop-down" id="drop-down3">
-                        <div class="name" id="assign-drop">Video ID : <span id="selected-drop3"></span></div>
+                        <div class="name" id="assign-drop">Video Name : <span id="selected-drop3"></span></div>
                         <div id="drop-button">▼</div>
                     </div>
 
-                    <div class="options-cont change-acc-warpped" id="options3">
+                    <div class="options-cont change-acc-warpped wide-options" id="options3">
                         <ul>
                         <?php
                             $getav = $db->query("SELECT * FROM videos");
@@ -201,7 +208,7 @@
                                 $thisname = $rows['VideoName'];
                                 $thisa = $rows['Accessebility'];
                                 $thischeck = checkViewing($thisa);
-                                echo "<li class='option3'>$thisid</li>";
+                                echo "<li class='option3'> $thisname</li>";
                             }
                         ?>
                         </ul>
@@ -221,13 +228,13 @@
         if(isset($_POST['complementsubmit'])){
 
             $idtobeset = $_POST['id'];
-            $getaccess = $db->query("SELECT `Accessebility` FROM `videos` WHERE `VideoID` = '$idtobeset'");
+            $getaccess = $db->query("SELECT `Accessebility` FROM `videos` WHERE `VideoName` = '$idtobeset'");
 
             while($row = $getaccess->fetch_assoc()){
                 $newaccess = complement($row['Accessebility']);
             }
 
-            $sqlset = "UPDATE `videos` SET Accessebility = $newaccess WHERE `VideoID` = $idtobeset";
+            $sqlset = "UPDATE `videos` SET Accessebility = $newaccess WHERE `VideoName` = '$idtobeset'";
             $setresult = mysqli_query($db, $sqlset);
             echo "<div class='pop-up'>Change Made!</div>";
         }
@@ -257,61 +264,72 @@
 
     }else{  
         echo "Access denied<br>";
-        echo '<a href="signin.php">Go Home</a><br>';
+        echo '<a href="index.php">Go Home</a><br>';
     }
 
-    function notExists($i, $db, $field, $table){
-        $exists = "SELECT `$field` FROM `$table`";
-        $r = mysqli_query($db, $exists);
-        $n = mysqli_num_rows($r);
-        while($x = mysqli_fetch_assoc($r)){
-            if($x[$field] == $i){
-                return false;
-            }
-        }
-        return true;
-    }
+    
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
+}
+    ?>
 
-    function checkViewing($accessCheck){
-        if($accessCheck>0){
-            return "Viewing";
-        } elseif($accessCheck<=0) {
-            return "Not Viewing";
-        }
-    }
+<?php 
 
-    function complement($bit){
-        if($bit == 0){
-            return 1;
-        } else if($bit == 1){
-            return 0;
-        }
-    }
-
-    function validName($name){
-        if(strlen($name)>0){
-            return true;
-        }
-        return false;
-    }
-
-    function validType($filename){
-        $allowed = array('mp4', 'avi', 'mkv');
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if (!in_array($ext, $allowed)) {
+function notExists($i, $db, $field, $table){
+    $exists = "SELECT `$field` FROM `$table`";
+    $r = mysqli_query($db, $exists);
+    $n = mysqli_num_rows($r);
+    while($x = mysqli_fetch_assoc($r)){
+        if($x[$field] == $i){
             return false;
         }
+    }
+    return true;
+}
+
+function checkViewing($accessCheck){
+    if($accessCheck>0){
+        return "Viewing";
+    } elseif($accessCheck<=0) {
+        return "Not Viewing";
+    }
+}
+
+function complement($bit){
+    if($bit == 0){
+        return 1;
+    } else if($bit == 1){
+        return 0;
+    }
+}
+
+function validName($name){
+    if(strlen($name)>0){
         return true;
     }
+    return false;
+}
 
-    function getLoc($db, $id){
-        $sql = $db->query("SELECT `VideoLocation` FROM `videos` WHERE `VideoID` = '$id'");
-        while($res = $sql->fetch_assoc()){
-            $loc = $res['VideoLocation'];
-            return $loc;
-        }
+function validType($filename){
+    $allowed = array('mp4', 'avi', 'mkv');
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    if (!in_array($ext, $allowed)) {
+        return false;
     }
-    ?>
+    return true;
+}
+
+function getLoc($db, $id){
+    $sql = $db->query("SELECT `VideoLocation` FROM `videos` WHERE `VideoID` = '$id'");
+    while($res = $sql->fetch_assoc()){
+        $loc = $res['VideoLocation'];
+        return $loc;
+    }
+}
+
+?>
     <script src="./styles/chooseFile.js"></script>
     <script src="./styles/dropdown3.js"></script>
 </body>

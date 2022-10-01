@@ -22,31 +22,37 @@ include_once "nav-index.html";
         <button onclick="var e = document.getElementById('course-cont');window.scroll({top:e.getBoundingClientRect().top+window.pageYOffset,behaviour:'smooth',});">Our Courses</button>
     </header>
 <?php 
-$sql = $dbc->query("SELECT * FROM `courses`");
-echo "<h1 class='our-courses'>Our Courses</h1>";
-echo "<hr>";
-echo "<div class='courses-cont' id='course-cont'>";
-//$i = 0;
-while($row = $sql->fetch_assoc()){
-    $thistitle = $row['Title'];
-    $thisd = $row['D'];
-    $thisimg = $row['Image'];
-    $thisprice = $row['Price'];
-    $thisinst = $row['Instructor'];
-    echo "<a class='course' href='$thisd.php' >";
-    //echo "<img src=$thisimg><br>";
-    echo "<img src='$thisimg'>";
-    echo "<div class='course-title'>$thistitle</div>";
-    echo '<div class="course-inst">By <span class=inst-name>'.$thisinst.'</span></div>';
-    echo "<div class='course-price'>$$thisprice</div>";
-    echo "</a>";
-    // $i+=1;
-    // if(i===2){
-    //     echo "</div>"
-    //     echo "<div class='course-cont'>";
-    // }
+ try{
+    $sql = $dbc->query("SELECT * FROM `courses`");
+    echo "<h1 class='our-courses'>Our Courses</h1>";
+    echo "<hr>";
+    echo "<div class='courses-cont' id='course-cont'>";
+    //$i = 0;
+    while($row = $sql->fetch_assoc()){
+        $thistitle = $row['Title'];
+        $thisd = $row['D'];
+        $thisimg = $row['Image'];
+        $thisprice = $row['Price'];
+        $thisinst = $row['Instructor'];
+        echo "<a class='course' href='$thisd.php' >";
+        //echo "<img src=$thisimg><br>";
+        echo "<img src='$thisimg'>";
+        echo "<div class='course-title'>$thistitle</div>";
+        echo '<div class="course-inst">By <span class=inst-name>'.$thisinst.'</span></div>';
+        echo "<div class='course-price'>$$thisprice</div>";
+        echo "</a>";
+        // $i+=1;
+        // if(i===2){
+        //     echo "</div>"
+        //     echo "<div class='course-cont'>";
+        // }
+    }
+    echo "</div>";
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
 }
-echo "</div>";
 ?>
 </body>
 </html>

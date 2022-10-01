@@ -8,10 +8,11 @@
 </head>
 <body>
     <?php
+     try{
         $ali = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
@@ -88,64 +89,75 @@
             }
         }else{
             echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';;
+            echo '<a href="index.php">Go Home</a><br>';;
         }
         
-        function clearVideos($db){
-            $sql = $db->query("SELECT `VideoLocation` FROM `videos`");
-            while($row = $sql->fetch_assoc()){
-                $loc = $row['VideoLocation'];
-                unlink($loc);
-            }
-        }
-
-        function clearAttachments($db){
-            $sql = $db->query("SELECT `attachments` FROM `posts`");
-            while($row = $sql->fetch_assoc()){
-                $loc = $row['attachments'];
-                if($loc != "attachments/"){
-                    if(!unlink($loc)){
-                        echo "<div class='pop-up'>Error</div>";
-                    }
-                }
-            }
-        }
-
-        function clearWorkAndReturns($db){
-            $sql = $db->query("SELECT * FROM `work`");
-            while($row = $sql->fetch_assoc()){
-                $loc = $row['WorkFile'];
-                $corrected = $row['Corrected'];
-                if($corrected == 1){
-                    $returnfile = "returns".substr($loc, 4);
-                    if(!unlink($returnfile)){
-                        echo "<div class='pop-up'>Error</div>";
-                    }
-                }
-                unlink($loc);
-            }
-        }
-
-        function clearProgCols($db, $selected){
-            $array = getProgColNames($db, $selected);
-            $len = count($array);
-            for($i = 0; $i < $len; $i++){
-                $sql = $db->query("ALTER TABLE `progress` DROP COLUMN `$array[$i]`");
-            }
-        }
-
-        function getProgColNames($db, $selected){
-            $sql = $db->query("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='$selected' AND `TABLE_NAME`='progress'");
-            $array = array();
-            while($row = $sql->fetch_assoc()){
-                $name = $row['COLUMN_NAME'];
-                if($name!="UserID"){
-                    array_push($array, $name);
-                }
-            }
-            return($array);
-        }
+        
+    }catch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
         
         ?>
+
+<?php 
+
+function clearVideos($db){
+    $sql = $db->query("SELECT `VideoLocation` FROM `videos`");
+    while($row = $sql->fetch_assoc()){
+        $loc = $row['VideoLocation'];
+        unlink($loc);
+    }
+}
+
+function clearAttachments($db){
+    $sql = $db->query("SELECT `attachments` FROM `posts`");
+    while($row = $sql->fetch_assoc()){
+        $loc = $row['attachments'];
+        if($loc != "attachments/"){
+            if(!unlink($loc)){
+                echo "<div class='pop-up'>Error</div>";
+            }
+        }
+    }
+}
+
+function clearWorkAndReturns($db){
+    $sql = $db->query("SELECT * FROM `work`");
+    while($row = $sql->fetch_assoc()){
+        $loc = $row['WorkFile'];
+        $corrected = $row['Corrected'];
+        if($corrected == 1){
+            $returnfile = "returns".substr($loc, 4);
+            if(!unlink($returnfile)){
+                echo "<div class='pop-up'>Error</div>";
+            }
+        }
+        unlink($loc);
+    }
+}
+
+function clearProgCols($db, $selected){
+    $array = getProgColNames($db, $selected);
+    $len = count($array);
+    for($i = 0; $i < $len; $i++){
+        $sql = $db->query("ALTER TABLE `progress` DROP COLUMN `$array[$i]`");
+    }
+}
+
+function getProgColNames($db, $selected){
+    $sql = $db->query("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='$selected' AND `TABLE_NAME`='progress'");
+    $array = array();
+    while($row = $sql->fetch_assoc()){
+        $name = $row['COLUMN_NAME'];
+        if($name!="UserID"){
+            array_push($array, $name);
+        }
+    }
+    return($array);
+}
+
+?>
 </body>
 </html>

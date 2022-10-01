@@ -8,10 +8,11 @@
 </head>
 <body>
 <?php
+ try{
     $li = false;
     if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+        session_start();
+    }
     if(isset($_SESSION['loggedin'])){
         $li = $_SESSION['loggedin'];}
     if($li){
@@ -71,15 +72,26 @@
         }
     }else{
             echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';;
+            echo '<a href="index.php">Go Home</a><br>';;
     }
 
-    function validName($name){
-        if(strlen($name)>5){
-            return true;
-        }
-        return false;
+    
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
+}
+?>
+
+<?php
+
+function validName($name){
+    if(strlen($name)>5){
+        return true;
     }
+    return false;
+}
+
 ?>
 </body>
 </html>

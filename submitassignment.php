@@ -8,10 +8,11 @@
 </head>
 <body>    
     <?php
+     try{
         $li = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['loggedin'])){
             $li = $_SESSION['loggedin'];}
         if($li){
@@ -35,7 +36,7 @@
                         ?>   
                         </select>
                 <div class="drop-down" id="drop-down">
-                    <div class="name" id="assign-drop">Assignment ID : <span id="selected-drop"></span></div>
+                    <div class="name" id="assign-drop">Assignment Name : <span id="selected-drop"></span></div>
                     <div id="drop-button">▼</div>
                 </div>
                 <div class="options-cont wide-options" id="options">
@@ -129,8 +130,17 @@
         } 
     }else{
         echo "Access denied<br>";
-        echo '<a href="signin.php">Go Home</a><br>';;
+        echo '<a href="index.php">Go Home</a><br>';;
     }
+    
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
+}
+    ?>
+    <?php 
+    
     function alreadySubmitted($u, $aid, $db){
         $checksql = "SELECT * FROM `work` WHERE `UserID` = '$u' AND `AssignmentID` = '$aid'";
         $r = mysqli_query($db, $checksql);
@@ -153,6 +163,7 @@
         }
         return true;
     }
+    
     ?>
     <script src="styles/dropdown.js"></script>
     <script src="styles/dropdown-vid.js"></script>

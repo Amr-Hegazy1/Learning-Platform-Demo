@@ -8,9 +8,15 @@
 </head>
 <body>
     <?php
+    
+     try{
+        function getName($email){
+            $name = strstr($email, '@', true);
+            return $name;             
+        }
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         $loggedin = false;
         if(isset($_SESSION['adminloggedin'])){$loggedin = $_SESSION['adminloggedin'];}
         if($loggedin){
@@ -33,11 +39,12 @@
 
         }
 
-        function getName($email){
-            $name = strstr($email, '@', true);
-            return $name;             
-        }
-            
+        
+    }catch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
     ?>
 </body>
 </html>

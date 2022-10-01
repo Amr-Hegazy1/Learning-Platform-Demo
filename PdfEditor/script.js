@@ -111,7 +111,7 @@ function savePDF() {
   $("body").css({"background-color":"white"});
   $(".spinner-border").show();
 
-  pdf.savePdf('output.pdf'); // save with given file name
+  pdf.savePdf('output.pdf');
   $(".spinner-border").hide();
   $("body").css({"background-color":"rgb(82, 86, 89)"});
   
@@ -192,4 +192,10 @@ document.onkeydown = function (e) {
   
 };
 
+window.onmessage = function(e){
+  if(e.data == "save"){
+    savePDF();
+  }
+
+};
 

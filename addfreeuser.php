@@ -7,12 +7,16 @@
 
 </head>
 <body>
-    <?php include_once("nav.html") ?>
+    
     <?php
+     try{
+        
+
+        include_once("nav.html");
         $ali = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){?>
@@ -69,43 +73,54 @@
             }
         }else{
                         echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';;
+            echo '<a href="index.php">Go Home</a><br>';;
         }
         
-        function notExists($i, $db, $field, $table){
-            $exists = "SELECT `$field` FROM `$table`";
-            $r = mysqli_query($db, $exists);
-            $n = mysqli_num_rows($r);
-            while($x = mysqli_fetch_assoc($r)){
-                if($x[$field] == $i){
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        function strong($password){
-            $uppercase = preg_match('@[A-Z]@', $password);
-            $lowercase = preg_match('@[a-z]@', $password);
-            $number    = preg_match('@[0-9]@', $password);
-            $specialChars = preg_match('@[^\w]@', $password);
-
-            if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-                echo "<div class='pop-up'>Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.</div>";
-                return false;
-            }else{
-                echo "<div class='pop-up'>Strong password.</div>";
-                return true;
-            }
-        }
-
-        function email($username){
-            if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
-                echo "<div class='pop-up'>Invalid email format</div>";
-                return false;
-              }
-            return true;
-        }
+        
+    }catch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
     ?>
+
+<?php 
+function notExists($i, $db, $field, $table){
+    $exists = "SELECT `$field` FROM `$table`";
+    $r = mysqli_query($db, $exists);
+    $n = mysqli_num_rows($r);
+    while($x = mysqli_fetch_assoc($r)){
+        if($x[$field] == $i){
+            return false;
+        }
+    }
+    return true;
+}
+
+function strong($password){
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number    = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
+
+    if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        echo "<div class='pop-up'>Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.</div>";
+        return false;
+    }else{
+        echo "<div class='pop-up'>Strong password.</div>";
+        return true;
+    }
+}
+
+function email($username){
+    if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+        echo "<div class='pop-up'>Invalid email format</div>";
+        return false;
+      }
+    return true;
+}
+
+?>
+
 </body>
 </html>

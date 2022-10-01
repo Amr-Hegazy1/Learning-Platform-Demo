@@ -8,18 +8,24 @@
 </head>
 <body>
 <?php 
-include_once("nav-index.html");
-$selected = $_SESSION['selected'];
-$sql = $dbc->query("SELECT * FROM `courses` WHERE `D`='$selected'");
-echo "<div class='container center'>";
-while($row = $sql->fetch_assoc()){
-    echo "<div class='segment single-seg segment-course'>";
-    echo "<h1>".$row['Title']."</h1>"."<h3>".$row['Instructor']."</h3>";
-    echo "<div class='course-desc'>";
-    echo $row['Description1'];
-    echo "</div>";
-    echo "<button onclick=signin()>Sign in</button>";
-    echo "</div>";
+ try{
+    include_once("nav-index.html");
+    $selected = $_SESSION['selected'];
+    $sql = $dbc->query("SELECT * FROM `courses` WHERE `D`='$selected'");
+    echo "<div class='container center'>";
+    while($row = $sql->fetch_assoc()){
+        echo "<div class='segment single-seg segment-course'>";
+        echo "<h1>".$row['Title']."</h1>"."<h3>".$row['Instructor']."</h3>";
+        echo "<div class='course-desc'>";
+        echo $row['Description1'];
+        echo "</div>";
+        echo "<button onclick=signin()>Sign in</button>";
+        echo "</div>";
+    }
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
 }
 ?>
 

@@ -326,7 +326,8 @@ PDFAnnotate.prototype.savePdf = function (fileName) {
       
       var blob = btoa(doc.output());
       var formData = new FormData();
-      formData.append("fileName",workFile.split("/")[1]);
+      formData.append("fileName",workFile.split("/")[1] + "/" + workFile.split("/")[2]);
+      formData.append("selected",workFile.split("/")[1]);
       formData.append("file",blob);
           
       $.ajax({

@@ -8,6 +8,7 @@
 </head>
 <body>
 <?php
+ try{
         $ali = false;
         if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -133,35 +134,45 @@
         }
     }else{
             echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';;
+            echo '<a href="index.php">Go Home</a><br>';;
     }
 
-    function validName($name){
-        if(strlen($name)>0){
-            return true;
-        }
-        return false;
-    }
-
-    function validType($filename){
-        if($filename != ""){
-            $allowed = array('pdf', 'jpg', 'png', 'jpeg', 'pptx');
-            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-            if (!in_array($ext, $allowed)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function removeAttach($db, $id){
-        $sql = $db->query("SELECT `attachments` FROM `posts` WHERE `PostID` = '$id'");
-        $row = $sql->fetch_assoc();
-        $loc = $row['attachments'];
-        unlink($loc);
-    }
+    
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
+}
 
         ?>
+<?php 
+
+function validName($name){
+    if(strlen($name)>0){
+        return true;
+    }
+    return false;
+}
+
+function validType($filename){
+    if($filename != ""){
+        $allowed = array('pdf', 'jpg', 'png', 'jpeg', 'pptx');
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        if (!in_array($ext, $allowed)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function removeAttach($db, $id){
+    $sql = $db->query("SELECT `attachments` FROM `posts` WHERE `PostID` = '$id'");
+    $row = $sql->fetch_assoc();
+    $loc = $row['attachments'];
+    unlink($loc);
+}
+
+?>
     <script src="styles/chooseFile.js"></script>
     <script src="styles/dropdown.js"></script>
 </body>

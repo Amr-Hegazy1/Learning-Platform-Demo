@@ -8,16 +8,15 @@
 </head>
 <body>
 <?php 
-if (session_status() === PHP_SESSION_NONE) {
+ try{
     if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-}
-include "configcourses.php";
-include_once("nav-manager.html");
-if($_SESSION['manager']){
+        session_start();
+    }
     include "configcourses.php";
-    $admin = $_SESSION['manager'];
+    include_once("nav-manager.html");
+    if($_SESSION['manager']){
+        include "configcourses.php";
+        $admin = $_SESSION['manager'];
 ?>
 <div class="container-manage-user">
     <div class="container" id="cont-add-admin">
@@ -181,6 +180,7 @@ if($_SESSION['manager']){
             </div>
         </div>    
     </div>
+    
 <?php 
     if(isset($_POST['removec'])){
         $_SESSION['selected'] = $_POST['course'];
@@ -202,7 +202,17 @@ if($_SESSION['manager']){
         $removecourse = $dbc->query("DELETE FROM `courses` WHERE `D` = '$d'");
 
     }
-} else { echo "Access denied<br>"; echo '<a href="signin.php">Go Home</a><br>';}
+} else { echo "Access denied<br>"; echo '<a href="index.php">Go Home</a><br>';}
+
+
+}catch( Error $ex){
+    echo $ex;
+}catch(Exception $ex){
+    echo $ex;
+}
+?>
+
+<?php 
 
 function clearVideos($db){
     $sql = $db->query("SELECT `VideoLocation` FROM `videos`");
@@ -271,7 +281,7 @@ function getProgColNames($db, $d){
 
 function addCourse($db, $title, $d, $inst, $desc, $price, $img){
     $db->query("INSERT INTO `courses`(`Title`, `D`, `Instructor`, `Description1`, `Price`, `Image`) VALUES ('$title', '$d', '$inst', '$desc', $price, '$img')");
-    echo $title." added";
+    echo "<div class='pop-up'>".$title." added</div>";
 }
 
 function getAvailableDatabases($db){

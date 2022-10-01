@@ -10,10 +10,11 @@
 </head>
 <body>
     <?php
+     try{
         $ali = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['adminloggedin'])){
             $ali = $_SESSION['adminloggedin'];}
         if($ali == true){
@@ -65,31 +66,40 @@
             $arrup = array_merge($a1, $arr);
         }else{
             echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';;}
-        function getArray($db){
-            $all = $db->query("SELECT `AssignmentID` FROM `assignments`");
-            $return = [];
-            while($x = $all->fetch_assoc()){
-                $y = $x['AssignmentID'];
-                array_push($return, $y);
-                //print_r($return); 
-                //echo "<br>";
-            }
-            return $return;
-        }
-        function displayAssignmentDetails($db){
-            $all = $db->query("SELECT * FROM `assignments`");
-            echo "<div class='all-quest'>";
-            echo "<div class='qa-cont'>";
-            while($x = $all->fetch_assoc()){
-                echo $x['AssignmentID']." : ";
-                echo $x['Description']."<br>";
-            }
-            echo "</div>";     
-            echo "</div>";   
-        }
+            echo '<a href="index.php">Go Home</a><br>';;}
+        
 
-
+    }catch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
+    ?>
+    <?php
+    
+    function getArray($db){
+        $all = $db->query("SELECT `AssignmentID` FROM `assignments`");
+        $return = [];
+        while($x = $all->fetch_assoc()){
+            $y = $x['AssignmentID'];
+            array_push($return, $y);
+            //print_r($return); 
+            //echo "<br>";
+        }
+        return $return;
+    }
+    function displayAssignmentDetails($db){
+        $all = $db->query("SELECT * FROM `assignments`");
+        echo "<div class='all-quest'>";
+        echo "<div class='qa-cont'>";
+        while($x = $all->fetch_assoc()){
+            echo $x['AssignmentID']." : ";
+            echo $x['Description']."<br>";
+        }
+        echo "</div>";     
+        echo "</div>";   
+    }
+    
     ?>
     <script>
         document.getElementById("sheetjsexport").addEventListener('click', function() {

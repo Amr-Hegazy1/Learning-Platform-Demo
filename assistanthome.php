@@ -8,9 +8,10 @@
 </head>
 <body>
     <?php
+     try{
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         $loggedin = false;
         if(isset($_SESSION['assistantloggedin'])){$loggedin = $_SESSION['assistantloggedin'];}
         if($loggedin){
@@ -20,14 +21,22 @@
             echo "<h1 id='welcome'>Welcome $name!</h1>";
         }else {
             echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';
+            echo '<a href="index.php">Go Home</a><br>';
 
         }
 
-        function getName($email){
-            $name = strstr($email, '@', true);
-            return $name;             
-        }
+        
+    }catch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
     ?>
+<?php
+function getName($email){
+    $name = strstr($email, '@', true);
+    return $name;             
+}
+?>
 </body>
 </html>

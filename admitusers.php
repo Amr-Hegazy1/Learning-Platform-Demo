@@ -8,10 +8,13 @@
 </head>
 <body>
     <?php 
+     try{
+        
+
         $li = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['assistant'])){$a = $_SESSION['assistant'];}
         if(isset($_SESSION['assistantloggedin'])){
             $li = $_SESSION['assistantloggedin'];}
@@ -154,15 +157,25 @@
 
         }else{
             echo "Access denied<br>";
-            echo '<a href="signin.php">Go Home</a><br>';}
+            echo '<a href="index.php">Go Home</a><br>';}
 
-        function remove($db, $username){
-            $sql = $db->query("DELETE FROM `users` WHERE `Username` = '$username'");
-        }
+        
+    }catch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
+    ?>
 
-        function admit($db, $username){
-            $sql = $db->query("UPDATE `users` SET `paid` = 1 WHERE `Username` = '$username'");
-        }
+    <?php
+    function remove($db, $username){
+        $sql = $db->query("DELETE FROM `users` WHERE `Username` = '$username'");
+    }
+
+    function admit($db, $username){
+        $sql = $db->query("UPDATE `users` SET `paid` = 1 WHERE `Username` = '$username'");
+    }
+    
     ?>
     <script src="styles/dropdown.js"></script>
     <script src="styles/dropdown-vid.js"></script>

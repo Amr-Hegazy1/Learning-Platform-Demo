@@ -8,10 +8,11 @@
 </head>
 <body>
     <?php 
+     try{
         $li = false;
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         if(isset($_SESSION['assistant'])){$a = $_SESSION['assistant'];}
         if(isset($_SESSION['assistantloggedin'])){
             $li = $_SESSION['assistantloggedin'];}
@@ -34,23 +35,25 @@
 
                             while($rows = $getavas->fetch_assoc()){
                                 $thisid = $rows['AssignmentID'];
-                                echo "<option value='$thisid'> Assignment $thisid</option>";
+                                $thisdesc = $rows['Description'];
+                                echo "<option value='$thisdesc'>$thisdesc</option>";
                             }
                         ?>   
                     </select>
 
                     <div class="drop-down" id="drop-down">
-                        <div class="name" id="assign-drop">Assignment ID : <span id="selected-drop"></span></div>
+                        <div class="name" id="assign-drop">Assignment Name : <span id="selected-drop"></span></div>
                         <div id="drop-button">▼</div>
                     </div>
 
-                    <div class="options-cont" id="options">
+                    <div class="options-cont wide-options" id="options">
                         <ul>
                             <?php
                                 $getavas = $db->query("SELECT * FROM `assignments`");
                                 while($rows = $getavas->fetch_assoc()){
                                     $thisid = $rows['AssignmentID'];
-                                    echo "<li class='option'>$thisid</li>";
+                                    $thisdesc = $rows['Description'];
+                                    echo "<li class='option'>$thisdesc</li>";
                                 }
                             ?>   
                         </ul>
@@ -64,8 +67,8 @@
             </div>
             <?php
             if(isset($_POST['submit'])){
-                $assignmentid = $_POST['id'];
-                $viewworksql = "SELECT * FROM work WHERE `AssignmentID`= '$assignmentid' AND `Corrected`=0 ORDER BY `WorkID` ASC";
+                $assignmentdesc = $_POST['id'];
+                $viewworksql = "SELECT w.* FROM work AS w INNER JOIN assignments AS a ON w.Corrected=0 AND a.Description='$assignmentdesc' ORDER BY `WorkID` ASC";
                 $res = mysqli_query($db, $viewworksql);
                 if(mysqli_num_rows($res)>0){
                     while ($work = mysqli_fetch_assoc($res)){
@@ -85,7 +88,7 @@
             }
         } else {
             echo "<div class='pop-up'>Access denied</div>";
-            echo '<a href="signin.php">Go Home</a><br>';;
+            echo '<a href="index.php">Go Home</a><br>';;
         }
         function lateCheck($x){
             if($x == 0){
@@ -94,6 +97,11 @@
                 return "Late";
             }
         }
+    }catch( Error $ex){
+        echo $ex;
+    }catch(Exception $ex){
+        echo $ex;
+    }
     ?>
     <script src="styles/dropdown.js"></script>
     <script src="styles/dropdown-vid.js"></script>

@@ -10,6 +10,43 @@
 <body>
 <?php include_once("nav-manager.html")?>
 <div class="container manage-inst-cont">
+<?php
+
+ try{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if($_SESSION['manager']){
+        include "configcourses.php";
+        if(isset($_POST['addinst'])){
+            $name = $_POST['name'];
+            $idesc = $_POST['idesc'];
+            $filename = $_FILES["iimage"]["name"];
+            $tempname = $_FILES["iimage"]["tmp_name"];
+            $folder = "images/" . $filename;
+            move_uploaded_file($tempname, $folder);
+            addInstructor($dbc, $name, $idesc, $folder);
+            header("Refresh:1");
+        }
+    } else { echo "Access denied<br>"; echo '<a href="index.php">Go Home</a><br>';}
+
+
+
+
+
+    if($_SESSION['manager']){?>
+        <?php include "configcourses.php";
+
+        if(isset($_POST['removeinst'])){
+            $inst = $_POST['inst'];
+            $sql = $dbc->query("DELETE FROM `instructors` WHERE `Instructor`='$inst'");
+            header("Refresh:1");
+        }
+    } else { echo "Access denied<br>"; echo '<a href="index.php">Go Home</a><br>';}
+
+    
+
+?>
     <div class="segment">
 
         <h1 class="title">Add Instructor</h1>
@@ -39,30 +76,7 @@
         </form>
     </div>
 
-<?php 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if($_SESSION['manager']){
-    include "configcourses.php";
-    if(isset($_POST['addinst'])){
-        $name = $_POST['name'];
-        $idesc = $_POST['idesc'];
-        $filename = $_FILES["iimage"]["name"];
-        $tempname = $_FILES["iimage"]["tmp_name"];
-        $folder = "images/" . $filename;
-        move_uploaded_file($tempname, $folder);
-        addInstructor($dbc, $name, $idesc, $folder);
-        header("Refresh:1");
-    }
-} else { echo "Access denied<br>"; echo '<a href="signin.php">Go Home</a><br>';}
 
-
-
-
-
-if($_SESSION['manager']){?>
-    <?php include "configcourses.php"?>
 
 
 
@@ -96,7 +110,20 @@ if($_SESSION['manager']){?>
                         $thisinst = $eachinst['Instructor'];
                         echo "<li class='option'>$thisinst</li>";
                     }
+                }catch( Error $ex){
+                    echo $ex;
+                }catch(Exception $ex){
+                    echo $ex;
+                }
                 ?>  
+                <?php 
+                
+                function addInstructor($db, $name, $desc, $img){
+                    $db->query("INSERT INTO `instructors`(`Instructor`, `Description`, `Image`) VALUES ('$name', '$desc', '$img')");
+                    echo "<div class='pop-up'>".$name." added</dive";
+                }
+
+                ?>
                 </ul>
             </div>
 
@@ -107,20 +134,7 @@ if($_SESSION['manager']){?>
         </form>
     </div>
 </div> <!--container end -->
-<?php
-    if(isset($_POST['removeinst'])){
-        $inst = $_POST['inst'];
-        $sql = $dbc->query("DELETE FROM `instructors` WHERE `Instructor`='$inst'");
-        header("Refresh:1");
-    }
-} else { echo "Access denied<br>"; echo '<a href="signin.php">Go Home</a><br>';}
 
-function addInstructor($db, $name, $desc, $img){
-    $db->query("INSERT INTO `instructors`(`Instructor`, `Description`, `Image`) VALUES ('$name', '$desc', '$img')");
-    echo $name." added";
-}
-
-?>
 <script src="./styles/chooseFile.js"></script>
 <script src="./styles/dropdown.js"></script>
 </body>
